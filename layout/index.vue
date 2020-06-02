@@ -2,8 +2,8 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:39
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-04-26 15:37:58
- * @Description: file content
+ * @LastEditTime: 2020-06-02 13:09:29
+ * @Description:  布局layout
  -->
 <template>
   <div :class="classObj" class="app-wrapper">
@@ -73,8 +73,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/styles/mixin.scss';
-@import '~@/styles/variables.scss';
+@import '~@/common-modules/styles/mixin.scss';
+@import '~@/common-modules/styles/variables.scss';
 
 .app-wrapper {
   @include clearfix;

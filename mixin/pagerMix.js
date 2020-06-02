@@ -1,11 +1,11 @@
 /*
  * @Author: 曹捷
  * @Date: 2019-07-19 09:19:35
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-05-14 16:12:54
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-06-02 11:50:47
  * @Description: table分页  抽取相关mix
  */
-import util from '@/utils/utils'
+import util from '@/common-modules/utils/utils'
 export default {
     data() {
         return {
@@ -141,7 +141,7 @@ export default {
                         this.reload()
                     })
                 })
-                .catch(() => {})
+                .catch(() => { })
         },
         deleteInfo(key, item) {
             let param = {
@@ -154,7 +154,7 @@ export default {
                         this.reload()
                     })
                 })
-                .catch(() => {})
+                .catch(() => { })
         }
     }
 }

@@ -2,16 +2,13 @@
  * @Author: 曹捷
  * @Date: 2019-08-01 14:25:13
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-03-05 00:06:37
+ * @LastEditTime: 2020-06-02 11:35:44
  * @Description: file content
  */
 import axios from 'axios'
-import {
-    util
-} from 'common-util-js'
-import {
-    Message
-} from "element-ui"
+import util from '@/common-modules/utils/utils'
+
+import { Message } from "element-ui"
 // import router from '@/router'
 // import api from './api'
 import ajax from './../index'

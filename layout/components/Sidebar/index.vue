@@ -1,18 +1,25 @@
+<!--
+ * @Author: 曹捷
+ * @Date: 2020-06-02 09:11:01
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-06-02 13:07:54
+ * @Description: file content
+--> 
 <template>
   <div :class="{'has-logo':showLogo}">
-    <logo v-if="showLogo" :collapse="isCollapse" />
+    <logo :collapse="isCollapse" v-if="showLogo" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
-        :default-active="activeMenu"
-        :collapse="isCollapse"
+        :active-text-color="variables.menuActiveText"
         :background-color="variables.menuBg"
+        :collapse="isCollapse"
+        :collapse-transition="false"
+        :default-active="activeMenu"
         :text-color="variables.menuText"
         :unique-opened="false"
-        :active-text-color="variables.menuActiveText"
-        :collapse-transition="false"
         mode="vertical"
       >
-        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
+        <sidebar-item :base-path="route.path" :item="route" :key="route.path" v-for="route in routes" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -22,14 +29,11 @@
 import { mapGetters } from 'vuex'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
-import variables from '@/styles/variables.scss'
+import variables from '@/common-modules/styles/variables.scss'
 
 export default {
   components: { SidebarItem, Logo },
   computed: {
-    ...mapGetters([
-      'sidebar'
-    ]),
     routes() {
       return this.$router.options.routes
     },
@@ -49,7 +53,7 @@ export default {
       return variables
     },
     isCollapse() {
-      return !this.sidebar.opened
+      return !this.$store.state.app.sidebar.opened
     }
   }
 }
