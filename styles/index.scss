@@ -133,17 +133,17 @@ div:focus {
   }
 }
 
-.com-tips {
+.obit-tips {
   font-size: 14px;
   color: #5e6d82;
   line-height: 1.5em;
   margin-top: 0;
   margin-bottom: 5px;
 }
-.com-tips-text{
+.obit-tips-text{
   text-indent:1em
 }
-.com-tip{
+.obit-tip{
   padding: 8px 16px;
   background-color: #ecf8ff;
   border-radius: 4px;
@@ -154,7 +154,7 @@ div:focus {
 
 
 
-.com-form-content {
+.obit-form-content {
   border: 1px solid #ebebeb;
   border-radius: 3px;
   transition: .2s;
@@ -224,7 +224,7 @@ div:focus {
   border-top: 1px solid $border;
 }
 
-.com-title {
+.obit-title {
   margin-top: 15px;
   padding-top: 15px;
   font-size: 16px;
@@ -294,12 +294,12 @@ div:focus {
   cursor: pointer;
 }
 
-.com-link {
+.obit-link {
   color: #337ab7;
   cursor: pointer;
 }
 
-.com-link:hover {
+.obit-link:hover {
   color: $active;
 }
 
@@ -372,7 +372,7 @@ div:focus {
   overflow: auto;
 }
 
-.com-form-50 {
+.obit-form-50 {
   .el-form-item {
     width: 50%;
     margin-right: 0;
@@ -403,7 +403,7 @@ div:focus {
   }
 }
 
-.com-form-45 {
+.obit-form-45 {
   .el-form-item {
     width: 45%;
     margin-right: 0;
@@ -422,7 +422,7 @@ div:focus {
   }
 }
 
-.com-form-100 {
+.obit-form-100 {
   .el-form-item {
     width: 100%;
 
@@ -450,7 +450,7 @@ div:focus {
 }
 
 // table 相关
-.com-table {
+.obit-table {
   td {
     .cell {
       overflow: hidden;
@@ -461,7 +461,7 @@ div:focus {
 }
 
 // 页面数据详情  相关
-.com-details {
+.obit-details {
   padding: 20px;
   color: #666;
   line-height: 22px;
@@ -483,13 +483,13 @@ div:focus {
   }
 }
 
-.com-line {
+.obit-line {
   border-bottom: 1px solid #dcdfe6;
   clear: both;
   float: none !important;
 }
 
-.com-item-list {
+.obit-item-list {
   line-height: 1.8;
   padding: 18px 24px;
   background-color: #fafafa;

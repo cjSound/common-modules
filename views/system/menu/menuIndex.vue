@@ -2,69 +2,61 @@
  * @Author: 曹捷
  * @Date: 2020-04-14 10:12:47
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-05-07 15:43:31
+ * @LastEditTime: 2020-06-02 16:20:08
  * @Description: file content
  -->
 
  <template>
-  <div class="com-main" v-loading="loading">
+  <div class="obit-main" v-loading="loading">
     <title-wrap title="菜单管理"></title-wrap>
-    <div class="com-search">
-      <comApp @change="initTree" v-model="params.appId"></comApp>
-      <span class="f-r p-r-10">
-        <el-button @click="initTree" class="btn-md" icon="el-icon-search" type="primary">搜索</el-button>
-
+    <div class="obit-search t-r">
+      <span class="p-r-10">
         <el-button @click="addDialog(0)" class="btn-md" icon="el-icon-plus" type="primary" v-permiss="'menuAdd'">新增菜单</el-button>
       </span>
     </div>
-    <com-table-tree
+    <obit-table-tree
       :childrenNum="'childrenNum'"
       :data-list="treeData"
       :expanded="'open'"
       :left="10"
       :name="'menuName'"
       :page="10"
-      :widths="widths"
       class="table"
       id="menuId"
       title="菜单名称"
-      v-if="treeData && treeData.length>0"
+      v-if="treeData.length>0"
     >
-      <div slot="类型" slot-scope="{item}">{{item.menuType|pressType}}</div>
+      <div slot="类型" slot-scope="{item}">{{item.permissionType|pressType}}</div>
       <div slot="编码" slot-scope="{item}">{{item.menuCode}}</div>
-      <div slot="API类型" slot-scope="{item}">{{item.apiMethod|apiMethodName}}</div>
-      <div slot="路径" slot-scope="{item}">{{item.apiUrl}}</div>
+      <div slot="路径" slot-scope="{item}">{{item.path}}</div>
 
       <div slot="图标" slot-scope="{item}">
-        <svg-icon :icon-class="item.iconClass" v-if="item.iconClass" />
+        <svg-icon :icon-class="item.iconname" v-if="item.iconname" />
       </div>
       <div slot="排序" slot-scope="{item}">{{item.orderNum}}</div>
-      <div slot="描述" slot-scope="{item}">{{item.remark}}</div>
 
       <div slot="操作" slot-scope="{item,keys}">
-        <el-tooltip class="item" content="新增菜单或者权限" effect="dark" placement="top" v-if="item.menuType===0" v-permiss="'menuAdd'">
-          <i @click="addDialog(item.id)" class="el-icon el-icon-folder-add pointer com-link p-r-10"></i>
+        <el-tooltip class="item" content="新增菜单或者权限" effect="dark" placement="top" v-if="item.permissionType===1" v-permiss="'menuAddChild'">
+          <i @click="addDialog(item.menuId)" class="el-icon el-icon-folder-add pointer obit-link p-r-10"></i>
         </el-tooltip>
-        <el-tooltip class="item" content="编辑" effect="dark" placement="top" v-permiss="'menuUpdate'">
-          <i @click="editDialog(item)" class="el-icon el-icon-setting pointer com-link p-r-10"></i>
+        <el-tooltip class="item" content="编辑" effect="dark" placement="top" v-permiss="'menuEdit'">
+          <i @click="editDialog(item)" class="el-icon el-icon-setting pointer obit-link p-r-10"></i>
         </el-tooltip>
-        <el-tooltip class="item" content="删除" effect="dark" placement="top" v-permiss="'menuDelete'">
-          <i @click="deleteMenu(item,keys)" class="el-icon el-icon-delete pointer com-link"></i>
+        <el-tooltip class="item" content="删除" effect="dark" placement="top" v-permiss="'menuRemove'">
+          <i @click="deleteMenu(item,keys)" class="el-icon el-icon-delete pointer obit-link"></i>
         </el-tooltip>
       </div>
-    </com-table-tree>
-    <nodata v-else></nodata>
+    </obit-table-tree>
 
     <menuAdd :addType="addType" :detailsInfo="detailsInfo" :visible.sync="addVisable" @reload="initTree"></menuAdd>
   </div>
 </template>
  
  <script>
-import comTableTree from '@/components/com-table-tree/table-tree'
-import comApp from './../components/com-app/com-app'
+import obitTableTree from '@/common-modules/components/obit-table-tree'
 import menuAdd from './menuAdd'
 export default {
-  components: { comTableTree, menuAdd, comApp },
+  components: { obitTableTree, menuAdd },
   data() {
     return {
       loading: false,
@@ -72,51 +64,23 @@ export default {
       treeData: [],
       addVisable: false,
       detailsInfo: {},
-      addType: 'add',
-      widths: [
-        '300px',
-        '100px',
-        '300px',
-        '150px',
-        '340px',
-        '100px',
-        '60px',
-        '260px',
-        '150px'
-      ]
+      addType: 'add'
     }
   },
   filters: {
     pressType(value) {
-      return value === 0 ? '菜单' : '权限'
-    },
-    apiMethodName(value) {
-      let info = {
-        1: 'POST',
-        2: 'GET',
-        3: 'PUT',
-        4: 'DELETE'
-      }
-      return info[value]
+      return value === 1 ? '菜单' : '权限'
     }
   },
   methods: {
     initTree() {
-      this.$http.getMenuTree(this.params).then(res => {
+      this.$http.getSystemPermissionList().then(res => {
         this.treeData = res
       })
     },
     addDialog(id) {
-      if (!this.params.appId) {
-        this.$message({
-          type: 'error',
-          message: '请先选择应用'
-        })
-        return
-      }
       this.detailsInfo = {
-        appId: this.params.appId,
-        parentId: id ? id : 0
+        parentId: id
       }
       this.addVisable = true
       this.addType = 'add'
@@ -128,10 +92,10 @@ export default {
     },
     deleteMenu(row) {
       let data = {}
-      data.menuId = row.id
+      data.menuId = row.menuId
       this.$confirm('是否删除', '提示')
         .then(() => {
-          this.$http.removeSystemMenu(data).then(res => {
+          this.$http.removeMenu(data).then(res => {
             this.$message({
               type: 'success',
               message: '删除成功'

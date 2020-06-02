@@ -2,43 +2,56 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:39
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-05-26 13:22:22
+ * @LastEditTime: 2020-06-02 15:52:55
  * @Description: 菜单 根据路由生成，根据系统权限判断是否展示对应菜单
  -->
 <template>
-  <div v-if="!item.hidden && hasMenuPermission(item)">
-    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
-      <app-link :to="resolvePath(onlyOneChild)" v-if="onlyOneChild.meta">
-        <el-menu-item :class="{'submenu-title-noDropdown':!isNest}" :index="resolvePath(onlyOneChild)">
-          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
-        </el-menu-item>
-      </app-link>
+  <div class="menu-wrapper" v-if="!item.hidden">
+    <template v-if="hasOneShowingChild(item.children,item)">
+      <el-menu-item :class="{'submenu-title-noDropdown':!isNest,'currMenu':currMenu}" :index="item.menuCode" @click="toPath(item)">
+        <item :icon="item.iconname||(item&&item.iconname)" :title="item.menuName" />
+      </el-menu-item>
     </template>
 
-    <el-submenu :index="resolvePath(item)" popper-append-to-body ref="subMenu" v-else>
+    <el-submenu :index="'submenu'+item.menuCode" popper-append-to-body ref="subMenu" v-else>
       <template slot="title">
-        <item :icon="item.meta && item.meta.icon" :title="item.meta.title" v-if="item.meta" />
+        <item :icon="item && item.iconname" :title="isCollapse?'':item.menuName" v-if="item" />
       </template>
-      <sidebar-item :base-path="resolvePath(child)" :is-nest="true" :item="child" :key="child.path" class="nest-menu" v-for="child in item.children" />
+      <sidebar-item
+        :base-path="resolvePath(child.path)"
+        :is-nest="true"
+        :item="child"
+        :key="child.menuCode"
+        class="nest-menu"
+        v-for="child in item.children"
+      />
     </el-submenu>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import path from 'path'
 import { isExternal } from '@/common-modules/utils/validate'
 import Item from './Item'
-import AppLink from './Link'
-import FixiOSBug from './FixiOSBug'
-import { mapState } from 'vuex'
 
 export default {
   name: 'SidebarItem',
-  components: { Item, AppLink },
+  components: { Item },
   computed: {
-    ...mapState(['permission'])
+    ...mapGetters(['sidebar']),
+    sidebar() {
+      return this.$store.state.app.sidebar
+    },
+    isCollapse() {
+      return this.sidebar.opened === 2
+    }
   },
-  mixins: [FixiOSBug],
+  watch: {
+    $route(value) {
+      this.currMenu = value.path === this.item.path
+    }
+  },
   props: {
     // route object
     item: {
@@ -56,56 +69,45 @@ export default {
   },
   data() {
     // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
-    // TODO: refactor with render function
     this.onlyOneChild = null
-    return {}
+    return {
+      currMenu: false
+    }
   },
+  mounted() {},
   methods: {
+    toPath(item) {
+      item.name = item.menuName
+      this.$store.dispatch('tagsView/addVisitedView', item)
+      console.log('toPath -> this.$route.path', this.$route.path, item)
+      if (this.$route.path !== item.path) {
+        this.$router.push({
+          path: item.path
+        })
+      }
+    },
     hasOneShowingChild(children = [], parent) {
-      const showingChildren = children.filter(item => {
-        if (item.hidden) {
-          return false
-        } else {
-          // Temp set(will be used if only has one showing child)
-          this.onlyOneChild = item
-          return true
-        }
-      })
-      // When there is only one child router, the child router is displayed by default
-      if (showingChildren.length === 1) {
-        return true
-      }
-      // Show parent if there are no child router to display
-      if (showingChildren.length === 0) {
-        this.onlyOneChild = { ...parent, path: '', noShowingChildren: true }
-        return true
-      }
-      return false
+      return parent.children && parent.children.length > 0 ? false : true
     },
-    // 判断是否有此 菜单权限 通过后台设置的唯一值  menuCode 和router的name
-    hasMenuPermission(parent) {
-      if (this.permission.sysMenu.indexOf(parent.name) != -1) {
-        return true
-      }
-      if (parent.children && parent.children.length === 1) {
-        let child = parent.children[0]
-        if (this.permission.sysMenu.indexOf(child.name) != -1) {
-          return true
-        }
-      }
-      return false
-    },
-    resolvePath(item) {
-      let routePath = item.path
+    resolvePath(routePath) {
       if (isExternal(routePath)) {
         return routePath
       }
       if (isExternal(this.basePath)) {
         return this.basePath
       }
-      let rpath = path.resolve(this.basePath, routePath)
-      return rpath
+      return path.resolve(
+        this.basePath === null ? '' : this.basePath,
+        routePath === null ? '' : routePath
+      )
     }
   }
 }
 </script>
+<style lang="scss">
+.menu-wrapper {
+  .currMenu {
+    background-color: #002528 !important;
+  }
+}
+</style>

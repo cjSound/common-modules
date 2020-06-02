@@ -6,19 +6,19 @@
  * @Description: file content
  -->
 <template>
-  <div class="com-main" v-loading="loading">
+  <div class="obit-main" v-loading="loading">
     <title-wrap title="列表展示"></title-wrap>
     <el-row :gutter="20">
       <el-col :span="11">
         <contentForm :fromtitle="{title1:'字典类型',title2:'数据字典类型'}">
-          <div class="com-search">
+          <div class="obit-search">
             <el-input @change="queryDataList(true)" class="input-md" placeholder="字典类型" v-model="params.codeField"></el-input>
             <el-input @change="queryDataList(true)" class="input-md" placeholder="字典描述" v-model="params.codeDesc"></el-input>
             <span class="f-r">
               <el-button @click="addDialog" class="btn-md" icon="el-icon-plus" type="primary" v-permiss="'addDict'">新增</el-button>
             </span>
           </div>
-          <el-table :data="dataList" @current-change="dictsChange" class="com-table" highlight-current-row style="width: 100%">
+          <el-table :data="dataList" @current-change="dictsChange" class="obit-table" highlight-current-row style="width: 100%">
             <el-table-column :key="column.prop" :label="column.label" :min-width="column.minWidth" v-for="column in tableColumns">
               <template slot-scope="scope">
                 <el-tooltip :content="scope.row[column.prop]" class="item" effect="dark" placement="top">
@@ -29,10 +29,10 @@
             <el-table-column label="操作" width="60">
               <template slot-scope="scope">
                 <el-tooltip class="item" content="操作" effect="dark" placement="top" v-permiss="'editDict'">
-                  <i @click="editDialog(scope.row)" class="el-icon el-icon-setting com-link p-r-10"></i>
+                  <i @click="editDialog(scope.row)" class="el-icon el-icon-setting obit-link p-r-10"></i>
                 </el-tooltip>
                 <el-tooltip class="item" content="删除" effect="dark" placement="top" v-permiss="'removeDict'">
-                  <i @click="removeInfo(scope.row)" class="el-icon el-icon-delete pointer com-link"></i>
+                  <i @click="removeInfo(scope.row)" class="el-icon el-icon-delete pointer obit-link"></i>
                 </el-tooltip>
               </template>
             </el-table-column>
@@ -41,12 +41,12 @@
       </el-col>
       <el-col :span="13">
         <contentForm :fromtitle="{title1:'字典值',title2:'数据字典类型值'}">
-          <div class="com-search">
+          <div class="obit-search">
             <span class="f-r">
               <el-button @click="addDialogValue" class="btn-md" icon="el-icon-plus" type="primary" v-permiss="'addDictV'">新增</el-button>
             </span>
           </div>
-          <el-table :data="dictValueList" class="com-table" style="width: 100%">
+          <el-table :data="dictValueList" class="obit-table" style="width: 100%">
             <el-table-column :key="column.prop" :label="column.label" :min-width="column.minWidth" v-for="column in dictColumns">
               <template slot-scope="scope">
                 <el-tooltip :content="scope.row[column.prop]" class="item" effect="dark" placement="top">
@@ -57,10 +57,10 @@
             <el-table-column label="操作" width="60">
               <template slot-scope="scope">
                 <el-tooltip class="item" content="操作" effect="dark" placement="top" v-permiss="'editDictV'">
-                  <i @click="editDialogValue(scope.row)" class="el-icon el-icon-setting com-link p-r-10"></i>
+                  <i @click="editDialogValue(scope.row)" class="el-icon el-icon-setting obit-link p-r-10"></i>
                 </el-tooltip>
                 <el-tooltip class="item" content="删除" effect="dark" placement="top" v-permiss="'removeDictV'">
-                  <i @click="removeInfoValue(scope.row)" class="el-icon el-icon-delete pointer com-link"></i>
+                  <i @click="removeInfoValue(scope.row)" class="el-icon el-icon-delete pointer obit-link"></i>
                 </el-tooltip>
               </template>
             </el-table-column>
@@ -68,7 +68,7 @@
         </contentForm>
       </el-col>
     </el-row>
-    <div class="com-pager">
+    <div class="obit-pager">
       <el-pagination
         :current-page="searchParams.pageNum"
         :page-size="searchParams.pageSize"

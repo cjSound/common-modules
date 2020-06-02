@@ -8,7 +8,7 @@
 <template>
   <div v-if="visible">
     <el-dialog :close-on-click-modal="false" :title="showTitle" :visible.sync="addVisible" @closed="closeDialog" width="40%">
-      <el-form :inline="true" :model="formData" :rules="rules" class="com-form-100" ref="formData">
+      <el-form :inline="true" :model="formData" :rules="rules" class="obit-form-100" ref="formData">
         <el-form-item label="字典名称" prop="codeField">
           <el-input :disabled="addType==='edit'" :maxlength="20" show-word-limit v-model="formData.codeField"></el-input>
         </el-form-item>
@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import { util } from 'common-util-js'
+import util from '@/common-modules/utils/utils'
 export default {
   props: {
     visible: {

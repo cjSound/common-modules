@@ -2,14 +2,15 @@
  * @Author: 曹捷
  * @Date: 2020-04-21 09:40:10
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-05-25 10:30:31
+ * @LastEditTime: 2020-06-02 14:39:56
  * @Description: file content
  */
+import config from '@/config/config'
 
 
 const state = {
 
-  title: "三一重起激励系统",
+  title: config.title,
 
   /**
    * @type {boolean} true | false

@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 17:02:31
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 10:43:53
+ * @LastEditTime: 2020-06-02 13:30:27
  * @Description: 系统工具类
  */
 const util = {}
@@ -45,6 +45,50 @@ util.util = {
         return arr;
     }
 }
+/**
+ * @description cookie模块
+ */
+util.cookie = {
+    set: function (c_name, value, expiredays) {
+        var exdate = new Date()
+        if (!expiredays) {
+            document.cookie = c_name + "=" + escape(JSON.stringify(value)) + ";path=/;";
+        } else {
+            exdate.setDate(exdate.getDate() + expiredays * 1);
+            document.cookie = c_name + "=" + escape(JSON.stringify(value)) +
+                ";expires=" + exdate.toGMTString()
+        }
+    },
+    get: function (c_name) {
+        var res = "";
+        if (document.cookie.length > 0) {
+            var c_start = document.cookie.indexOf(c_name + "=");
+            if (c_start != -1) {
+                c_start = c_start + c_name.length + 1
+                var c_end = document.cookie.indexOf(";", c_start)
+                if (c_end == -1) c_end = document.cookie.length
+                res = unescape(document.cookie.substring(c_start, c_end));
+            }
+        }
+        return res;
+    },
+    del: function (c_name) {
+        var exp = new Date();
+        exp.setDate(exp.getDate() - 1);
+        var cval = this.get(c_name);
+        if (cval != null) {
+            document.cookie = c_name + "=" + escape(cval) + ";expires=" + exp.toGMTString() + ";path=/;";
+        }
+    },
+    clear: function () {
+        var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+        if (keys) {
+            for (var i = keys.length; i--;) {
+                this.del(keys[i]);
+            }
+        }
+    }
+};
 util.localstorage = {
     getStarage: function () {
         return localStorage;

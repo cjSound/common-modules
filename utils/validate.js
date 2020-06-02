@@ -2,13 +2,32 @@
  * @Author: 曹捷
  * @Date: 2020-06-02 12:42:34
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 12:42:57
+ * @LastEditTime: 2020-06-02 14:56:55
  * @Description: file content
  */
 /**
  * Created by PanJiaChen on 16/11/18.
  */
 
+/**
+* 判断用户是否有路由权限
+*/
+export function routerPermission(listMenu, path, noMenu) {
+  if (noMenu) {
+    return true
+  }
+  for (const i in listMenu) {
+    let iterator = listMenu[i]
+    if (iterator.path === path) {
+      return true
+    } else if (iterator.children && iterator.children.length > 0) {
+      if (routerPermission(iterator.children, path)) {
+        return true
+      }
+    }
+  }
+  return false
+}
 /**
  * @param {string} path
  * @returns {Boolean}

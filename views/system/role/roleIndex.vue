@@ -2,42 +2,42 @@
  * @Author: 曹捷
  * @Date: 2019-08-19 10:44:04
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-05-07 15:47:19
- * @Description: 角色管理
+ * @LastEditTime: 2020-03-05 10:46:15
+ * @Description: file content
  -->
 <template>
-  <div class="com-main submit-main" v-loading="loading">
+  <div class="obit-main submit-main" v-loading="loading">
     <title-wrap title="角色管理"></title-wrap>
-    <comApp @change="initRole" class="m-l-5" v-model="treeParams.appId"></comApp>
-    <el-container class="height-100-head" style="height: calc(100% - 96px);">
+    <el-container class="height-100-head">
       <el-container class="role-layout">
         <el-aside width="300px">
-          <!-- <comApp @change="initTree" v-model="treeParams.appId"></comApp> -->
-
           <div class="title p-l-10 p-r-10">
             <span class="online">系统角色</span>
-            <el-button @click="addDialog" class="btn-md f-r" icon="el-icon-plus" type="primary" v-permiss="'roleAdd'">新增</el-button>
+            <el-button @click="addDialog" class="btn-md f-r" icon="el-icon-plus" type="primary" v-permiss="'addRole'">新增</el-button>
           </div>
+          <!-- <el-input class="input-obit p-l-10 p-r-10" placeholder="搜索" v-model="model.approvalStatus">
+            <i @click="search(true)" class="el-input__icon el-icon-search" slot="suffix" style="line-height:32px;"></i>
+          </el-input>-->
           <ul class="role-list" v-if="list.length>0">
             <li
-              :class="{'ischeck':checkRole ===item.id}"
+              :class="{'ischeck':checkRole ===item.roleId}"
               :key="index"
               @click="choiceRole(item)"
               class="role-device-item pointer"
               v-for="(item,index) in list"
             >
               {{item.roleName}}
-              <el-tooltip class="hover-operator com-link f-r" content="删除" effect="dark" placement="top" v-permiss="'roleDelete'">
+              <el-tooltip class="hover-operator obit-link f-r" content="删除" effect="dark" placement="top" v-permiss="'removeRole'">
                 <i @click.stop="removeRole(item)" class="el-icon el-icon-delete pointer"></i>
               </el-tooltip>
-              <el-tooltip class="hover-operator com-link f-r" content="编辑" effect="dark" placement="top" v-permiss="'roleChange'">
+              <el-tooltip class="hover-operator obit-link f-r" content="编辑" effect="dark" placement="top" v-permiss="'editRole'">
                 <i @click.stop="editDialog(item)" class="el-icon el-icon-setting pointer"></i>
               </el-tooltip>
             </li>
           </ul>
         </el-aside>
         <el-main class="scrollBar">
-          <contentForm :fromtitle="{title1:'系统资源',title2:'以下为系统资源整合体'}">
+          <contentForm :fromtitle="{title1:'角色权限',title2:'以下为用户数据权限'}">
             <el-tree
               :data="treeData"
               :default-checked-keys="defaultChecks"
@@ -45,15 +45,16 @@
               :highlight-current="true"
               :props="defaultProps"
               class="role-tree"
-              node-key="id"
+              node-key="menuId"
               ref="tree"
               show-checkbox
-              v-if="treeData && treeData.length>0"
+              v-if="checkRole"
             ></el-tree>
             <nodata v-else></nodata>
             <div class="btn_wrap">
-              <el-button @click="submitRole" class="submit btn-md" style="padding: 10px 28px;" type="primary" v-permiss="'roleResource'">提交</el-button>
+              <el-button @click="submitRole" class="submit btn-md" style="padding: 10px 28px;" type="primary">提交</el-button>
             </div>
+            <!-- <submit-bar @submitForm="submitRole" v-permiss="'editPermiss'" v-show="checkRole" /> -->
           </contentForm>
         </el-main>
       </el-container>
@@ -63,11 +64,10 @@
 </template>
 
 <script>
-import comApp from './../components/com-app/com-app'
 import roleAdd from './roleAdd'
 import util from '@/common-modules/utils/utils'
 export default {
-  components: { roleAdd, comApp },
+  components: { roleAdd },
   data() {
     return {
       loading: false,
@@ -77,46 +77,112 @@ export default {
       treeData: [],
       defaultProps: {
         children: 'children',
-        label: 'resourceName'
+        label: 'menuName'
       },
       defaultChecks: [], // 树 默认选择
       // 新增编辑相关
       addVisable: false,
       addType: 'add',
-      detailsInfo: {},
-      // 菜单树 筛选 APP
-      treeParams: {
-        appId: ''
-      }
+      detailsInfo: {}
     }
   },
   methods: {
     initRole() {
-      this.$http.getAllRole(this.treeParams).then(res => {
+      this.$http.getSystemRoleList().then(res => {
         this.list = res
-        this.$refs.tree.setCheckedKeys([])
-        this.checkRole = ''
       })
     },
     initTree() {
-      this.$http.getAllResource().then(res => {
+      this.$http.getSystemPermissionList().then(res => {
         this.treeData = res
       })
     },
     // 选择角色，分配权限
     choiceRole(item) {
-      this.checkRole = this.checkRole === item.id ? '' : item.id
-      if (this.checkRole) {
-        let list = []
-        item.roleResourceList.forEach(element => {
-          list.push(element.resourceId)
-        })
+      this.checkRole = this.checkRole === item.roleId ? '' : item.roleId
+      this.checkRole &&
+        this.$http
+          .getPermissionByRoleId({ roleId: this.checkRole })
+          .then(res => {
+            let list = []
+            res.forEach(element => {
+              list.push(element.menuId)
+            })
+            this.removeParentId(list, this.treeData)
+            this.defaultChecks = list
+            this.$refs.tree.setCheckedKeys(this.defaultChecks)
+          })
+    },
 
-        this.defaultChecks = list
-        this.$refs.tree.setCheckedKeys(this.defaultChecks)
-      } else {
-        this.$refs.tree.setCheckedKeys([])
+    setParentId(keys, data) {
+      //由于element  tree选择的子节点是没有包含父节点的，在传递参数之前必须带上父节点，这里最多三级
+      function getParent(list, keys) {
+        let num = 0
+        for (const key in list) {
+          if (list.hasOwnProperty(key)) {
+            const element = list[key]
+            if (element.children && element.children.length > 0) {
+              getParent(element.children, keys)
+            }
+            if (keys.indexOf(element.menuId) != -1) {
+              num++
+            }
+          }
+        }
+        if (num > 0) {
+          if (keys.indexOf(list[0].parentId) == -1) {
+            keys.push(list[0].parentId)
+          }
+        }
       }
+      getParent(data, keys)
+      return keys
+    },
+    /**
+     * 在设置的时候  不必要的父节点必须去掉
+     * data 数据，    总数组
+     */
+    removeParentId(arr, data, its) {
+      for (var i = 0; i < arr.length; i++) {
+        arr[i] = parseInt(arr[i])
+      }
+      var parent = []
+      queryRemove(arr, data, parent)
+      removeParent(arr, parent)
+      function queryRemove(arr, data, parent) {
+        var res = true
+        for (var d in data) {
+          if (res) {
+            for (var a = 0; a < arr.length; a++) {
+              if (data[d] == arr[a]) {
+                break
+              } else if (a == arr.length - 1) {
+                res = false
+                parent.push(data[d].parentId)
+                break
+              }
+            }
+          }
+          if (data[d].children != null && data[d].children.length > 0) {
+            queryRemove(arr, data[d].children, parent)
+          }
+        }
+      }
+      function removeParent(arr, parent) {
+        for (var i in parent) {
+          arr = util.util.removeByValue(arr, parent[i])
+        }
+      }
+    },
+    getArrString(arr) {
+      var right = ''
+      for (var i = 0; i < arr.length; i++) {
+        right += arr[i]
+        if (i != arr.length - 1) {
+          right += ','
+        }
+      }
+      return right
     },
     // 角色新增和编辑相关  --------------start --------------------------
     addDialog() {
@@ -131,7 +197,7 @@ export default {
     removeRole(item) {
       this.$confirm('是否删除', '提示')
         .then(() => {
-          this.$http.removeRole({ roleId: item.id }).then(res => {
+          this.$http.removeSystemRoleInfo({ roleId: item.roleId }).then(res => {
             this.$message.success('删除成功')
             this.initRole()
           })
@@ -140,34 +206,27 @@ export default {
     },
     // 角色新增和编辑相关   -------------------end-------------------
     submitRole() {
-      if (!this.checkRole) {
-        this.$message.error('请选择系统角色')
-        return
+      if (this.checkRole) {
+        let keys = this.$refs.tree.getCheckedKeys()
+        keys = this.setParentId(keys, this.treeData)
+        keys = util.util.removeByValue(keys, 0)
+        console.log('TCL: submitRole -> keys', keys)
+        this.loading = true
+        this.$http
+          .addPerByRoleId({
+            roleId: this.checkRole,
+            permission: keys.join(',')
+          })
+          .then(res => {
+            this.$message.success('权限保存成功')
+            this.loading = false
+          })
       }
-      let keys = this.$refs.tree.getCheckedKeys()
-      // keys = this.setParentId(keys, this.treeData)
-      // keys = util.util.removeByValue(keys, 0)
-      this.loading = true
-
-      let param = {
-        roleId: this.checkRole,
-        resourceIds: keys
-      }
-      this.$http
-        .saveRoleResource(param)
-        .then(res => {
-          this.$message.success('角色保存成功')
-          this.initRole()
-          this.loading = false
-        })
-        .catch(error => {
-          this.loading = false
-        })
     }
   },
   mounted() {
-    this.initRole()
     this.initTree()
+    this.initRole()
   }
 }
 </script>

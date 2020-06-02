@@ -2,15 +2,12 @@
  * @Author: 曹捷
  * @Date: 2019-08-01 14:25:13
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 11:35:44
- * @Description: file content
+ * @LastEditTime: 2020-06-02 15:18:32
+ * @Description: ajax 请求
  */
 import axios from 'axios'
-import util from '@/common-modules/utils/utils'
-
+import { userRole } from '@/common-modules/utils/auth'
 import { Message } from "element-ui"
-// import router from '@/router'
-// import api from './api'
 import ajax from './../index'
 // 创建axios实例
 const service = axios.create({
@@ -38,7 +35,7 @@ service.interceptors.request.use(config => {
             ...config.params
         }
     }
-    let userInfo = util.cookie.get('user')
+    let userInfo = userRole.get()
     if (userInfo) {
         let user = JSON.parse(userInfo)
         if (user && user.accessToken) {
@@ -66,7 +63,7 @@ service.interceptors.response.use(
                 // token 已经过期，重新拉取新的token再重新发送之前请求
                 let config = response.config
                 var backoff = new Promise(function (resolve) {
-                    let userInfo = util.cookie.get('user')
+                    let userInfo = userRole.get()
                     let user = JSON.parse(userInfo)
                     let params = {
                         userId: user.userId,
@@ -74,19 +71,17 @@ service.interceptors.response.use(
                     }
                     ajax.methods.reflesh(params).then(res => {
                         user.accessToken = res.accessToken
-                        util.cookie.set('user', user)
+                        // util.cookie.set('user', user)
+                        userRole.set(user)
                         resolve()
                     })
                 })
                 return backoff.then(function () {
                     return service(config)
                 })
-            } else if (res.code === '0005') {
+            } else if (res.code === '0005' || res.code === 'LOGIN.001') {
                 // 登陆超时 或者是token异常 ，跳登陆页面
-                Message({
-                    type: "error",
-                    message: res.errorMsg
-                })
+                Message.error(res.errorMsg)
                 ajax.router.push({
                     path: '/login'
                 })

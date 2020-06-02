@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:38
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 13:00:01
+ * @LastEditTime: 2020-06-02 16:43:14
  * @Description: 路由基础文件
  */
 import Vue from 'vue'
@@ -13,9 +13,9 @@ import system from './system'
 export const constantRoutes = [
   {
     path: '/404',
-    component: () => import('@/views/404'),
+    component: () => import('@/common-modules/views/404'),
     meta: {
-      nopermiss: true
+      noLogin: true
     },
     hidden: true
   },
@@ -23,9 +23,9 @@ export const constantRoutes = [
     path: '/401',
     hidden: true,
     meta: {
-      nopermiss: true
+      noLogin: true
     },
-    component: () => import('@/views/401'),
+    component: () => import('@/common-modules/views/401'),
   },
   {
     path: '*',

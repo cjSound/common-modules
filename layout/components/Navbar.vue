@@ -1,3 +1,4 @@
+
 <template>
   <div class="navbar">
     <hamburger :is-active="sidebar.opened" @toggleClick="toggleSideBar" class="hamburger-container" />
@@ -7,7 +8,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" />
+          <img :src="'?imageView2/1/w/80/h/80'" class="user-avatar" />
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu class="user-dropdown" slot="dropdown">
@@ -24,9 +25,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
+import Breadcrumb from '@/common-modules/components/Breadcrumb'
+import Hamburger from '@/common-modules/components/Hamburger'
 
 export default {
   components: {
@@ -34,7 +34,9 @@ export default {
     Hamburger
   },
   computed: {
-    ...mapGetters(['sidebar', 'avatar'])
+    sidebar() {
+      return this.$store.state.app.sidebar
+    }
   },
   methods: {
     toggleSideBar() {

@@ -2,8 +2,8 @@
  * @Author: 曹捷
  * @Date: 2020-06-02 09:11:01
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 13:07:54
- * @Description: file content
+ * @LastEditTime: 2020-06-02 15:35:35
+ * @Description: 左侧菜单
 --> 
 <template>
   <div :class="{'has-logo':showLogo}">
@@ -19,14 +19,13 @@
         :unique-opened="false"
         mode="vertical"
       >
-        <sidebar-item :base-path="route.path" :item="route" :key="route.path" v-for="route in routes" />
+        <sidebar-item :base-path="route.path" :item="route" :key="route.menuCode" v-for="route in routes" />
       </el-menu>
     </el-scrollbar>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/common-modules/styles/variables.scss'
@@ -35,7 +34,7 @@ export default {
   components: { SidebarItem, Logo },
   computed: {
     routes() {
-      return this.$router.options.routes
+      return this.$store.state.permission.sysMenu
     },
     activeMenu() {
       const route = this.$route

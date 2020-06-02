@@ -6,10 +6,10 @@
   @include scrollBar;
   background: $mainBackground;
   position: relative;
-  .com-main{
+  .obit-main{
     background: #ffffff;
     // padding: 10px;
-    .com-main-add{
+    .obit-main-add{
       position: absolute;
       top: 0;
       left: 0;
@@ -23,11 +23,11 @@
     }
   }
   // 内容填充 100% 
-  .com-main-fill{
+  .obit-main-fill{
     height: calc(100vh - 70px);
     display: flex;
     flex-direction: column;
-    .com-content{
+    .obit-content{
       flex-grow:1;
       overflow: auto;
       @include scrollBar;
@@ -52,17 +52,17 @@
   .height-100{
     height: 100%;
   }
-  .com-search{
+  .obit-search{
     padding:  20px;
 
   }
-  .com-content{
+  .obit-content{
     padding: 0 10px;
     .el-table__body-wrapper{
       @include scrollBar;
     }
   }
-  .com-pager{
+  .obit-pager{
     text-align: right;
     padding-top: 5px;
   }
@@ -100,7 +100,7 @@
   border-radius: 4px;
 }
 // 搜索 多条件搜索 form 表单样式
-.com-serach-form{
+.obit-serach-form{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

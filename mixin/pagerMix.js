@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-07-19 09:19:35
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 11:50:47
+ * @LastEditTime: 2020-06-02 16:55:04
  * @Description: table分页  抽取相关mix
  */
 import util from '@/common-modules/utils/utils'
@@ -51,12 +51,13 @@ export default {
                 }
                 const params = Object.assign(this.params, (this.getQueryParam && this.getQueryParam()) || this.queryParams)
                 let param = util.util.cloneObj(this.searchParams)
-                param = Object.assign(params, param)
+                // param = Object.assign(params, param)
+                param.param = params
                 param.total = this.total
                 this.loading = true
                 const data = await this.$http[this.tableRequest](param)
                 this.loading = false
-                if (data.code === '000') {
+                if (data.code === '0000') {
                     // 自定义处理后台数据
                     if (this.beforeSuccess) {
                         this.beforeSuccess(data)

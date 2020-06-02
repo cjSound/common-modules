@@ -21,11 +21,18 @@ export default {
         return api.get(`${URL}/getDictParentListById`, data)
     },
     getCommonTest(data) {
-        console.log('TCL: getCommonTest -> 原始版本', data)
         return api.get(`${URL}manage/codeValue/findByCodeFiled`, data)
     },
     // 获取所有机构接口
     getAllOrgTree(data = {}) {
         return api.post(`${URL}/getAllOrgTree`, data)
-    }
+    },
+    //获取用户菜单权限
+    getSystemMenuList(data = {}) {
+        return api.get(`${URL}manage/menu/getList`, data)
+    },
+    //获取用户按钮权限
+    getSystemButtonList(data = {}) {
+        return api.get(`${URL}manage/menu/getButtonList`, data)
+    },
 }
