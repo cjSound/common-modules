@@ -4,6 +4,7 @@
     <hamburger :is-active="sidebar.opened" @toggleClick="toggleSideBar" class="hamburger-container" />
     <!-- breadcrumbTop true 配置 面包屑在header里面 -->
     <breadcrumb class="breadcrumb-container" v-if="config.breadcrumbTop" />
+    <div class="navbarTitle" v-if="config.navbarTitle">{{config.navbarTitle}}</div>
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -59,11 +60,17 @@ export default {
   height: 50px;
   overflow: hidden;
   position: relative;
-  background: #fff;
+  background: $navbag;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-
+  color: $titleColor;
+  .navbarTitle {
+    display: inline-block;
+    height: 100%;
+    line-height: 50px;
+    font-size: 19px;
+  }
   .hamburger-container {
-    line-height: 46px;
+    line-height: 50px;
     height: 100%;
     float: left;
     cursor: pointer;

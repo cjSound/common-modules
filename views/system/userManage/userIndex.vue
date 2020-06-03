@@ -2,7 +2,7 @@
  * @Author: 刘硕
  * @Date: 2019-08-19 09:34:05
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-04-17 10:08:58
+ * @LastEditTime: 2020-06-03 14:20:23
  * @Description: file content
  -->
 <template>
@@ -140,7 +140,6 @@ export default {
     updatePass(row) {
       this.updateVisable = true
       this.userId = row.userId
-      console.log('TCL: updatePass -> userId', this.userId)
     },
     reloadUp() {
       this.updateVisable = false

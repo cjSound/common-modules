@@ -6,7 +6,7 @@
  * @Description: file content
  -->
 <template>
-  <div class="obit-main submit-main" v-loading="loading">
+  <div class="obit-main obit-main-fill" v-loading="loading">
     <title-wrap title="角色管理"></title-wrap>
     <el-container class="height-100-head">
       <el-container class="role-layout">
