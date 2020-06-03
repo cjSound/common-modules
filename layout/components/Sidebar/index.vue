@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-06-02 09:11:01
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 15:35:35
+ * @LastEditTime: 2020-06-03 10:40:59
  * @Description: 左侧菜单
 --> 
 <template>
@@ -16,7 +16,7 @@
         :collapse-transition="false"
         :default-active="activeMenu"
         :text-color="variables.menuText"
-        :unique-opened="false"
+        :unique-opened="true"
         mode="vertical"
       >
         <sidebar-item :base-path="route.path" :item="route" :key="route.menuCode" v-for="route in routes" />
@@ -29,6 +29,7 @@
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/common-modules/styles/variables.scss'
+import styleVariables from '@/styles/variables.scss'
 
 export default {
   components: { SidebarItem, Logo },
@@ -49,7 +50,7 @@ export default {
       return this.$store.state.settings.sidebarLogo
     },
     variables() {
-      return variables
+      return styleVariables ? styleVariables : variables
     },
     isCollapse() {
       return !this.$store.state.app.sidebar.opened
@@ -57,3 +58,4 @@ export default {
   }
 }
 </script>
+

@@ -1,11 +1,12 @@
 
 // app-main  路由子内容主题样式
 .obt-main{
-  padding: 10px;
+  padding: 5px;
   overflow: auto;
   @include scrollBar;
   background: $mainBackground;
   position: relative;
+  // height: calc(100vh - 50px);
   .obit-main{
     background: #ffffff;
     // padding: 10px;
@@ -24,7 +25,7 @@
   }
   // 内容填充 100% 
   .obit-main-fill{
-    height: calc(100vh - 70px);
+    height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
     .obit-content{
@@ -66,6 +67,10 @@
     text-align: right;
     padding-top: 5px;
   }
+}
+// 固定header
+.fixed-header-main{
+  margin-top: 50px;
 }
 .input-md{
     width: 220px;

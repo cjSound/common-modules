@@ -6,7 +6,7 @@
  * @Description: 机构管理
  -->
 <template>
-  <div class="obit-main" v-loading="loading">
+  <div class="obit-main obit-main-fill" v-loading="loading">
     <title-wrap title="机构管理"></title-wrap>
     <div class="obit-search t-r">
       <span class="p-r-10">

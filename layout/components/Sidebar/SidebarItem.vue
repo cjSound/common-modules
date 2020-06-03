@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:39
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 15:52:55
+ * @LastEditTime: 2020-06-03 10:33:38
  * @Description: 菜单 根据路由生成，根据系统权限判断是否展示对应菜单
  -->
 <template>
@@ -105,9 +105,11 @@ export default {
 }
 </script>
 <style lang="scss">
-.menu-wrapper {
-  .currMenu {
-    background-color: #002528 !important;
+#app .sidebar-container .el-submenu {
+  .menu-wrapper {
+    .currMenu {
+      background-color: $subMenuSelect !important;
+    }
   }
 }
 </style>

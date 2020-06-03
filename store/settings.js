@@ -2,8 +2,8 @@
  * @Author: 曹捷
  * @Date: 2020-04-21 09:40:10
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 09:47:00
- * @Description: file content
+ * @LastEditTime: 2020-06-03 11:01:43
+ * @Description: 基础配置参数
  */
 import config from '@/config/config'
 
@@ -16,7 +16,7 @@ const state = {
    * @type {boolean} true | false
    * @description Whether fix the header
    */
-  fixedHeader: false,
+  fixedHeader: config.fixedHeader,
 
   /**
    * @type {boolean} true | false

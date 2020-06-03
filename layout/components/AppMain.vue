@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-30 08:36:29
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-05-13 19:17:03
+ * @LastEditTime: 2020-06-03 11:13:36
  * @Description: file content
  -->
 <template>
@@ -27,7 +27,7 @@ export default {
 <style scoped>
 .app-main {
   /*50 = navbar  */
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 60px);
   width: 100%;
   position: relative;
   overflow: hidden;

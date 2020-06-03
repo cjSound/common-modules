@@ -7,7 +7,7 @@
  -->
 
  <template>
-  <div class="obit-main" v-loading="loading">
+  <div class="obit-main obit-main-fill" v-loading="loading">
     <title-wrap title="菜单管理"></title-wrap>
     <div class="obit-search t-r">
       <span class="p-r-10">

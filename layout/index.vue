@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:39
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 13:09:29
+ * @LastEditTime: 2020-06-03 11:04:52
  * @Description:  布局layout
  -->
 <template>
@@ -13,7 +13,7 @@
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
       </div>
-      <div class="obt-main">
+      <div :class="{'fixed-header-main':fixedHeader}" class="obt-main">
         <app-main />
       </div>
     </div>

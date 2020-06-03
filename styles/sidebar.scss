@@ -74,6 +74,11 @@
     .is-active>.el-submenu__title {
       color: $subMenuActiveText !important;
     }
+    .is-opened{
+      .el-submenu__title{
+        background: $menuSelect;
+      }
+    }
 
     & .nest-menu .el-submenu>.el-submenu__title,
     & .el-submenu .el-menu-item {

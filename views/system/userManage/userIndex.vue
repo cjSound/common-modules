@@ -6,7 +6,7 @@
  * @Description: file content
  -->
 <template>
-  <div class="obit-main" v-loading="loading">
+  <div class="obit-main obit-main-fill" v-loading="loading">
     <title-wrap title="用户管理"></title-wrap>
     <div class="obit-search">
       <el-input @change="queryDataList(true)" class="input-md" placeholder="用户名、用户编码" v-model="params.name"></el-input>

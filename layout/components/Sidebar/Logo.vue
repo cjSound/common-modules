@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-06-02 09:11:01
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 09:58:23
+ * @LastEditTime: 2020-06-03 10:59:37
  * @Description: file content
 --> 
 <template>
@@ -52,7 +52,7 @@ export default {
   width: 100%;
   height: 50px;
   line-height: 50px;
-  background: #2b2f3a;
+  background: $logoBag;
   text-align: center;
   overflow: hidden;
 

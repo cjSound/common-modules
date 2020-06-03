@@ -6,7 +6,7 @@
  * @Description: file content
  -->
 <template>
-  <div class="obit-main" v-loading="loading">
+  <div class="obit-main obit-main-fill" v-loading="loading">
     <title-wrap title="列表展示"></title-wrap>
     <el-row :gutter="20">
       <el-col :span="11">
