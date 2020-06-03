@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-06-02 09:11:01
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 15:27:59
+ * @LastEditTime: 2020-06-03 09:58:23
  * @Description: file content
 --> 
 <template>
@@ -10,11 +10,11 @@
     <transition name="sidebarLogoFade">
       <router-link class="sidebar-logo-link" key="collapse" to="/" v-if="collapse">
         <img class="sidebar-logo" src="@/assets/images/logoTop.png" />
-        <h1 class="sidebar-title">{{ title }}</h1>
+        <!-- <h1 class="sidebar-title">{{ title }}</h1> -->
       </router-link>
       <router-link class="sidebar-logo-link" key="expand" to="/" v-else>
-        <img class="sidebar-logo" src="@/assets/images/logoTop.png" />
-        <h1 class="sidebar-title">{{ title }}</h1>
+        <img class="sidebar-logo" src="@/assets/images/logoMenu.png" />
+        <!-- <h1 class="sidebar-title">{{ title }}</h1> -->
       </router-link>
     </transition>
   </div>
@@ -59,12 +59,14 @@ export default {
   & .sidebar-logo-link {
     height: 100%;
     width: 100%;
+    text-align: left;
 
     & .sidebar-logo {
-      width: 32px;
-      height: 32px;
+      width: 75%;
+      /* height: 32px; */
       vertical-align: middle;
-      margin-right: 12px;
+      // margin-right: 12px;
+      margin-left: 20px;
     }
 
     & .sidebar-title {
@@ -80,8 +82,15 @@ export default {
   }
 
   &.collapse {
+    & .sidebar-logo-link {
+      text-align: center;
+    }
     .sidebar-logo {
       margin-right: 0px;
+      width: 32px;
+      height: 32px;
+      vertical-align: middle;
+      margin-left: 0;
     }
   }
 }

@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-21 09:40:10
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 14:39:56
+ * @LastEditTime: 2020-06-03 09:47:00
  * @Description: file content
  */
 import config from '@/config/config'
@@ -22,7 +22,7 @@ const state = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: false
+  sidebarLogo: config.showLogin
 }
 
 const mutations = {
