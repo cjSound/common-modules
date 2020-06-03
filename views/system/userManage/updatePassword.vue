@@ -25,11 +25,9 @@
 </template>
 
 <script>
-import pagerMix from '@/common-modules/mixin/pagerMix'
 import util from '@/common-modules/utils/utils'
 
 export default {
-  mixins: [pagerMix],
   props: {
     updateVisable: {
       type: Boolean

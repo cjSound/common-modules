@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-19 14:18:42
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-02-26 21:58:36
+ * @LastEditTime: 2020-06-03 17:45:28
  * @Description: file content
  -->
 
@@ -51,7 +51,7 @@ export default {
 .fromTitle {
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid #e8e8e8;
+  border: 1px solid $--border-color-extra-light;
   padding: 25px;
   position: relative;
   font-size: 14px;
@@ -60,8 +60,8 @@ export default {
   }
   .title_box {
     height: 25px;
-    background-color: #fff;
     position: absolute;
+    background: $bodybg;
     top: -12px;
     left: 10px;
     span:nth-child(1) {

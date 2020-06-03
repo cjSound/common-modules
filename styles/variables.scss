@@ -9,7 +9,9 @@ $yellow:#FEC171;
 $panGreen: #30B08F;
 
 $active :#ff6a00;
-$mainBackground :#f1f2f7;
+$mainBackground :#f1f2f7;// 最下层body背景颜色
+$bodybg :#fff;// 实际层背景颜色
+
 $border :#e8e8e8;
 // ----------------------------------------------------        sidebar
 $menuText:#bfcbd9;
@@ -32,6 +34,22 @@ $navbag:#fff;
 // ------------------------------------------------ 字体颜色
 //表格内部字体颜色
 $tableColor:#606266;
+$titleColor:#333;
+
+// --------------------------------------------------
+$--color-primary:#409EFF;
+$--background-color-base:#F5F7FA;
+$--color-text-primary:#303133;
+$--color-text-regular:#606266;
+$--color-white:#FFFFFF;
+$--color-black:#000000;
+$--border-color-extra-light:#F2F6FC;
+$--color-info:#909399;
+$--color-text-secondary:#909399;
+$--border-color-base:#DCDFE6;
+$--border-color-lighter:#EBEEF5;
+// ------------------------------------------------
+
 
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass

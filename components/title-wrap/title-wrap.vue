@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-19 10:52:38
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-05-27 17:45:58
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-06-03 15:47:05
  * @Description: file content
  -->
 <template>
@@ -76,7 +76,7 @@ export default {
     .title_left_top {
       margin: 0;
       font-size: 16px;
-      color: #333;
+      color: $titleColor;
       span:nth-child(1) {
         display: inline-block;
         width: 6px;

@@ -6,6 +6,7 @@
     <breadcrumb class="breadcrumb-container" v-if="config.breadcrumbTop" />
     <div class="navbarTitle" v-if="config.navbarTitle">{{config.navbarTitle}}</div>
     <div class="right-menu">
+      <span class="userName">欢迎，{{userInfo.userName}}</span>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img class="user-avatar" src="@/assets/images/logoTop.png" />
@@ -28,6 +29,7 @@
 import config from '@/config/config'
 import Breadcrumb from '@/common-modules/components/Breadcrumb'
 import Hamburger from '@/common-modules/components/Hamburger'
+import { userRole } from '@/common-modules/utils/auth'
 export default {
   components: {
     Breadcrumb,
@@ -40,8 +42,13 @@ export default {
   },
   data() {
     return {
-      config: config
+      config: config,
+      userInfo: {}
     }
+  },
+  created() {
+    this.userInfo = JSON.parse(userRole.get())
+    console.log('created -> this.userInfo', this.userInfo)
   },
   methods: {
     toggleSideBar() {
@@ -67,7 +74,7 @@ export default {
     display: inline-block;
     height: 100%;
     line-height: 50px;
-    font-size: 19px;
+    font-size: 18px;
   }
   .hamburger-container {
     line-height: 50px;
@@ -76,25 +83,26 @@ export default {
     cursor: pointer;
     transition: background 0.3s;
     -webkit-tap-highlight-color: transparent;
-
     &:hover {
       background: rgba(0, 0, 0, 0.025);
     }
   }
-
   .breadcrumb-container {
     float: left;
   }
-
   .right-menu {
     float: right;
     height: 100%;
     line-height: 50px;
-
     &:focus {
       outline: none;
     }
-
+    .userName {
+      height: 100%;
+      line-height: 50px;
+      float: left;
+      padding-right: 15px;
+    }
     .right-menu-item {
       display: inline-block;
       padding: 0 8px;
@@ -102,7 +110,6 @@ export default {
       font-size: 18px;
       color: #5a5e66;
       vertical-align: text-bottom;
-
       &.hover-effect {
         cursor: pointer;
         transition: background 0.3s;
@@ -112,21 +119,17 @@ export default {
         }
       }
     }
-
     .avatar-container {
       margin-right: 30px;
-
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
-
         .user-avatar {
           cursor: pointer;
           width: 40px;
           height: 40px;
           border-radius: 10px;
         }
-
         .el-icon-caret-bottom {
           cursor: pointer;
           position: absolute;

@@ -6,9 +6,10 @@
   @include scrollBar;
   background: $mainBackground;
   position: relative;
+  color: $titleColor;
   // height: calc(100vh - 50px);
   .obit-main{
-    background: #ffffff;
+    background: $bodybg;
     // padding: 10px;
     .obit-main-add{
       position: absolute;

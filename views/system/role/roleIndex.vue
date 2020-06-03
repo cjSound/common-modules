@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-19 10:44:04
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-03-05 10:46:15
+ * @LastEditTime: 2020-06-03 17:50:11
  * @Description: file content
  -->
 <template>
@@ -247,8 +247,8 @@ export default {
     margin: 5px;
     overflow: auto;
     // background: #f1f2f6;
-    background: #fff;
-    border: 1px solid #e4e4e4;
+    background: $bodybg;
+    border: 1px solid $--border-color-base;
     position: relative;
   }
   .title {
@@ -278,12 +278,15 @@ export default {
         line-height: 35px;
         padding-right: 10px;
       }
+      i {
+        color: $--color-text-primary;
+      }
     }
     .role-device-item:last-child {
       border-bottom: 1px solid $border;
     }
     .role-device-item:hover {
-      background: #f5f7fa;
+      background: $--color-text-regular;
       .hover-operator {
         display: initial;
       }
@@ -302,14 +305,14 @@ export default {
   width: calc(100%);
   box-sizing: border-box;
   padding: 7px 20px;
-  background-color: #fff;
-  border-top: 1px solid #ececec;
+  background-color: $bodybg;
+  border-top: 1px solid $--border-color-lighter;
   position: fixed;
   bottom: 0px;
   left: 0;
-  box-shadow: 0 -2px 2px #ececec;
+  box-shadow: 0 -2px 2px $--border-color-lighter;
   z-index: 100;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid $--border-color-lighter;
   .submit {
     float: right;
     margin-left: 10px;
