@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 17:02:31
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 13:30:27
+ * @LastEditTime: 2020-06-03 13:10:26
  * @Description: 系统工具类
  */
 const util = {}
@@ -233,6 +233,21 @@ util.export = {
                 })
             }, 200)
         });
+    }
+}
+util.array = {
+    treeToArray(nodes, childrenName) {
+        var r = [];
+        if (Array.isArray(nodes)) {
+            for (var i = 0, l = nodes.length; i < l; i++) {
+                r.push(nodes[i]); // 取每项数据放入一个新数组
+                if (Array.isArray(nodes[i][childrenName]) && nodes[i][childrenName].length > 0)
+                    // 若存在children则递归调用，把数据拼接到新数组中，并且删除该children
+                    r = r.concat(util.array.treeToArray(nodes[i][childrenName], childrenName));
+                delete nodes[i][childrenName]
+            }
+        }
+        return r;
     }
 }
 export default util;

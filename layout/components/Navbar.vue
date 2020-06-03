@@ -2,9 +2,8 @@
 <template>
   <div class="navbar">
     <hamburger :is-active="sidebar.opened" @toggleClick="toggleSideBar" class="hamburger-container" />
-
-    <breadcrumb class="breadcrumb-container" />
-
+    <!-- breadcrumbTop true 配置 面包屑在header里面 -->
+    <breadcrumb class="breadcrumb-container" v-if="config.breadcrumbTop" />
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -25,9 +24,9 @@
 </template>
 
 <script>
+import config from '@/config/config'
 import Breadcrumb from '@/common-modules/components/Breadcrumb'
 import Hamburger from '@/common-modules/components/Hamburger'
-
 export default {
   components: {
     Breadcrumb,
@@ -36,6 +35,11 @@ export default {
   computed: {
     sidebar() {
       return this.$store.state.app.sidebar
+    }
+  },
+  data() {
+    return {
+      config: config
     }
   },
   methods: {

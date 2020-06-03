@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:39
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 11:04:52
+ * @LastEditTime: 2020-06-03 12:46:58
  * @Description:  布局layout
  -->
 <template>
@@ -10,6 +10,7 @@
     <div @click="handleClickOutside" class="drawer-bg" v-if="device==='mobile'&&sidebar.opened" />
     <sidebar class="sidebar-container" />
     <div class="main-container" v-if="loadPermission">
+      <!-- fixedHeader 是否固定header区域 -->
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
       </div>
@@ -23,6 +24,7 @@
 <script>
 import { Navbar, Sidebar, AppMain } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
+import { routerPermission } from '@/common-modules/utils/validate'
 
 export default {
   name: 'Layout',
@@ -62,6 +64,15 @@ export default {
     },
     initMenu() {
       this.$store.dispatch('permission/getUserPermission').then(res => {
+        if (
+          !routerPermission(
+            this.$store.state.permission.sysMenu,
+            this.$route.path,
+            this.$route.meta
+          )
+        ) {
+          this.$router.push({ path: '/401' })
+        }
         this.loadPermission = true
       })
     }

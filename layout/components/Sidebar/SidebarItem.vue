@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:39
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 10:33:38
+ * @LastEditTime: 2020-06-03 13:59:56
  * @Description: 菜单 根据路由生成，根据系统权限判断是否展示对应菜单
  -->
 <template>
@@ -79,7 +79,6 @@ export default {
     toPath(item) {
       item.name = item.menuName
       this.$store.dispatch('tagsView/addVisitedView', item)
-      console.log('toPath -> this.$route.path', this.$route.path, item)
       if (this.$route.path !== item.path) {
         this.$router.push({
           path: item.path

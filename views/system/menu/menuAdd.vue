@@ -1,8 +1,8 @@
 <!--
  * @Author: 刘硕
  * @Date: 2019-08-19 14:45:40
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-04-18 14:24:24
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-06-03 13:59:16
  * @Description: file content
  -->
 <template>
@@ -37,11 +37,9 @@
 </template>
 
 <script>
-import pagerMix from '@/common-modules/mixin/pagerMix'
 import util from '@/common-modules/utils/utils'
 
 export default {
-  mixins: [pagerMix],
   props: {
     visible: {
       type: Boolean
