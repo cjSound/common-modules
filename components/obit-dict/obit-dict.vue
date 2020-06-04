@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-22 15:24:21
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-04 15:22:10
+ * @LastEditTime: 2020-06-04 16:26:34
  * @Description: 字典组件
  -->
 <template>
@@ -85,8 +85,15 @@ export default {
       if (this.value === null || this.value === undefined) {
         this.dictValue = this.multiple ? [] : ''
       } else {
-        this.dictValue =
-          this.value instanceof Array ? this.value : this.value + ''
+        if (this.value instanceof Array) {
+          let arr = []
+          this.value.forEach(element => {
+            arr.push(element + '')
+          })
+          this.dictValue = arr
+        } else {
+          this.dictValue = this.value + ''
+        }
       }
     },
     initData() {

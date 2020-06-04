@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-20 15:22:51
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-04 11:22:26
+ * @LastEditTime: 2020-06-04 16:28:18
  * @Description: 地图搜索
  -->
 <template>
@@ -53,6 +53,7 @@ module.exports = {
         city: '长沙',
         citylimit: false
       },
+      address: '',
       mapCenter: [121.59996, 31.197646],
       loaded: false,
       plugin: [
@@ -63,7 +64,7 @@ module.exports = {
               // o 是高德地图定位插件实例
               o.getCurrentPosition((status, result) => {
                 console.log('init -> result', result)
-                console.log('init -> status', status)
+                self.address = result.formattedAddress
                 if (result && result.position) {
                   self.mapCenter = [result.position.lng, result.position.lat]
                   self.markers = [[result.position.lng, result.position.lat]]
@@ -84,8 +85,7 @@ module.exports = {
   },
   methods: {
     onSubmit() {
-      this.$emit('change', this.markers)
-      console.log('onSubmit -> this.markers', this.markers)
+      this.$emit('change', this.markers, this.address)
       this.closeDialog()
     },
     closeDialog() {
@@ -96,6 +96,7 @@ module.exports = {
       let lngSum = 0
       if (pois.length > 0) {
         let poi = pois[0]
+        self.address = poi.address
         this.markers = [[poi.lng, poi.lat]]
         this.mapCenter = [poi.lng, poi.lat]
       }
