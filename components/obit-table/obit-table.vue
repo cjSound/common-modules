@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-05-17 11:39:56
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-05-27 15:58:23
+ * @LastEditTime: 2020-06-04 10:19:19
  * @Description: file content
 --> 
 <template>
@@ -18,13 +18,8 @@
       v-for="column in tableColumns"
     >
       <template slot-scope="scope">
-        <el-tooltip
-          :content="column.render ? column.render(scope.row[column.prop]) +'':scope.row[column.prop]+''"
-          class="item"
-          effect="dark"
-          placement="top"
-        >
-          <span>{{column.render ? column.render(scope.row[column.prop]) :scope.row[column.prop] |valueType(column.filterType)}}</span>
+        <el-tooltip :content="column.render ? column.render(scope.row) +'':scope.row[column.prop]+''" class="item" effect="dark" placement="top">
+          <span>{{column.render ? column.render(scope.row) :scope.row[column.prop] |valueType(column.filterType)}}</span>
         </el-tooltip>
       </template>
     </el-table-column>

@@ -112,7 +112,6 @@ export default {
                 let crumbInfo = { type: 'show', menuName: this.crumbName, path: '' }
                 this.$store.commit('app/setLastBreadcrumb', crumbInfo)
             }
-
         },
         // 编辑组件
         editDialog(item) {
