@@ -390,7 +390,13 @@ div:focus {
       }
     }
   }
-
+  .el-form-item-lr {
+    .el-form-item__content {
+      >div {
+        width: 75%
+      }
+    }
+  }
   .form-item-100 {
     width: 100%;
 

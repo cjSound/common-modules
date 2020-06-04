@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-20 15:22:51
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-04-20 18:16:33
+ * @LastEditTime: 2020-06-04 11:22:26
  * @Description: 地图搜索
  -->
 <template>
@@ -66,6 +66,7 @@ module.exports = {
                 console.log('init -> status', status)
                 if (result && result.position) {
                   self.mapCenter = [result.position.lng, result.position.lat]
+                  self.markers = [[result.position.lng, result.position.lat]]
                   self.loaded = true
                   self.$nextTick()
                 }
@@ -82,7 +83,11 @@ module.exports = {
     }, 5000)
   },
   methods: {
-    onSubmit() {},
+    onSubmit() {
+      this.$emit('change', this.markers)
+      console.log('onSubmit -> this.markers', this.markers)
+      this.closeDialog()
+    },
     closeDialog() {
       this.$emit('update:visible', false)
     },
