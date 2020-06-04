@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-07-19 09:19:35
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 16:55:04
+ * @LastEditTime: 2020-06-04 10:01:50
  * @Description: table分页  抽取相关mix
  */
 import util from '@/common-modules/utils/utils'
@@ -29,6 +29,8 @@ export default {
             addVisable: false,
             addType: 'add',
             detailsInfo: {},
+            // 新增或者修改面包屑名称
+            crumbName: '',
             // 多选选择的列表
             handleSelectionList: [],
             handleSelectionKey: ''
@@ -106,6 +108,11 @@ export default {
         addDialog() {
             this.addVisable = true
             this.addType = 'add'
+            if (this.crumbName !== '') {
+                let crumbInfo = { type: 'show', menuName: this.crumbName, path: '' }
+                this.$store.commit('app/setLastBreadcrumb', crumbInfo)
+            }
+
         },
         // 编辑组件
         editDialog(item) {

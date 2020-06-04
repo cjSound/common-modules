@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:38
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 14:11:33
+ * @LastEditTime: 2020-06-04 10:06:15
  * @Description: 面包屑  两种形式 
   1放在header里面
   2放在body里面 breadcrumb-content
@@ -30,6 +30,9 @@ export default {
   watch: {
     $route() {
       this.getBreadcrumb()
+    },
+    '$store.state.app.lastBreadcrumb': function(newInfo, oldInfo) {
+      this.getBreadcrumb()
     }
   },
   created() {
@@ -51,7 +54,10 @@ export default {
       if (!this.isDashboard(first)) {
         arr = [{ path: '/main', menuName: '首页' }].concat(arr)
       }
-
+      let lastCrumb = this.$store.state.app.lastBreadcrumb
+      if (lastCrumb.menuName) {
+        arr.push(lastCrumb)
+      }
       this.levelList = arr
     },
     isDashboard(route) {

@@ -1,3 +1,10 @@
+/*
+ * @Author: 曹捷
+ * @Date: 2020-06-02 09:52:39
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-06-04 09:57:30
+ * @Description: file content
+ */
 import Cookies from 'js-cookie'
 
 const state = {
@@ -5,7 +12,9 @@ const state = {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
-  device: 'desktop'
+  device: 'desktop',
+  // 最后一层面包屑
+  lastBreadcrumb: {}
 }
 
 const mutations = {
@@ -25,6 +34,12 @@ const mutations = {
   },
   TOGGLE_DEVICE: (state, device) => {
     state.device = device
+  },
+  setLastBreadcrumb(state, info) {
+    state.lastBreadcrumb = info
+  },
+  removeLastBreadcrumb(state) {
+    state.lastBreadcrumb = {}
   }
 }
 
