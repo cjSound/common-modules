@@ -2,16 +2,17 @@
  * @Author: 曹捷
  * @Date: 2019-08-22 15:24:21
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 16:13:59
+ * @LastEditTime: 2020-06-04 11:05:43
  * @Description: 字典组件
  -->
 <template>
   <el-select
+    :clearable="clearable"
     :disabled="disabled"
+    :multiple="multiple"
     :placeholder="placeholder"
     @change="changeDict"
     class="input-md"
-    clearable
     v-if="dictValueList.length>0"
     v-model="dictValue"
   >
@@ -30,6 +31,14 @@ export default {
   },
   props: {
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    clearable: {
+      type: Boolean,
+      default: true
+    },
+    multiple: {
       type: Boolean,
       default: false
     },
