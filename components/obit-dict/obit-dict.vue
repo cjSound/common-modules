@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-22 15:24:21
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-04 11:05:43
+ * @LastEditTime: 2020-06-04 15:22:10
  * @Description: 字典组件
  -->
 <template>
@@ -47,7 +47,7 @@ export default {
       default: false
     },
     value: {
-      type: [Number, String]
+      type: [Number, String, Array]
     },
     dictCode: {
       type: String,
@@ -68,21 +68,27 @@ export default {
   },
   data() {
     return {
-      dictValue:
-        this.value === null || this.value === undefined ? '' : this.value + '',
+      dictValue: '',
       dictValueList: []
     }
   },
   watch: {
     value() {
-      this.dictValue =
-        this.value === null || this.value === undefined ? '' : this.value + ''
+      this.initValue()
     },
     dictCode() {
       this.initData()
     }
   },
   methods: {
+    initValue() {
+      if (this.value === null || this.value === undefined) {
+        this.dictValue = this.multiple ? [] : ''
+      } else {
+        this.dictValue =
+          this.value instanceof Array ? this.value : this.value + ''
+      }
+    },
     initData() {
       let param = { codeField: this.dictCode }
       ajax.methods.getCommonDictValueList(param).then(res => {
@@ -95,6 +101,7 @@ export default {
     }
   },
   mounted() {
+    this.initValue()
     this.initData()
   }
 }
