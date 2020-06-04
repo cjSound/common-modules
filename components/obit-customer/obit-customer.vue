@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-20 14:53:21
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-04-20 15:09:50
+ * @LastEditTime: 2020-06-04 16:25:45
  * @Description: 客户
  -->
 <template>
@@ -20,8 +20,13 @@ export default {
   },
   data() {
     return {
-      cValue: '',
+      cValue: this.value,
       custList: []
+    }
+  },
+  watch: {
+    value() {
+      this.cValue = this.value
     }
   },
   methods: {
