@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-19 19:49:53
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 16:14:08
+ * @LastEditors: 徐生延
+ * @LastEditTime: 2020-06-05 15:58:13
  * @Description: 地区 多级联动
  -->
 <template>
@@ -35,6 +35,10 @@ export default {
       type: String,
       default: 'value'
     },
+    levelValue: {
+      type: Number,
+      default: 3
+    },
     placeholder: {
       type: String,
       default: '请选择'
@@ -58,7 +62,7 @@ export default {
       plugChange: false,
       cValue: [],
       cityProps: {
-        expandTrigger: 'hover',
+        // expandTrigger: 'hover',
         value: 'id',
         label: 'name',
         lazy: true,
@@ -70,8 +74,9 @@ export default {
           if (!vm.cValue.length && vm.value && vm.value.length) {
             await vm.initSetValue(vm.value)
           }
+          if(level > vm.levelValue) return;
           ajax.methods.getCommonDictByParentId({ dictId: id }).then(res => {
-            if (level === 3) {
+            if (level === vm.levelValue) {
               res.forEach(element => {
                 element.leaf = true
               })
@@ -95,6 +100,7 @@ export default {
       } else {
         value = values
       }
+      console.log(value);
       this.$emit('input', value)
       this.$emit('change', value)
     },
