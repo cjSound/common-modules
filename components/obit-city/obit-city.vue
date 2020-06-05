@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-19 19:49:53
  * @LastEditors: 徐生延
- * @LastEditTime: 2020-06-05 15:58:13
+ * @LastEditTime: 2020-06-05 16:42:32
  * @Description: 地区 多级联动
  -->
 <template>
@@ -100,7 +100,6 @@ export default {
       } else {
         value = values
       }
-      console.log(value);
       this.$emit('input', value)
       this.$emit('change', value)
     },

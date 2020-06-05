@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-30 08:36:29
  * @LastEditors: 徐生延
- * @LastEditTime: 2020-06-04 16:08:36
+ * @LastEditTime: 2020-06-05 17:19:01
  * @Description: file content
  -->
 <template>
@@ -43,7 +43,6 @@ export default {
   width: 100%;
   position: relative;
   overflow: hidden;
-  padding:15px;
 }
 .fixed-header + .app-main {
   padding-top: 50px;
