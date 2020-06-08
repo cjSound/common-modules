@@ -9,51 +9,52 @@ $yellow:#FEC171;
 $panGreen: #30B08F;
 
 $active :#ff6a00;
-$mainBackground :#f1f2f7;// 最下层body背景颜色
-$bodybg :#fff;// 实际层背景颜色
-
+$mainBackground :#1c2142;// body背景颜色
+$bodybg :#1c2142;// 实际层背景颜色
 $border :#e8e8e8;
 // ----------------------------------------------------        sidebar
-$menuText:#bfcbd9;
+$menuText:#e6e6e6; //选中的颜色
 $menuActiveText:#409EFF;
 $subMenuActiveText:#f4f4f5; // https://github.com/ElemeFE/element/issues/12951
 
-$menuBg:#304156;//菜单背景色
-$menuHover:#263445;
-$menuSelect:#304156;//一级菜单选中效果背景
+$menuBg:#232851; //菜单背景色
+$menuHover:#0081f4;
+$menuSelect:linear-gradient(to bottom  , #00b8f1, #0077f3);
 
-$subMenuBg:#1f2d3d;// 下拉菜单背景
-$subMenuHover:#001528;
-$subMenuSelect:#26547d; //下拉菜单选中背景颜色
+$subMenuBg:#292f5e;// 下拉菜单背景
+$subMenuHover:#2d3680;
+$subMenuSelect:#2d3680; //下拉菜单选中背景颜色
 $sideBarWidth: 210px;
-$logoBag:#1d2146;// logo  区域背景颜色
+$logoBag:#1d2146;
 
 // -------------------------------------navbar
-$navbag:#fff;
+$navbag:#1C1F42;
 
 // ------------------------------------------------ 字体颜色
 //表格内部字体颜色
-$tableColor:#606266;
-$titleColor:#333;
+$tableColor:#777889;
+$titleColor:#fff;
+$mainColor:#008FF2;
+
 
 // --------------------------------------------------
-$--color-primary:#409EFF;
-$--background-color-base:#F5F7FA;
-$--color-text-primary:#303133;
-$--color-text-regular:#606266;
-$--color-white:#FFFFFF;
-$--color-black:#000000;
-$--border-color-extra-light:#F2F6FC;
-$--color-info:#909399;
-$--color-text-secondary:#909399;
-$--border-color-base:#DCDFE6;
-$--border-color-lighter:#EBEEF5;
+$--color-primary:#008FF2;
+$--background-color-base:#2C314F;
+$--color-text-primary:#FFFFFF;
+$--color-text-regular:#868799;
+$--color-white:#1D2142;
+$--color-black:#1D2142;
+$--border-color-extra-light:#464F5C;
+$--color-info:#E2E7F1;
+$--color-text-secondary:#E6ECF8;
+$--border-color-base:#777888;
+$--border-color-lighter:#898A96;
 // ------------------------------------------------
-
 
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
+  mainColor:$mainColor;
   menuText: $menuText;
   menuActiveText: $menuActiveText;
   subMenuActiveText: $subMenuActiveText;
@@ -62,4 +63,6 @@ $--border-color-lighter:#EBEEF5;
   subMenuBg: $subMenuBg;
   subMenuHover: $subMenuHover;
   sideBarWidth: $sideBarWidth;
+  $subMenuSelect: $subMenuSelect;
+  $tableColor:$tableColor
 }
