@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-05-17 11:39:56
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-04 10:19:19
+ * @LastEditTime: 2020-06-08 11:21:12
  * @Description: file content
 --> 
 <template>
@@ -34,6 +34,7 @@
         <el-tooltip class="item" content="查看详情" effect="dark" placement="top" v-if="$listeners.lookEven" v-permiss="deletePermiss">
           <i @click="clickEvent(scope.row,'lookEven')" class="el-icon el-icon-view pointer com-link"></i>
         </el-tooltip>
+        <slot name="operate"></slot>
       </template>
     </el-table-column>
     <slot></slot>
