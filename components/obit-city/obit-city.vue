@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-19 19:49:53
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-08 17:32:07
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-06-08 17:46:54
  * @Description: 地区 多级联动
  -->
 <template>
@@ -65,19 +65,22 @@ export default {
         // expandTrigger: 'hover',
         value: 'id',
         label: 'name',
-        checkStrictly: true,
         lazy: true,
         async lazyLoad(node, resolve) {
           const { level } = node
+          console.log('lazyLoad -> level', level, vm.levelValue)
           let id = level === 0 ? 0 : node.data.id
           // 规避不能正常回显的bug
 
           if (!vm.cValue.length && vm.value && vm.value.length) {
             await vm.initSetValue(vm.value)
           }
-          if (level > vm.levelValue) return
+          if (level >= vm.levelValue) {
+            resolve([])
+            return
+          }
           ajax.methods.getCommonDictByParentId({ dictId: id }).then(res => {
-            if (level === vm.levelValue) {
+            if (level === vm.levelValue - 1) {
               res.forEach(element => {
                 element.leaf = true
               })
