@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-19 19:49:53
- * @LastEditors: 徐生延
- * @LastEditTime: 2020-06-05 16:42:32
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-06-08 17:32:07
  * @Description: 地区 多级联动
  -->
 <template>
@@ -65,6 +65,7 @@ export default {
         // expandTrigger: 'hover',
         value: 'id',
         label: 'name',
+        checkStrictly: true,
         lazy: true,
         async lazyLoad(node, resolve) {
           const { level } = node
@@ -74,7 +75,7 @@ export default {
           if (!vm.cValue.length && vm.value && vm.value.length) {
             await vm.initSetValue(vm.value)
           }
-          if(level > vm.levelValue) return;
+          if (level > vm.levelValue) return
           ajax.methods.getCommonDictByParentId({ dictId: id }).then(res => {
             if (level === vm.levelValue) {
               res.forEach(element => {
