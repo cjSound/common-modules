@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-05-17 11:39:56
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-08 11:22:22
+ * @LastEditTime: 2020-06-08 11:44:36
  * @Description: file content
 --> 
 <template>
@@ -35,7 +35,7 @@
           <i @click="clickEvent(scope.row,'lookEven')" class="el-icon el-icon-view pointer com-link"></i>
         </el-tooltip>
 
-        <slot name="operate"></slot>
+        <slot :data="scope.row" name="operate"></slot>
       </template>
     </el-table-column>
     <slot></slot>
