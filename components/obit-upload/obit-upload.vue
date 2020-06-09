@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-21 15:16:37
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-05-27 17:46:38
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-06-09 19:22:23
  * @Description: file content
  -->
 <template>
@@ -11,29 +11,34 @@
       :accept="accept"
       :action="action"
       :auto-upload="autoUpload"
+      :before-remove="handleRemove"
       :before-upload="beforeUpload"
       :drag="drag"
+      :file-list="fileList"
       :http-request="customUpload"
       :limit="limit"
       :list-type="listType"
       :multiple="multiple"
       :on-change="onChange"
       :on-exceed="onExceed"
-      :on-remove="onRemove"
+      :on-preview="handlePictureCardPreview"
       :on-success="success"
       :show-file-list="showFileList"
       class="avatar-uploader"
       ref="upload"
     >
       <slot></slot>
-      <span slot="file" slot-scope="{file}" v-if="listType !==''">
+      <!-- <span slot="file" slot-scope="{file}" v-if="listType !==''">
         <img :src="file.url" alt class="el-upload-list__item-thumbnail" />
         <span class="el-upload-list__item-actions">
           <span @click="handlePictureCardPreview(file)" class="el-upload-list__item-preview">
             <i class="el-icon-zoom-in"></i>
           </span>
+          <span @click="handleRemove(file)" class="el-upload-list__item-delete">
+            <i class="el-icon-delete"></i>
+          </span>
         </span>
-      </span>
+      </span>-->
     </el-upload>
     <el-dialog :visible.sync="dialogVisible" append-to-body v-if="listType !==''">
       <img :src="dialogImageUrl" alt width="100%" />
@@ -103,7 +108,8 @@ export default {
       uploadSuccessNum: 0,
       loading: '',
       dialogVisible: false,
-      dialogImageUrl: ''
+      dialogImageUrl: '',
+      fileList: []
     }
   },
   methods: {
@@ -113,6 +119,15 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
+    },
+    handleRemove(file, fileList) {
+      let fileIndex
+      fileList.forEach((element, index) => {
+        if (file.name === element.name) {
+          fileIndex = index
+        }
+      })
+      this.$emit('remove', fileIndex, this.params)
     },
     onExceed() {
       this.$message.error(`上传数量一次不能超过${this.limit}个`)

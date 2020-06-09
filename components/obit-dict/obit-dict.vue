@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-22 15:24:21
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-04 16:26:34
+ * @LastEditTime: 2020-06-09 09:11:34
  * @Description: 字典组件
  -->
 <template>
@@ -82,6 +82,7 @@ export default {
   },
   methods: {
     initValue() {
+      console.log(222, this.value)
       if (this.value === null || this.value === undefined) {
         this.dictValue = this.multiple ? [] : ''
       } else {

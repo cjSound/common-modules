@@ -6,7 +6,7 @@
  * @Description: 封装select组件  支持同时获取value和name
  -->
 <template>
-  <el-select :disabled="disabled" :placeholder="placeholder" @change="changeValue" class="input-md" clearable filterable v-if="selectList.length>0" v-model="dictValue">
+  <el-select :disabled="disabled" :placeholder="placeholder" @change="changeValue" class="input-md" clearable filterable  v-model="dictValue">
     <el-option :key="item.valueName" :label="item[labelName]" :value="item[valueName]" v-for="item in selectList"></el-option>
   </el-select>
 </template>
