@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-21 15:16:37
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-09 19:22:23
+ * @LastEditTime: 2020-06-10 10:43:22
  * @Description: file content
  -->
 <template>
@@ -100,6 +100,9 @@ export default {
     listType: {
       type: String,
       default: ''
+    },
+    fileList: {
+      type: Array
     }
   },
   data() {
@@ -108,8 +111,7 @@ export default {
       uploadSuccessNum: 0,
       loading: '',
       dialogVisible: false,
-      dialogImageUrl: '',
-      fileList: []
+      dialogImageUrl: ''
     }
   },
   methods: {
