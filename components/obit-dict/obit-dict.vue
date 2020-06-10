@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-22 15:24:21
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-09 09:11:34
+ * @LastEditTime: 2020-06-10 09:04:06
  * @Description: 字典组件
  -->
 <template>
@@ -13,11 +13,14 @@
     :placeholder="placeholder"
     @change="changeDict"
     class="input-md"
-    v-if="dictValueList.length>0"
+    v-if="type==='select'"
     v-model="dictValue"
   >
-    <el-option :key="item.codeValue" :label="item[labelName]" :value="item[valueName]" v-for="item in dictValueList"></el-option>
+    <el-option :key="item[valueName]" :label="item[labelName]" :value="item[valueName]" v-for="item in dictValueList"></el-option>
   </el-select>
+  <el-radio-group :disabled="disabled" @change="changeDict" v-else-if="type==='radio'" v-model="dictValue">
+    <el-radio :key="item[valueName]" :label="item[valueName]" v-for="item in dictValueList">{{item[labelName]}}</el-radio>
+  </el-radio-group>
 </template>
 
 <script>
@@ -38,6 +41,7 @@ export default {
       type: Boolean,
       default: true
     },
+    // 是否可以多选
     multiple: {
       type: Boolean,
       default: false
@@ -49,6 +53,7 @@ export default {
     value: {
       type: [Number, String, Array]
     },
+    // 字典编码
     dictCode: {
       type: String,
       required: true
@@ -57,13 +62,20 @@ export default {
       type: String,
       default: '请选择'
     },
+    // 展示名称key
     labelName: {
       type: String,
       default: 'valueDesc'
     },
+    // 数据保存对应的key名称
     valueName: {
       type: String,
       default: 'codeValue'
+    },
+    // 字典展示方式   select  radio
+    type: {
+      type: String,
+      default: 'select'
     }
   },
   data() {
