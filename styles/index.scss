@@ -70,7 +70,7 @@ div:focus {
 
 @for $i from 1 through 24 {
   [sizew="#{$i}"] {
-    width: (100% * (($i /24)-0.01));
+    width: (100% * (($i /24)-0.01)) !important;
   }
 }
 
@@ -191,7 +191,7 @@ div:focus {
 .crow {
   position: relative;
   overflow: hidden;
-
+  width: 100%;
   [sizew] {
     float: left;
   }
@@ -470,7 +470,7 @@ div:focus {
 // 页面数据详情  相关
 .obit-details {
   padding: 20px;
-  color: #666;
+  color:$--color-info;
   line-height: 22px;
 
   >div {
@@ -479,14 +479,15 @@ div:focus {
   }
 
   .title {
-    color: #333;
+    color: $--color-text-primary;
   }
 
   .detail-info {
     line-height: 40px;
-    width: 800px;
-    color: #666;
+    >div{
+      display: inline-block;
 
+    }
   }
 }
 
