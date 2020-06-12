@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-19 19:49:53
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-06-08 17:46:54
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-06-12 11:18:56
  * @Description: 地区 多级联动
  -->
 <template>
@@ -42,7 +42,16 @@ export default {
     placeholder: {
       type: String,
       default: '请选择'
+    },
+    // 是否可以选择任意一级
+    checkAll: {
+      type: Boolean,
+      default: false
     }
+  },
+  mounted() {
+    console.log(this.checkAll)
+    this.cityProps.checkStrictly = this.checkAll
   },
   watch: {
     value(newValue) {
@@ -66,9 +75,9 @@ export default {
         value: 'id',
         label: 'name',
         lazy: true,
+        checkStrictly: false,
         async lazyLoad(node, resolve) {
           const { level } = node
-          console.log('lazyLoad -> level', level, vm.levelValue)
           let id = level === 0 ? 0 : node.data.id
           // 规避不能正常回显的bug
 
