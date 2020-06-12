@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-19 19:49:53
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-12 11:18:56
+ * @LastEditTime: 2020-06-12 11:32:17
  * @Description: 地区 多级联动
  -->
 <template>
@@ -50,7 +50,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.checkAll)
     this.cityProps.checkStrictly = this.checkAll
   },
   watch: {
