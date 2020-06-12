@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-05-17 11:39:56
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-08 11:44:36
+ * @LastEditTime: 2020-06-12 11:51:20
  * @Description: file content
 --> 
 <template>
@@ -35,6 +35,11 @@
           <i @click="clickEvent(scope.row,'lookEven')" class="el-icon el-icon-view pointer com-link"></i>
         </el-tooltip>
 
+        <slot :data="scope.row" name="operate"></slot>
+      </template>
+    </el-table-column>
+    <el-table-column align="center" fixed="right" label="操作" v-else-if="$scopedSlots.operate" width="100">
+      <template slot-scope="scope">
         <slot :data="scope.row" name="operate"></slot>
       </template>
     </el-table-column>
@@ -89,6 +94,9 @@ export default {
       type: String,
       default: null
     }
+  },
+  mounted() {
+    console.log(this.$scopedSlots, this)
   },
   methods: {
     // 多选 将id 存入handleSelectionList 集合
