@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-05-17 11:39:56
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-12 11:51:20
+ * @LastEditTime: 2020-06-15 16:45:51
  * @Description: file content
 --> 
 <template>
@@ -23,7 +23,14 @@
         </el-tooltip>
       </template>
     </el-table-column>
-    <el-table-column align="center" fixed="right" label="操作" v-if="$listeners.editEven || $listeners.deleteEven || $listeners.lookEven" width="100">
+    <!-- 默认操作列 有编辑删除 查看三个按钮 额外需要新增的可以采用slot=operate -->
+    <el-table-column
+      :width="operationWidth"
+      align="center"
+      fixed="right"
+      label="操作"
+      v-if="$listeners.editEven || $listeners.deleteEven || $listeners.lookEven"
+    >
       <template slot-scope="scope">
         <el-tooltip class="item" content="修改" effect="dark" placement="top" v-if="$listeners.editEven" v-permiss="editPermiss">
           <i @click="clickEvent(scope.row,'editEven')" class="el-icon el-icon-setting pointer com-link p-r-10"></i>
@@ -38,7 +45,8 @@
         <slot :data="scope.row" name="operate"></slot>
       </template>
     </el-table-column>
-    <el-table-column align="center" fixed="right" label="操作" v-else-if="$scopedSlots.operate" width="100">
+    <!-- 完全自定义操作列内容按钮  直接采用slot=operate-->
+    <el-table-column :width="operationWidth" align="center" fixed="right" label="操作" v-else-if="$scopedSlots.operate">
       <template slot-scope="scope">
         <slot :data="scope.row" name="operate"></slot>
       </template>
@@ -71,6 +79,13 @@ export default {
     minWidth: {
       type: String,
       default: '80px'
+    },
+    /**
+     * 操作列 宽度
+     */
+    operationWidth: {
+      type: String,
+      default: '80'
     },
     width: {
       type: String,
