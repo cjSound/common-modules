@@ -178,6 +178,10 @@ div:focus {
   display: flex;
   flex-direction: column;
 }
+.flex-l-r{
+  display: flex;
+  justify-content: space-around;
+}
 
 .full {
   width: 100%;

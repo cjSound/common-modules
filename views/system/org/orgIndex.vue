@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-13 10:49:35
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 16:25:22
+ * @LastEditTime: 2020-06-16 09:28:44
  * @Description: 机构管理
  -->
 <template>
@@ -14,7 +14,29 @@
       </span>
     </div>
     <div class="obit-content">
-      <obit-table-tree
+      <el-table :data="orgList" :tree-props="{children: 'children' }" border default-expand-all row-key="organizationId" style="width: 100%; ">
+        <el-table-column label="机构名称" prop="organizationName"></el-table-column>
+        <el-table-column label="机构编码" prop="organizationCode"></el-table-column>
+        <el-table-column label="简称" prop="shortName"></el-table-column>
+        <el-table-column label="地址" prop="address"></el-table-column>
+        <el-table-column label="联系人" prop="concatName"></el-table-column>
+        <el-table-column label="电话" prop="phone"></el-table-column>
+        <el-table-column label="描述" prop="orgDesc"></el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-tooltip class="item" content="新增下级机构" effect="dark" placement="top" v-permiss="'menuAddChild'">
+              <i @click="addDialog(scope.row.organizationId)" class="el-icon el-icon-folder-add pointer obit-link p-r-10"></i>
+            </el-tooltip>
+            <el-tooltip class="item" content="编辑" effect="dark" placement="top" v-permiss="'editOrg'">
+              <i @click="editDialog(scope.row)" class="el-icon el-icon-setting pointer obit-link p-r-10"></i>
+            </el-tooltip>
+            <el-tooltip class="item" content="删除" effect="dark" placement="top" v-permiss="'removeOrg'">
+              <i @click="remove(scope.row)" class="el-icon el-icon-delete pointer obit-link"></i>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!-- <obit-table-tree
         :data-list="orgList"
         :expanded="'open'"
         :left="10"
@@ -44,7 +66,7 @@
             <i @click="remove(item,keys)" class="el-icon el-icon-delete pointer obit-link"></i>
           </el-tooltip>
         </div>
-      </obit-table-tree>
+      </obit-table-tree>-->
     </div>
     <orgAdd :addType="addType" :detailsInfo="detailsInfo" :visible.sync="addVisable" @reload="getOrgList"></orgAdd>
   </div>

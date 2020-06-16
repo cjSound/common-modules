@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-14 10:12:47
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 13:55:08
+ * @LastEditTime: 2020-06-16 09:12:02
  * @Description: file content
  -->
 
@@ -15,7 +15,34 @@
       </span>
     </div>
     <div class="obit-content">
-      <obit-table-tree
+      <el-table :data="treeData" :tree-props="{children: 'children' }" border default-expand-all row-key="menuId" style="width: 100%; ">
+        <el-table-column label="菜单名称" prop="menuName"></el-table-column>
+        <el-table-column label="类型" prop="menuName">
+          <template slot-scope="scope">{{scope.row.permissionType|pressType}}</template>
+        </el-table-column>
+        <el-table-column label="编码" prop="menuCode"></el-table-column>
+        <el-table-column label="路径" prop="path" width="300"></el-table-column>
+        <el-table-column label="图标">
+          <template slot-scope="scope">
+            <svg-icon :icon-class="scope.row.iconname" v-if="scope.row.iconname" />
+          </template>
+        </el-table-column>
+        <el-table-column label="排序" prop="orderNum"></el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-tooltip class="item" content="新增菜单或者权限" effect="dark" placement="top" v-if="scope.row.permissionType===1" v-permiss="'menuAddChild'">
+              <i @click="addDialog(scope.row.menuId)" class="el-icon el-icon-folder-add pointer obit-link p-r-10"></i>
+            </el-tooltip>
+            <el-tooltip class="item" content="编辑" effect="dark" placement="top" v-permiss="'menuEdit'">
+              <i @click="editDialog(scope.row)" class="el-icon el-icon-setting pointer obit-link p-r-10"></i>
+            </el-tooltip>
+            <el-tooltip class="item" content="删除" effect="dark" placement="top" v-permiss="'menuRemove'">
+              <i @click="deleteMenu(scope.row)" class="el-icon el-icon-delete pointer obit-link"></i>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!-- <obit-table-tree
         :childrenNum="'childrenNum'"
         :data-list="treeData"
         :expanded="'open'"
@@ -47,7 +74,7 @@
             <i @click="deleteMenu(item,keys)" class="el-icon el-icon-delete pointer obit-link"></i>
           </el-tooltip>
         </div>
-      </obit-table-tree>
+      </obit-table-tree>-->
     </div>
 
     <menuAdd :addType="addType" :detailsInfo="detailsInfo" :visible.sync="addVisable" @reload="initTree"></menuAdd>

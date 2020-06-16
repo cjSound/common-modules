@@ -2,11 +2,11 @@
  * @Author: 曹捷
  * @Date: 2020-05-17 11:39:56
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-15 16:45:51
+ * @LastEditTime: 2020-06-16 09:30:23
  * @Description: file content
 --> 
 <template>
-  <el-table :data="dataList" :style="{width:width}" @selection-change="handleSelectionChange" class="com-table">
+  <el-table :border="tableBorder" :data="dataList" :style="{width:width}" @selection-change="handleSelectionChange" class="com-table">
     <el-table-column type="selection" v-if="$listeners.selectionChange" width="55"></el-table-column>
     <el-table-column :label="indexName" type="index" v-if="indexName !==null" width="50"></el-table-column>
     <el-table-column
@@ -33,13 +33,13 @@
     >
       <template slot-scope="scope">
         <el-tooltip class="item" content="修改" effect="dark" placement="top" v-if="$listeners.editEven" v-permiss="editPermiss">
-          <i @click="clickEvent(scope.row,'editEven')" class="el-icon el-icon-setting pointer com-link p-r-10"></i>
+          <i @click="clickEvent(scope.row,'editEven')" class="el-icon el-icon-setting pointer obit-link p-r-10"></i>
         </el-tooltip>
         <el-tooltip class="item" content="删除" effect="dark" placement="top" v-if="$listeners.deleteEven" v-permiss="deletePermiss">
-          <i @click="clickEvent(scope.row,'deleteEven')" class="el-icon el-icon-delete pointer com-link"></i>
+          <i @click="clickEvent(scope.row,'deleteEven')" class="el-icon el-icon-delete pointer obit-link"></i>
         </el-tooltip>
         <el-tooltip class="item" content="查看详情" effect="dark" placement="top" v-if="$listeners.lookEven" v-permiss="deletePermiss">
-          <i @click="clickEvent(scope.row,'lookEven')" class="el-icon el-icon-view pointer com-link"></i>
+          <i @click="clickEvent(scope.row,'lookEven')" class="el-icon el-icon-view pointer obit-link"></i>
         </el-tooltip>
 
         <slot :data="scope.row" name="operate"></slot>
@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import config from '@/config/config'
+console.log('tableBorder', config)
 export default {
   props: {
     dataList: {
@@ -74,7 +76,7 @@ export default {
     },
     align: {
       type: String,
-      default: 'left'
+      default: config.tableAlign ? config.tableAlign : 'left'
     },
     minWidth: {
       type: String,
@@ -108,6 +110,10 @@ export default {
     indexName: {
       type: String,
       default: null
+    },
+    tableBorder: {
+      type: Boolean,
+      default: config.tableBorder ? config.tableBorder : false
     }
   },
   mounted() {
