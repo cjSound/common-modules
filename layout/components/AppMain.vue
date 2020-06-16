@@ -1,12 +1,12 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-04-30 08:36:29
- * @LastEditors: 徐生延
- * @LastEditTime: 2020-06-05 17:19:01
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-06-16 09:43:43
  * @Description: file content
  -->
 <template>
-  <section :class="{'has-breadcrumb':!config.breadcrumbTop}" class="app-main theme-blue">
+  <section :class="[config.theme,{'has-breadcrumb':!config.breadcrumbTop}]" class="app-main">
     <!-- breadcrumbTop false 配置 面包屑在body里面 -->
     <breadcrumb class="breadcrumb-container breadcrumb-content" v-if="!config.breadcrumbTop" />
     <transition mode="out-in" name="fade-transform">

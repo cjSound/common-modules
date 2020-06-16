@@ -27,3 +27,25 @@
       }
     }
   }
+// 主题样式  黑色
+.theme-black{
+  .el-dialog{
+    border-radius: 10px;
+  }
+  .el-dialog__wrapper{
+    .el-dialog__header{
+      border-radius: 9px 9px 0 0;
+      padding: 18px;;
+      background-color: #409eff;
+      border-bottom: 1px solid #DADADA;
+      color: #ffffff;
+      .el-dialog__close,.el-dialog__title{
+        font-size: 18px;
+        line-height: 20px;
+        padding: 0;
+        text-transform: none;
+        color: #ffffff;
+      }
+    }
+  }
+}
