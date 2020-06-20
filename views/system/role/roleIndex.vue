@@ -1,13 +1,12 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-19 10:44:04
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 17:50:11
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-06-20 16:46:46
  * @Description: file content
  -->
 <template>
   <div class="obit-main obit-main-fill" v-loading="loading">
-    <title-wrap title="角色管理"></title-wrap>
     <el-container class="height-100-head">
       <el-container class="role-layout">
         <el-aside width="300px">

@@ -1,13 +1,12 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-20 20:25:19
- * @LastEditors: 曹捷
- * @LastEditTime: 2019-08-29 09:54:01
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-06-20 16:47:49
  * @Description: file content
  -->
 <template>
   <div class="obit-main obit-main-fill" v-loading="loading">
-    <title-wrap title="列表展示"></title-wrap>
     <el-row :gutter="20">
       <el-col :span="11">
         <contentForm :fromtitle="{title1:'字典类型',title2:'数据字典类型'}">

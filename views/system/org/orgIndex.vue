@@ -1,13 +1,12 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-13 10:49:35
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-16 09:28:44
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-06-20 16:46:56
  * @Description: 机构管理
  -->
 <template>
   <div class="obit-main obit-main-fill" v-loading="loading">
-    <title-wrap title="机构管理"></title-wrap>
     <div class="obit-search t-r">
       <span class="p-r-10">
         <el-button @click="addDialog(0)" class="btn-md" icon="el-icon-plus" type="primary" v-permiss="'addOrg'">新增</el-button>

@@ -2,25 +2,24 @@
  * @Author: 刘硕
  * @Date: 2019-08-19 09:34:05
  * @LastEditors: 刘硕
- * @LastEditTime: 2020-06-20 10:38:58
+ * @LastEditTime: 2020-06-20 16:50:33
  * @Description: file content
  -->
 <template>
-  <div class="obit-main obit-main-fill" v-loading="loading">
-    <title-wrap title="用户管理"></title-wrap>
+  <div class="obit-main obit-main-fill">
     <div class="obit-search">
       <el-input @change="queryDataList(true)" class="input-md" placeholder="用户名、用户编码" v-model="params.name"></el-input>
       <el-select @change="queryDataList(true)" class="input-md" clearable filterable placeholder="请选择机构" v-model="params.orgId">
         <el-option :key="item.organizationId" :label="item.organizationName" :value="item.organizationId" v-for="item in orgList"></el-option>
       </el-select>
 
-      <span class="f-r p-r-10">
+      <span class="p-r-10">
         <el-button @click="queryDataList" class="btn-md" icon="el-icon-search" type="primary">搜索</el-button>
         <el-button @click="addDialog" class="btn-md" icon="el-icon-plus" type="primary" v-permiss="'addUser'">新增</el-button>
       </span>
     </div>
     <div class="obit-content">
-      <el-table :data="dataList" class="obit-table" style="width: 100%">
+      <!-- <el-table :data="dataList" class="obit-table" style="width: 100%">
         <el-table-column :key="column.prop" :label="column.label" :min-width="column.minWidth" v-for="column in tableColumns">
           <template slot-scope="scope">
             <el-tooltip :content="scope.row[column.prop]" class="item" effect="dark" placement="top">
@@ -41,7 +40,25 @@
             </el-tooltip>
           </template>
         </el-table-column>
-      </el-table>
+      </el-table>-->
+      <obit-table
+        :dataList="dataList"
+        :tableColumns="tableColumns"
+        @deleteEven="deleteUser"
+        @editEven="editDialog"
+        deletePermiss="removeUser"
+        editPermiss="editUser"
+        iconType="name"
+        operationWidth="150px"
+        v-loading="loading"
+      >
+        <span slot="operate" slot-scope="scope">
+          <el-tooltip class="item m-l-10" content="重置密码" effect="dark" placement="top" v-permiss="'resetUser'">
+            <!-- <i @click="redeploy(scope.data)" class="el-icon el-icon-view pointer com-link"></i> -->
+            <svg-icon @click="updatePass(scope.data)" class="pointer obit-link" icon-class="reset" />
+          </el-tooltip>
+        </span>
+      </obit-table>
       <div class="obit-pager">
         <el-pagination
           :current-page="searchParams.pageNum"

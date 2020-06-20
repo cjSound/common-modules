@@ -1,17 +1,16 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-04-14 10:12:47
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-16 09:12:02
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-06-20 16:49:13
  * @Description: file content
  -->
 
  <template>
   <div class="obit-main obit-main-fill" v-loading="loading">
-    <title-wrap title="菜单管理"></title-wrap>
     <div class="obit-search t-r">
       <span class="p-r-10">
-        <el-button @click="addDialog(0)" class="btn-md" icon="el-icon-plus" type="primary" v-permiss="'menuAdd'">新增菜单</el-button>
+        <el-button @click="addDialog(0)" class="btn-md" icon="el-icon-plus" type="primary" v-permiss="'menuAdd'">新增</el-button>
       </span>
     </div>
     <div class="obit-content">
