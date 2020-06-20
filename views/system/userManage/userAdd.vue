@@ -1,14 +1,17 @@
 <!--
  * @Author: 刘硕
  * @Date: 2019-08-19 14:45:40
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 17:58:11
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-06-20 10:40:53
  * @Description: file content
  -->
 <template>
   <div v-if="visible">
     <el-dialog :close-on-click-modal="false" :title="showTitle" :visible.sync="addVisible" @closed="closeDialog" width="40%">
       <el-form :inline="true" :model="formData" :rules="rules" class="obit-form-100" ref="formData">
+        <el-form-item label="账号" prop="account">
+          <el-input placeholder="请输入账号" v-model="formData.account"></el-input>
+        </el-form-item>
         <el-form-item label="用户名称" prop="userName">
           <el-input placeholder="请输入用户名称" v-model="formData.userName"></el-input>
         </el-form-item>
@@ -61,6 +64,7 @@ export default {
       activeName: 'add',
       addVisible: this.visible,
       rules: {
+        account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
         userName: [
           { required: true, message: '请输入用户名称', trigger: 'blur' }
         ],

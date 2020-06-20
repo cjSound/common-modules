@@ -1,8 +1,8 @@
 <!--
  * @Author: 刘硕
  * @Date: 2019-08-19 09:34:05
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 14:20:23
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-06-20 10:38:58
  * @Description: file content
  -->
 <template>
@@ -70,6 +70,7 @@ export default {
   data() {
     return {
       tableColumns: [
+        { prop: 'account', label: '账号' },
         { prop: 'userName', label: '用户名称' },
         { prop: 'userCode', label: '用户编码' },
         { prop: 'orgName', label: '机构' },
