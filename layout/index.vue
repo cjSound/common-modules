@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:39
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 12:46:58
+ * @LastEditors: 徐生延
+ * @LastEditTime: 2020-06-20 15:58:08
  * @Description:  布局layout
  -->
 <template>
@@ -25,6 +25,7 @@
 import { Navbar, Sidebar, AppMain } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { routerPermission } from '@/common-modules/utils/validate'
+import config from '@/config/config'
 
 export default {
   name: 'Layout',
@@ -36,6 +37,7 @@ export default {
   mixins: [ResizeMixin],
   data() {
     return {
+      config: config,
       loadPermission: false
     }
   },
@@ -50,12 +52,16 @@ export default {
       return this.$store.state.settings.fixedHeader
     },
     classObj() {
-      return {
+      let obj = {
         hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
         mobile: this.device === 'mobile'
       }
+      if(this.config.theme){
+        obj[this.config.theme] =true
+      }
+      return obj
     }
   },
   methods: {
