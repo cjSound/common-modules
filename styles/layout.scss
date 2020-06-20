@@ -1,125 +1,147 @@
-
 // app-main  路由子内容主题样式
-.obt-main{
+.obt-main {
   padding: 5px;
   overflow: auto;
   @include scrollBar;
   background: $mainBackground;
   position: relative;
   color: $titleColor;
+
   // height: calc(100vh - 50px);
-  .obit-main{
+  .obit-main {
     background: $bodybg;
+
     // padding: 10px;
-    .obit-main-add{
+    .obit-main-add {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
       padding: 10px 10px 0 10px;
-      background: $mainBackground;;
+      background: $mainBackground;
+      ;
       z-index: 5;
       overflow: auto;
       @include scrollBar;
     }
-    .el-button--primary{
+
+    .el-button--primary {
       color: $titleColor;
     }
   }
+
   // 内容填充 100% 
-  .obit-main-fill{
+  .obit-main-fill {
     height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
-    .obit-content{
-      flex-grow:1;
+
+    .obit-content {
+      flex-grow: 1;
       overflow: auto;
       @include scrollBar;
     }
   }
+
   // 面包屑在body里面
-  .has-breadcrumb{
-    .obit-main-fill{
+  .has-breadcrumb {
+    .obit-main-fill {
       height: calc(100vh - 83px);
     }
-    .obit-main-add{
+
+    .obit-main-add {
       top: 19px;
     }
   }
-  
-  .full-main{
+
+  .full-main {
     left: 10px;
     right: 10px;
     bottom: 10px;
     top: 10px;
   }
-  .submit-main{
+
+  .submit-main {
     position: absolute;
     left: 10px;
     right: 10px;
     bottom: 48px;
     top: 10px;
   }
-  .height-100-head{
+
+  .height-100-head {
     height: calc(100% - 50px);
   }
-  .height-100{
+
+  .height-100 {
     height: 100%;
   }
-  .obit-search{
-    padding:  20px;
+
+  .obit-search {
+    padding: 10px;
 
   }
-  .obit-content{
+
+  .obit-content {
     padding: 0 10px;
-    .el-table__body-wrapper{
+
+    .el-table__body-wrapper {
       @include scrollBar;
     }
   }
-  .obit-pager{
+
+  .obit-pager {
     text-align: right;
     padding-top: 5px;
   }
 }
+
 // 固定header
-.fixed-header-main{
+.fixed-header-main {
   margin-top: 50px;
 }
-.input-md{
-    width: 220px;
-    vertical-align: top;
-    margin: 0 20px 10px 0;
-    line-height: 36px;
 
-    .el-input__inner{
-        height: 36px;
-        line-height: 36px;
-    }
-}
-.input-com{
+.input-md {
+  width: 220px;
   vertical-align: top;
-  height: 36px;
-    line-height: 36px;
-  .el-input__inner{
+  margin: 0 20px 10px 0;
+  line-height: 36px;
+
+  .el-input__inner {
     height: 36px;
     line-height: 36px;
   }
-  .el-range-input{
+}
+
+.input-com {
+  vertical-align: top;
+  height: 36px;
+  line-height: 36px;
+
+  .el-input__inner {
+    height: 36px;
+    line-height: 36px;
+  }
+
+  .el-range-input {
     height: 34px;
     line-height: 36px;
   }
-  .el-range-separator{
+
+  .el-range-separator {
     width: 7%;
   }
 }
-.btn-md{
+
+.btn-md {
   padding: 10px 20px;
   font-size: 14px;
   border-radius: 4px;
 }
+
 // 搜索 多条件搜索 form 表单样式
-.obit-serach-form{
+.obit-serach-form {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -129,49 +151,56 @@
   transition: .2s;
   margin: 0px 10px 20px;
   padding: 20px 10px 10px;
-  box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
-  .input-md{
-      margin-right: 0;
+  box-shadow: 0 0 8px 0 rgba(232, 237, 250, .6), 0 2px 4px 0 rgba(232, 237, 250, .5);
+
+  .input-md {
+    margin-right: 0;
   }
-  .search-br{
+
+  .search-br {
     width: 340px;
     height: 0;
   }
-  .search-btn{
+
+  .search-btn {
     width: 100%;
     margin-right: 10px;
     margin-bottom: 5px;
     text-align: center;
   }
-  .el-form-item{
-    margin-bottom:5px;
+
+  .el-form-item {
+    margin-bottom: 5px;
   }
 }
 
-.table-content{
+.table-content {
   border: 1px solid #ebebeb;
-    border-radius: 3px;
-    transition: .2s;
-    padding: 24px;
-    .table-header{    
-      font-weight: 400;
-      color: #1f2f3d;
-      font-size: 22px;
-      margin: 5px 0 20px;
-    }
+  border-radius: 3px;
+  transition: .2s;
+  padding: 24px;
+
+  .table-header {
+    font-weight: 400;
+    color: #1f2f3d;
+    font-size: 22px;
+    margin: 5px 0 20px;
+  }
 }
-.center-header{
+
+.center-header {
   font-weight: 400;
   color: #1f2f3d;
   font-size: 28px;
   text-align: center;
   padding: 10px;
 }
-.table-content:hover{
-  box-shadow:0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
+
+.table-content:hover {
+  box-shadow: 0 0 8px 0 rgba(232, 237, 250, .6), 0 2px 4px 0 rgba(232, 237, 250, .5);
 }
 
 
-.el-upload--picture-card{
+.el-upload--picture-card {
   background: $bodybg;
 }
