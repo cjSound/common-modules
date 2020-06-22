@@ -1,9 +1,9 @@
 <!--
- * @Author: 刘硕
+ * @Author: 曹捷
  * @Date: 2019-08-19 09:34:05
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-06-20 16:50:33
- * @Description: file content
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-06-22 21:58:19
+ * @Description: 系统管理 之 用户管理
  -->
 <template>
   <div class="obit-main obit-main-fill">
@@ -12,35 +12,14 @@
       <el-select @change="queryDataList(true)" class="input-md" clearable filterable placeholder="请选择机构" v-model="params.orgId">
         <el-option :key="item.organizationId" :label="item.organizationName" :value="item.organizationId" v-for="item in orgList"></el-option>
       </el-select>
-
       <span class="p-r-10">
         <el-button @click="queryDataList" class="btn-md" icon="el-icon-search" type="primary">搜索</el-button>
         <el-button @click="addDialog" class="btn-md" icon="el-icon-plus" type="primary" v-permiss="'addUser'">新增</el-button>
       </span>
     </div>
+    <!-- 自定义搜索组件，拼接sql -->
+    <!-- <obitSearch @change="queryDataList" searchCode="test" v-model="params.strSql"></obitSearch> -->
     <div class="obit-content">
-      <!-- <el-table :data="dataList" class="obit-table" style="width: 100%">
-        <el-table-column :key="column.prop" :label="column.label" :min-width="column.minWidth" v-for="column in tableColumns">
-          <template slot-scope="scope">
-            <el-tooltip :content="scope.row[column.prop]" class="item" effect="dark" placement="top">
-              <span>{{scope.row[column.prop] || "-"}}</span>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="150">
-          <template slot-scope="scope">
-            <el-tooltip class="item" content="重置密码" effect="dark" placement="top" v-permiss="'resetUser'">
-              <svg-icon @click="updatePass(scope.row)" class="m-r-10 obit-link" icon-class="reset" />
-            </el-tooltip>
-            <el-tooltip class="item" content="编辑" effect="dark" placement="top" v-permiss="'editUser'">
-              <i @click="editDialog(scope.row)" class="el-icon el-icon-setting pointer obit-link p-r-10"></i>
-            </el-tooltip>
-            <el-tooltip class="item" content="删除" effect="dark" placement="top" v-permiss="'removeUser'">
-              <i @click="deleteUser(scope.row)" class="el-icon el-icon-delete pointer obit-link"></i>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-      </el-table>-->
       <obit-table
         :dataList="dataList"
         :tableColumns="tableColumns"
@@ -80,7 +59,7 @@
 import pagerMix from '@/common-modules/mixin/pagerMix'
 import userAdd from './userAdd'
 import updatePassword from './updatePassword'
-
+import { aesEncode, aesDecode } from '@/common-modules/utils/secret'
 export default {
   components: { userAdd, updatePassword },
   mixins: [pagerMix],
@@ -107,6 +86,7 @@ export default {
     }
   },
   mounted() {
+    // this.tableRequest = 'getTestQuery'
     this.tableRequest = 'getSystemUserList'
     this.queryDataList()
     this.getOrgList()
@@ -151,7 +131,6 @@ export default {
       this.addType = 'edit'
     },
     reload() {
-      this.tableRequest = 'getSystemUserList'
       this.queryDataList()
       this.getOrgList()
     },

@@ -2,10 +2,11 @@
  * @Author: 曹捷
  * @Date: 2019-07-19 09:19:35
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-04 10:01:50
+ * @LastEditTime: 2020-06-22 21:56:33
  * @Description: table分页  抽取相关mix
  */
 import util from '@/common-modules/utils/utils'
+import { aesEncode } from '@/common-modules/utils/secret'
 export default {
     data() {
         return {
@@ -51,9 +52,12 @@ export default {
                     this.searchParams.pageNum = 1
                     this.total = 0
                 }
-                const params = Object.assign(this.params, (this.getQueryParam && this.getQueryParam()) || this.queryParams)
+                const params = Object.assign(util.util.cloneObj(this.params), (this.getQueryParam && this.getQueryParam()) || this.queryParams)
                 let param = util.util.cloneObj(this.searchParams)
-                // param = Object.assign(params, param)
+                // 自定义查询组件 前端拼接字符串，AES加密传输
+                if (params.strSql) {
+                    params.strSql = aesEncode(params.strSql)
+                }
                 param.param = params
                 param.total = this.total
                 this.loading = true

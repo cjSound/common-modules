@@ -2,11 +2,19 @@
  * @Author: 曹捷
  * @Date: 2020-04-27 18:44:59
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-04-27 19:02:58
+ * @LastEditTime: 2020-06-22 18:54:51
  * @Description: 封装select组件  支持同时获取value和name
  -->
 <template>
-  <el-select :disabled="disabled" :placeholder="placeholder" @change="changeValue" class="input-md" clearable filterable  v-model="dictValue">
+  <el-select
+    :clearable="clearable"
+    :disabled="disabled"
+    :placeholder="placeholder"
+    @change="changeValue"
+    class="input-md"
+    filterable
+    v-model="dictValue"
+  >
     <el-option :key="item.valueName" :label="item[labelName]" :value="item[valueName]" v-for="item in selectList"></el-option>
   </el-select>
 </template>
@@ -23,6 +31,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    clearable: {
+      type: Boolean,
+      default: true
     },
     readOnly: {
       type: Boolean,

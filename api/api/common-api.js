@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-01 14:25:13
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-04-16 16:10:48
+ * @LastEditTime: 2020-06-22 21:25:54
  * @Description: file content
  */
 import api from './api'
@@ -35,4 +35,12 @@ export default {
     getSystemButtonList(data = {}) {
         return api.get(`${URL}manage/menu/getButtonList`, data)
     },
+    // 自定义查询组件相关
+    getDataByUrl(url) {
+        return api.get(`${URL}${url} `, {})
+    },
+    getQuerySetting(data) {
+        let param = { business: data }
+        return api.get(`${URL}querySetting/getByBusiness`, param)
+    }
 }

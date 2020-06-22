@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-05-17 11:39:56
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-16 09:30:23
+ * @LastEditTime: 2020-06-22 17:32:58
  * @Description: file content
 --> 
 <template>
@@ -57,7 +57,6 @@
 
 <script>
 import config from '@/config/config'
-console.log('tableBorder', config)
 export default {
   props: {
     dataList: {
@@ -117,7 +116,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$scopedSlots, this)
+    // console.log(this.$scopedSlots, this)
   },
   methods: {
     // 多选 将id 存入handleSelectionList 集合
