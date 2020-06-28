@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-20 20:25:19
  * @LastEditors: 刘硕
- * @LastEditTime: 2020-06-20 16:47:49
+ * @LastEditTime: 2020-06-28 10:06:07
  * @Description: file content
  -->
 <template>
@@ -42,7 +42,7 @@
         <contentForm :fromtitle="{title1:'字典值',title2:'数据字典类型值'}">
           <div class="obit-search">
             <span class="f-r">
-              <el-button @click="addDialogValue" class="btn-md" icon="el-icon-plus" type="primary" v-permiss="'addDictV'">新增</el-button>
+              <el-button @click="addDialogValue" class="btn-md" icon="el-icon-plus" type="primary">新增</el-button>
             </span>
           </div>
           <el-table :data="dictValueList" class="obit-table" style="width: 100%">
@@ -55,10 +55,10 @@
             </el-table-column>
             <el-table-column label="操作" width="60">
               <template slot-scope="scope">
-                <el-tooltip class="item" content="操作" effect="dark" placement="top" v-permiss="'editDictV'">
+                <el-tooltip class="item" content="操作" effect="dark" placement="top">
                   <i @click="editDialogValue(scope.row)" class="el-icon el-icon-setting obit-link p-r-10"></i>
                 </el-tooltip>
-                <el-tooltip class="item" content="删除" effect="dark" placement="top" v-permiss="'removeDictV'">
+                <el-tooltip class="item" content="删除" effect="dark" placement="top">
                   <i @click="removeInfoValue(scope.row)" class="el-icon el-icon-delete pointer obit-link"></i>
                 </el-tooltip>
               </template>

@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-04-14 16:28:00
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-04-23 13:00:09
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-06-28 10:30:44
  * @Description: 改造cascader modal  是数组，实际使用是最后一级
  -->
 <template>
@@ -13,6 +13,7 @@
     :props="pData"
     :show-all-levels="false"
     @change="cascChange"
+    clearable
     v-if="loading"
     v-model="cascValue"
   ></el-cascader>

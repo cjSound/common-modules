@@ -1,17 +1,24 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-19 09:34:05
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-22 21:58:19
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-06-28 10:30:55
  * @Description: 系统管理 之 用户管理
  -->
 <template>
   <div class="obit-main obit-main-fill">
     <div class="obit-search">
       <el-input @change="queryDataList(true)" class="input-md" placeholder="用户名、用户编码" v-model="params.name"></el-input>
-      <el-select @change="queryDataList(true)" class="input-md" clearable filterable placeholder="请选择机构" v-model="params.orgId">
-        <el-option :key="item.organizationId" :label="item.organizationName" :value="item.organizationId" v-for="item in orgList"></el-option>
-      </el-select>
+      <obitDict
+        :dictCode="'userType'"
+        @change="queryDataList(true)"
+        class="input-md"
+        clearable
+        filterable
+        placeholder="请选择用户类型"
+        v-model="params.userType"
+      ></obitDict>
+      <obit-org @change="queryDataList(true)" class="input-md" v-model="params.orgId"></obit-org>
       <span class="p-r-10">
         <el-button @click="queryDataList" class="btn-md" icon="el-icon-search" type="primary">搜索</el-button>
         <el-button @click="addDialog" class="btn-md" icon="el-icon-plus" type="primary" v-permiss="'addUser'">新增</el-button>
@@ -70,12 +77,11 @@ export default {
         { prop: 'userName', label: '用户名称' },
         { prop: 'userCode', label: '用户编码' },
         { prop: 'orgName', label: '机构' },
-        { prop: 'roleName', label: '角色' }
+        { prop: 'roleName', label: '角色' },
+        { prop: 'userTypeName', label: '用户类型' }
       ],
       orgList: [],
-      params: {
-        userType: 1
-      },
+      params: {},
       // 新增编辑相关
       addVisable: false,
       //密码重置相关
@@ -89,20 +95,12 @@ export default {
     // this.tableRequest = 'getTestQuery'
     this.tableRequest = 'getSystemUserList'
     this.queryDataList()
-    this.getOrgList()
   },
   methods: {
     todetails(item) {
       this.$message({
         type: 'success',
         message: item.name
-      })
-    },
-    //获取组织树
-    getOrgList() {
-      let data = {}
-      this.$http.getAllOrgTree().then(res => {
-        this.orgList = res
       })
     },
     //删除
@@ -132,7 +130,6 @@ export default {
     },
     reload() {
       this.queryDataList()
-      this.getOrgList()
     },
     updatePass(row) {
       this.updateVisable = true

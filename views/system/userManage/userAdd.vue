@@ -2,7 +2,7 @@
  * @Author: 刘硕
  * @Date: 2019-08-19 14:45:40
  * @LastEditors: 刘硕
- * @LastEditTime: 2020-06-20 10:40:53
+ * @LastEditTime: 2020-06-28 10:28:10
  * @Description: file content
  -->
 <template>
@@ -23,9 +23,6 @@
         </el-form-item>
         <el-form-item label="机构" prop="organizationId">
           <obit-org v-model="formData.organizationId"></obit-org>
-          <!-- <el-select filterable placeholder="请选择机构" v-model="formData.organizationId">
-            <el-option :key="item.organizationId" :label="item.organizationName" :value="item.organizationId" v-for="item in orgList"></el-option>
-          </el-select>-->
         </el-form-item>
         <el-form-item label="角色" prop="roleId">
           <el-select filterable placeholder="请选择角色" v-model="formData.roleId">
@@ -57,6 +54,20 @@ export default {
     }
   },
   data() {
+    let checkValue = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('请输入账号'))
+      }
+      let params = {}
+      params.account = value
+      this.$http.accountCanUse(params).then(res => {
+        if (res) {
+          return callback(new Error('该账号已使用'))
+        } else {
+          return callback()
+        }
+      })
+    }
     return {
       formData: {},
       roleList: [],
@@ -64,7 +75,7 @@ export default {
       activeName: 'add',
       addVisible: this.visible,
       rules: {
-        account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+        account: [{ required: true, validator: checkValue, trigger: 'blur' }],
         userName: [
           { required: true, message: '请输入用户名称', trigger: 'blur' }
         ],
@@ -94,7 +105,6 @@ export default {
   },
   mounted() {
     this.getAllRole()
-    this.getOrgList()
   },
   methods: {
     //保存
@@ -127,13 +137,6 @@ export default {
     getAllRole() {
       this.$http.getSystemRoleList().then(res => {
         this.roleList = res
-      })
-    },
-    //获取组织树
-    getOrgList() {
-      let data = {}
-      this.$http.getAllOrgTree().then(res => {
-        this.orgList = res
       })
     }
   }
