@@ -2,7 +2,7 @@
  * @Author: 刘硕
  * @Date: 2019-08-19 14:45:40
  * @LastEditors: 刘硕
- * @LastEditTime: 2020-06-28 10:28:10
+ * @LastEditTime: 2020-06-29 19:32:20
  * @Description: file content
  -->
 <template>
@@ -58,6 +58,9 @@ export default {
       if (!value) {
         return callback(new Error('请输入账号'))
       }
+      if (this.oldAccount === value) {
+        return callback()
+      }
       let params = {}
       params.account = value
       this.$http.accountCanUse(params).then(res => {
@@ -74,6 +77,7 @@ export default {
       orgList: [],
       activeName: 'add',
       addVisible: this.visible,
+      oldAccount: '',
       rules: {
         account: [{ required: true, validator: checkValue, trigger: 'blur' }],
         userName: [
@@ -97,6 +101,7 @@ export default {
     visible(value) {
       if (value && this.addType === 'edit') {
         this.$set(this, 'formData', util.util.cloneObj(this.detailsInfo))
+        this.oldAccount = this.formData.account
       } else {
         util.util.cleanObj(this.formData)
       }
