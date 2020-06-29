@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-21 15:16:37
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-10 10:43:22
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-06-29 11:25:28
  * @Description: file content
  -->
 <template>
@@ -102,7 +102,10 @@ export default {
       default: ''
     },
     fileList: {
-      type: Array
+      type: Array,
+      default() {
+        return []
+      }
     }
   },
   data() {
