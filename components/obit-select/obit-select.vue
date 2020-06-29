@@ -1,14 +1,15 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-04-27 18:44:59
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-22 18:54:51
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-06-29 11:20:23
  * @Description: 封装select组件  支持同时获取value和name
  -->
 <template>
   <el-select
     :clearable="clearable"
     :disabled="disabled"
+    :multiple="multiple"
     :placeholder="placeholder"
     @change="changeValue"
     class="input-md"
@@ -32,6 +33,10 @@ export default {
       type: Boolean,
       default: false
     },
+    multiple: {
+      type: Boolean,
+      default: false
+    },
     clearable: {
       type: Boolean,
       default: true
@@ -41,7 +46,7 @@ export default {
       default: false
     },
     value: {
-      type: [Number, String]
+      type: [Number, String, Array]
     },
     placeholder: {
       type: String,
@@ -82,10 +87,14 @@ export default {
       let obj = this.selectList.find(item => {
         return item[this.valueName] === value
       })
-      this.$emit('update:selectName', obj[this.labelName])
+      this.$emit('update:selectName', obj ? obj[this.labelName] : '')
     }
   },
-  mounted() {}
+  mounted() {
+    if (this.value) {
+      this.changeValue(this.value)
+    }
+  }
 }
 </script>
 

@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-22 15:24:21
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-10 09:04:06
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-06-29 11:15:39
  * @Description: 字典组件
  -->
 <template>
@@ -11,7 +11,6 @@
     :disabled="disabled"
     :multiple="multiple"
     :placeholder="placeholder"
-    @change="changeDict"
     class="input-md"
     v-if="type==='select'"
     v-model="dictValue"
@@ -90,11 +89,13 @@ export default {
     },
     dictCode() {
       this.initData()
+    },
+    dictValue(value, oldvalue) {
+      this.changeDict(value)
     }
   },
   methods: {
     initValue() {
-      console.log(222, this.value)
       if (this.value === null || this.value === undefined) {
         this.dictValue = this.multiple ? [] : ''
       } else {
@@ -113,6 +114,7 @@ export default {
       let param = { codeField: this.dictCode }
       ajax.methods.getCommonDictValueList(param).then(res => {
         this.dictValueList = res
+        this.initValue()
       })
     },
     changeDict(value) {
@@ -121,7 +123,7 @@ export default {
     }
   },
   mounted() {
-    this.initValue()
+    // this.initValue()
     this.initData()
   }
 }
