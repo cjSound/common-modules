@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-22 15:24:21
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-06-29 11:15:39
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-06-30 12:43:33
  * @Description: 字典组件
  -->
 <template>
@@ -91,11 +91,18 @@ export default {
       this.initData()
     },
     dictValue(value, oldvalue) {
-      this.changeDict(value)
+      if (value instanceof Array) {
+        if (value.length !== oldvalue.length) {
+          this.changeDict(value)
+        }
+      } else {
+        this.changeDict(value)
+      }
     }
   },
   methods: {
     initValue() {
+      console.log('initValue -> initValue', this.value)
       if (this.value === null || this.value === undefined) {
         this.dictValue = this.multiple ? [] : ''
       } else {
