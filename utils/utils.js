@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 17:02:31
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 13:10:26
+ * @LastEditTime: 2020-07-09 09:48:31
  * @Description: 系统工具类
  */
 const util = {}
@@ -11,7 +11,8 @@ util.util = {
     /*克隆一个对象*/
     cloneObj(obj) {
         var newObj = {};
-        if (obj instanceof Array) {
+        let type = Object.prototype.toString.call(obj)
+        if (type.indexOf('Array') !== -1) {
             newObj = [];
         }
         for (var key in obj) {
@@ -43,7 +44,159 @@ util.util = {
             }
         }
         return arr;
-    }
+    },
+    getArrayIndexByOptions: function (arry, value, optionList) {
+        for (var i = 0; i < arry.length; i++) {
+            var res = true;
+            for (var it in optionList) {
+                if (arry[i][optionList[it]] != value[optionList[it]]) {
+                    res = false;
+                }
+            }
+            if (res) {
+                return i;
+            }
+        }
+        return -1;
+    },
+    getArrayObjectByValues: function (arry, value, option) {
+        var arr = arguments;
+        for (let i = 0; i < arry.length; i++) {
+            if (arr.length > 3) {
+                var find = true;
+                for (var index = 2; index < arr.length; index++) {
+                    if (arry[i][arr[index]] != value[arr[index]]) {
+                        find = false;
+                    }
+                }
+                if (find) return arry[i];
+            } else {
+                if (arry[i][option] == value[option]) {
+                    return arry[i];
+                }
+            }
+
+        }
+        return null;
+    },
+    /*对敏感信息 进行*号处理  比如id  身份证号,手机号*/
+    infoPrivacy(el) {
+        let ht = el.innerHTML;
+        let ls = el.innerHTML.length;
+        let rep, length = 0;
+        if (ls > 10) {
+            rep = ht.substring(0, ls - 5);
+            length = ls - 5;
+        } else if (ls < 4) {
+            rep = ht.substring(1, ls - 1);
+            length = ls - 2;
+        } else {
+            rep = ht.substring(2, ls - 2);
+            length = ls - 4;
+        }
+        let repl = '';
+        for (let i = 0; i < length; i++) {
+            repl += '*';
+        }
+        ht = ht.replace(rep, repl);
+        el.innerHTML = ht;
+    },
+    /**
+     * 保留原对象基础属性，集成新对象里面的所有的属性值，属性值相同的替换成新属性
+     * source {a:1,b:1,c:1}  newdata{b:1,c:1,d:1}  = {a:1,b:2,c:2,d:1}
+     * @param {*} source 
+     * 原数据对象
+     * @param {*} newdata 
+     * 要赋值给原数据对象的内容
+     */
+    extendObj(source, newdata) {
+        if (source == null) return;
+        for (var property in newdata) {
+            if (typeof newdata[property] === "object") {
+                if (source[property] == null) {
+                    if (newdata[property] instanceof Array) {
+                        source[property] = [];
+                    } else {
+                        source[property] = {};
+                    }
+                }
+                this.extendObj(source[property], newdata[property]);
+            } else {
+                source[property] = newdata[property];
+            }
+
+        }
+        return source;
+    },
+    /**
+     * 保留原对象基础属性，新对象里面对应的属性值有值的情况下进行更新
+     * source {a:1,b:1,c:1}  newdata{b:1,c:1,d:1}  = {a:1,b:2,c:2}
+     * @param {*} source 
+     * 原数据对象
+     * @param {*} newdata 
+     * 要赋值给原数据对象的内容
+     */
+    assignObj(source, newdata) {
+        if (source == null) return;
+        for (var property in source) {
+            if (typeof source[property] === "object" && typeof newdata[property] === "object") {
+                this.assignObj(source[property], newdata[property]);
+            } else if (newdata[property] != null && newdata[property] != '') {
+                source[property] = newdata[property];
+            }
+        }
+        return source;
+    },
+    /*在传递数据的时候对对象进行中文编码处理*/
+    encodeParemt(paremt) {
+        var a = {};
+        for (var i in paremt) {
+            a[i] = encodeURI(paremt[i]);
+        }
+        return a;
+    },
+    /**
+     * 获取url后面的参数  返回json
+     */
+    getParams: function () {
+        var url = window.location.hash;
+        var theRequest = null;
+        if (url.indexOf("?") != -1) {
+            url = url.split("?")[1];
+            theRequest = new Object();
+            var str = url.substr(0);
+            var strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = (strs[i].split("=")[1]);
+            }
+        }
+        if (theRequest != null)
+            return theRequest;
+        else
+            return null;
+    },
+    //数组去重
+    ArrayUnique: function (arr) {
+        var res = [];
+        var json = {};
+        for (var i = 0; i < arr.length; i++) {
+            if (!json[arr[i]]) {
+                res.push(arr[i]);
+                json[arr[i]] = 1;
+            }
+        }
+        return res;
+    },
+    parseParam(queryConfig) { //吧对象转为url字符拼接
+        var _str = "";
+        for (var o in queryConfig) {
+            if (queryConfig[o] != -1) {
+                _str += o + "=" + queryConfig[o] + "&";
+            }
+        }
+        var _str = _str.substring(0, _str.length - 1);
+        return _str;
+    },
 }
 /**
  * @description cookie模块
