@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-06-22 20:37:04
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-07-13 21:02:08
+ * @LastEditors: 徐生延
+ * @LastEditTime: 2020-07-14 15:26:53
  * @Description: 自定义查询条件 接口下拉列表
 --> 
 <template>
@@ -21,7 +21,6 @@
 
 <script>
 import obitSelect from './../obit-select/obit-select'
-import { querySettingGetURL } from '@/api/querySetting'
 
 export default {
   props: {
@@ -64,7 +63,7 @@ export default {
     },
     initData(searchText) {
       searchText = searchText ? searchText : ''
-      querySettingGetURL(`${this.itemInfo.ajaxurl}${searchText}`).then(res => {
+      this.$http.getDataByUrl(`${this.itemInfo.ajaxurl}${searchText}`).then(res => {
         if (res.status == 200 && res.code === '000') {
           let list = res.data
           list.forEach((element, index) => {

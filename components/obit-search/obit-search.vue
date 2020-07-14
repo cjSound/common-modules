@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-06-22 17:06:07
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-07-13 21:00:03
+ * @LastEditors: 徐生延
+ * @LastEditTime: 2020-07-14 15:27:45
  * @Description: 自定义查询条件 自动新增拼接sql
 --> 
 <template>
@@ -132,10 +132,8 @@
 import obitSelect from './../obit-select/obit-select'
 import obitSelectUrl from './obit-select-url'
 import { Message } from 'element-ui'
-import { querySettingGetByBusiness } from '@/api/querySetting'
-import { aesEncode } from '@/utils/secret'
 
-import util from '@/utils/utils'
+import util from '@/common-modules/utils/utils'
 export default {
   props: {
     value: {
@@ -233,7 +231,7 @@ export default {
       callback()
     },
     listToSearchList() {
-      querySettingGetByBusiness({ business: this.searchCode }).then(res => {
+      this.$http.getQuerySetting({ business: this.searchCode }).then(res => {
         // let list = util.util.cloneObj(this.dataList)
         this.dataList = res.data
       })
@@ -331,9 +329,9 @@ export default {
               this.selfParams[item.setCode] = item.value1
             }
           })
-          this.$emit('input', aesEncode(sql))
+          this.$emit('input', sql)
           this.$emit('update:params', this.selfParams)
-          this.$emit('change', aesEncode(sql))
+          this.$emit('change', sql)
           console.log('onSubmit -> sql', sql)
         } else {
           console.log('error submit!!')
