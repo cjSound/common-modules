@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 17:02:31
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-07-09 09:48:31
+ * @LastEditTime: 2020-07-15 11:47:45
  * @Description: 系统工具类
  */
 const util = {}
@@ -141,7 +141,7 @@ util.util = {
         for (var property in source) {
             if (typeof source[property] === "object" && typeof newdata[property] === "object") {
                 this.assignObj(source[property], newdata[property]);
-            } else if (newdata[property] != null && newdata[property] != '') {
+            } else if (newdata[property] !== null && newdata[property] !== '' && newdata[property] !== undefined) {
                 source[property] = newdata[property];
             }
         }
