@@ -1,12 +1,12 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-06-22 17:06:07
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-22 21:57:25
+ * @LastEditors: 徐生延
+ * @LastEditTime: 2020-07-14 15:27:45
  * @Description: 自定义查询条件 自动新增拼接sql
 --> 
 <template>
-  <div class="p-l-10">
+  <div class>
     <el-collapse accordion class="search-main">
       <el-collapse-item :title="title">
         <el-form :inline="true" :model="formData" class="search-ruleForm" label-width="100px" ref="ruleForm">
@@ -53,7 +53,7 @@
             }]"
               v-if="item.type===4"
             >
-              <obitSelectUrl :itemInfo="item" v-model="item.value1"></obitSelectUrl>
+              <obitSelectUrl :itemInfo="item" :selectCode="item.setCode" v-model="item.value1"></obitSelectUrl>
             </el-form-item>
             <!-- 时间类型 包含单个或者区间范围 -----------------------start -->
             <el-form-item
@@ -154,6 +154,8 @@ export default {
       formData: {
         searchParamsList: []
       },
+      // 自定义参数对象
+      selfParams: {},
       dataList: [
         // {
         //   fieldName: 'date',
@@ -229,9 +231,9 @@ export default {
       callback()
     },
     listToSearchList() {
-      this.$http.getQuerySetting(this.searchCode).then(res => {
+      this.$http.getQuerySetting({ business: this.searchCode }).then(res => {
         // let list = util.util.cloneObj(this.dataList)
-        this.dataList = res
+        this.dataList = res.data
       })
     },
     // 字段名改变
@@ -241,15 +243,34 @@ export default {
       })
       let selestList = this.selectType[arr[0].type]
       let param = this.formData.searchParamsList[index]
+      /**
+       * fatherId
+       * 级联查询 ，代表当前查询条件的内容 ，要依据对应fatherId 选择的内容
+       */
+      if (arr[0].fatherId) {
+        // debugger
+        let info = this.dataList.filter(item => {
+          return arr[0].fatherId === item.id
+        })[0]
+        let fItem = this.formData.searchParamsList.filter(item => {
+          return arr[0].fatherId === item.id
+        })
+        if (fItem.length === 0 || !fItem[0].value1) {
+          Message.warning({
+            message: `提示：当前字段内容属于级联查询，依赖 [${info.fieldContext}] 字段内容，请先选择 [${info.fieldContext}] 字段`,
+            duration: 10000
+          })
+          return
+        } else {
+          param.initValue = fItem[0].value1
+        }
+      }
       param.selectList = selestList
       param.selectCode = selestList[0].key
+
+      util.util.assignObj(param, arr[0])
       param.value1 = ''
       param.value2 = ''
-      param.type = arr[0].type
-      param.ajaxurl = arr[0].ajaxurl
-      param.labelname = arr[0].labelname
-      param.valuename = arr[0].valuename
-      console.log('changeSetting -> this.formData', this.formData)
     },
     // 查询条件改变
     changeSelect(event, index) {
@@ -265,8 +286,12 @@ export default {
         value2: '', //当介于条件 有多个条件
         selectList: [], //查询条件集合
         ajaxurl: '',
+        remote: 0,
+        deal: '',
         labelname: '',
-        valuename: ''
+        valuename: '',
+        id: '',
+        fatherId: ''
       })
     },
     removeParam(index) {
@@ -279,21 +304,33 @@ export default {
           let sql = ` `
           this.formData.searchParamsList.forEach(element => {
             let item = util.util.cloneObj(element)
-            if (item.type === 1 || item.type === 2) {
-              if (item.selectCode === 'like') {
-                item.value1 = `'%${item.value1}%'`
-              } else {
-                item.value1 = `'${item.value1}'`
-                item.value2 = `'${item.value2}'`
+            if (item.deal === 1) {
+              // item.deal 1才拼接sql
+              // item.deal 0返回自定义params
+              if (item.type === 1 || item.type === 2) {
+                if (item.selectCode === 'like') {
+                  item.value1 = `'%${item.value1}%'`
+                } else {
+                  item.value1 = `'${item.value1}'`
+                  item.value2 = `'${item.value2}'`
+                }
+              } else if (item.type === 4) {
+                // todo 001 判断为 数字
+                if (isNaN(item.value1)) {
+                  item.value1 = `'${item.value1}'`
+                }
               }
-            }
-            if (item.selectCode === 'between') {
-              sql += ` and  ${item.setCode} ${item.selectCode}  ${item.value1} and ${item.value2} `
-            } else {
-              sql += ` and  ${item.setCode} ${item.selectCode}  ${item.value1}   `
+              if (item.selectCode === 'between') {
+                sql += ` and  ${item.setCode} ${item.selectCode}  ${item.value1} and ${item.value2} `
+              } else {
+                sql += ` and  ${item.setCode} ${item.selectCode}  ${item.value1}   `
+              }
+            } else if (item.deal === 0) {
+              this.selfParams[item.setCode] = item.value1
             }
           })
           this.$emit('input', sql)
+          this.$emit('update:params', this.selfParams)
           this.$emit('change', sql)
           console.log('onSubmit -> sql', sql)
         } else {

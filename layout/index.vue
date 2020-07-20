@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:39
  * @LastEditors: 徐生延
- * @LastEditTime: 2020-06-20 15:58:08
+ * @LastEditTime: 2020-07-18 16:14:43
  * @Description:  布局layout
  -->
 <template>
@@ -26,6 +26,7 @@ import { Navbar, Sidebar, AppMain } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { routerPermission } from '@/common-modules/utils/validate'
 import config from '@/config/config'
+import { userRole } from '@/common-modules/utils/auth'
 
 export default {
   name: 'Layout',
@@ -84,7 +85,16 @@ export default {
     }
   },
   mounted() {
-    this.initMenu()
+    let userInfo = userRole.get()
+    if(userInfo && JSON.parse(userInfo).userType === 1){
+      this.initMenu()
+    }else{
+      if(this.$route.path === '/main'){
+        this.$router.push('/client/monitorIndex');
+      }else{
+        this.$router.push('/401');
+      }
+    }
   }
 }
 </script>
