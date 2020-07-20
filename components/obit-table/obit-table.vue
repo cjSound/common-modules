@@ -1,12 +1,20 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-05-17 11:39:56
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-22 17:32:58
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-07-20 10:51:37
  * @Description: file content
 --> 
 <template>
-  <el-table :border="tableBorder" :data="dataList" :style="{width:width}" @selection-change="handleSelectionChange" class="com-table">
+  <el-table
+    :border="tableBorder"
+    :data="dataList"
+    :style="{width:width}"
+    @current-change="handleCurrentChange"
+    @selection-change="handleSelectionChange"
+    class="com-table"
+    highlight-current-row
+  >
     <el-table-column type="selection" v-if="$listeners.selectionChange" width="55"></el-table-column>
     <el-table-column :label="indexName" type="index" v-if="indexName !==null" width="50"></el-table-column>
     <el-table-column
@@ -130,6 +138,9 @@ export default {
     },
     clickEvent(item, eventKey) {
       this.$emit(eventKey, item)
+    },
+    handleCurrentChange(item) {
+      this.$emit('handleCurrentChange', item)
     }
   }
 }
