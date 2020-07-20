@@ -1,8 +1,8 @@
 /*
  * @Author: 曹捷
  * @Date: 2020-04-21 09:40:10
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 14:33:37
+ * @LastEditors: 徐生延
+ * @LastEditTime: 2020-07-18 15:04:27
  * @Description: file content
  */
 import ajax from '@/common-modules/api'
@@ -47,7 +47,7 @@ const actions = {
 
         userRole.set(response)
         setToken(accessToken)
-        resolve()
+        resolve(response)
       }).catch(error => {
         reject(error)
       })
