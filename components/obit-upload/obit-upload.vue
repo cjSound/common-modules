@@ -1,12 +1,18 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-21 15:16:37
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-06-29 11:25:28
+ * @LastEditors: 徐生延
+ * @LastEditTime: 2020-07-21 19:07:11
  * @Description: file content
  -->
 <template>
   <span>
+    <ul class="obit-video-content" v-if="isShowVideo">
+      <li v-for="(item,inx) in videosArr" :key="'videosArr'+inx">
+        <video v-bind:src="item.url" controls="controls"></video>
+        <el-button size="mini" @click="removeVideo(inx)" type="danger" icon="el-icon-close" circle></el-button>
+      </li>
+    </ul>
     <el-upload
       :accept="accept"
       :action="action"
@@ -25,6 +31,7 @@
       :on-success="success"
       :show-file-list="showFileList"
       class="avatar-uploader"
+      :class="{'obit-video':isShowVideo}"
       ref="upload"
     >
       <slot></slot>
@@ -48,6 +55,7 @@
 
 <script>
 import { Upload, Loading } from 'element-ui'
+import util from '@/common-modules/utils/utils'
 
 export default {
   components: {
@@ -101,11 +109,20 @@ export default {
       type: String,
       default: ''
     },
+    uploadType: {
+      type: String,
+      default: 'Img'
+    },
     fileList: {
       type: Array,
       default() {
         return []
       }
+    }
+  },
+  computed:{
+    isShowVideo(){
+      return this.uploadType === 'video' && !this.showFileList
     }
   },
   data() {
@@ -114,7 +131,8 @@ export default {
       uploadSuccessNum: 0,
       loading: '',
       dialogVisible: false,
-      dialogImageUrl: ''
+      dialogImageUrl: '',
+      videosArr:JSON.parse(JSON.stringify(this.fileList)),
     }
   },
   methods: {
@@ -124,6 +142,13 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
+    },
+    removeVideo(fileIndex){
+      this.videosArr.splice(fileIndex, 1)
+      //要清空uploadFiles，不然onExceed方法无法控制
+      this.$refs.upload.uploadFiles.splice(fileIndex, 1)
+      console.log('this.videosArr-del:',this.videosArr)
+      this.$emit('remove', fileIndex, this.params)
     },
     handleRemove(file, fileList) {
       let fileIndex
@@ -174,6 +199,8 @@ export default {
         .upload(this.action, param)
         .then(res => {
           this.endLoading()
+          this.videosArr.push({url:res.sourceUrl})
+          console.log('this.videosArr:',this.videosArr)
           this.success && this.success(res, this.params)
         })
         .catch(() => {
@@ -199,8 +226,32 @@ export default {
 }
 </script>
 
-<style lang="scss"  >
+<style lang="scss">
+.obit-video-content{
+  float:left;
+  li{
+    float:left;
+    width:148px;
+    height:148px;
+    margin-right:15px;
+    position:relative;
+    video{
+      width:100%;
+      height:100%;
+      object-fit:fill;
+    }
+    .el-button{
+      position:absolute;
+      right:-14px;
+      top:-14px;
+      color:#fff;
+    }
+  }
+}
 .avatar-uploader {
+  &.obit-video{
+    float:left;
+  }
   .el-upload {
     // border: 1px dashed #d9d9d9;
     border-radius: 6px;
