@@ -1,3 +1,10 @@
+<!--
+ * @Author: 刘硕
+ * @Date: 2020-07-24 10:25:07
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-07-24 10:34:45
+ * @Description: file content
+--> 
 <template>
   <div class="echarts-panel" ref="echarts"></div>
 </template>
@@ -9,33 +16,22 @@ export default {
   props: {
     chartsOption: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-
-  computed: {
-    ...mapGetters(['windowSize'])
-  },
-
   data() {
     return {
-      chart: null
+      chart: null,
     }
   },
-
   watch: {
-    windowSize() {
-      if (this.chart != null && this.chart != '' && this.chart != undefined) {
-        this.chart.resize()
-      }
-    },
     chartsOption: {
       deep: true,
       handler(val) {
         console.log('TCL: handler -> val', JSON.stringify(val))
         this.chart.setOption(val, true)
-      }
-    }
+      },
+    },
   },
 
   methods: {
@@ -50,12 +46,12 @@ export default {
         this.chart = echarts.init(this.$refs.echarts, '')
       }
       this.chart.setOption(this.chartsOption)
-    }
+    },
   },
 
   mounted() {
     this.init()
-  }
+  },
 }
 </script>
 
