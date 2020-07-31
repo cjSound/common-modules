@@ -1,9 +1,31 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-05-17 11:39:56
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-07-20 10:51:37
- * @Description: file content
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-07-31 11:49:53
+ * @Description: 表格统一处理
+--> 
+<!--
+传参demos
+tableColumns: [
+        { prop: 'detailDate', label: '日期', filterType: 'dateM' },
+        {
+          label: '一级汇总',
+          children: [
+            { prop: 'departmentName', label: '部门' },
+            {
+              label: '事业部',
+              children: [
+                { prop: 'divisionName', label: '事业部1' },
+                { prop: 'agentName', label: '代理商2' },
+              ],
+            },
+            { prop: 'agreementNo', label: '合同号' },
+          ],
+        },
+        { prop: 'overdueDealer', label: '逾期专干' },
+        { prop: 'createTime', label: '导入时间' },
+      ],
 --> 
 <template>
   <el-table
@@ -17,7 +39,9 @@
   >
     <el-table-column type="selection" v-if="$listeners.selectionChange" width="55"></el-table-column>
     <el-table-column :label="indexName" type="index" v-if="indexName !==null" width="50"></el-table-column>
-    <el-table-column
+    <tableColumn :tableColumnItem="tableColumns"></tableColumn>
+
+    <!-- <el-table-column
       :align="align"
       :key="column.prop"
       :label="column.label"
@@ -30,7 +54,7 @@
           <span>{{column.render ? column.render(scope.row) :scope.row[column.prop] |valueType(column.filterType)}}</span>
         </el-tooltip>
       </template>
-    </el-table-column>
+    </el-table-column>-->
     <!-- 默认操作列 有编辑删除 查看三个按钮 额外需要新增的可以采用slot=operate -->
     <el-table-column
       :width="operationWidth"
@@ -65,66 +89,73 @@
 
 <script>
 import config from '@/config/config'
+import tableColumn from './table-column.js'
 export default {
+  components: { tableColumn },
   props: {
     dataList: {
       type: Array,
-      default: function() {
+      default: function () {
         return []
-      }
+      },
     },
     tableColumns: {
       type: Array,
-      required: true
+      required: true,
     },
     hasSelection: {
       type: Boolean,
-      default: false
+      default: false,
     },
     align: {
       type: String,
-      default: config.tableAlign ? config.tableAlign : 'left'
+      default: config.tableAlign ? config.tableAlign : 'left',
     },
     minWidth: {
       type: String,
-      default: '80px'
+      default: '80px',
     },
     /**
      * 操作列 宽度
      */
     operationWidth: {
       type: String,
-      default: '80'
+      default: '80',
     },
     width: {
       type: String,
-      default: '100%'
+      default: '100%',
     },
     /**
      * 编辑按钮的权限key
      */
     editPermiss: {
       type: String,
-      default: 'no'
+      default: 'no',
     },
     /**
      * 删除按钮的权限key
      */
     deletePermiss: {
       type: String,
-      default: 'no'
+      default: 'no',
     },
     indexName: {
       type: String,
-      default: null
+      default: null,
     },
     tableBorder: {
       type: Boolean,
-      default: config.tableBorder ? config.tableBorder : false
-    }
+      default: config.tableBorder ? config.tableBorder : false,
+    },
   },
-  mounted() {
-    // console.log(this.$scopedSlots, this)
+  provide() {
+    let props = this._props
+    let res = {}
+    for (const key in props) {
+      res[key] = props[key]
+    }
+    return res
   },
   methods: {
     // 多选 将id 存入handleSelectionList 集合
@@ -141,8 +172,8 @@ export default {
     },
     handleCurrentChange(item) {
       this.$emit('handleCurrentChange', item)
-    }
-  }
+    },
+  },
 }
 </script>
 
