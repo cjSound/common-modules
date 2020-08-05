@@ -1,12 +1,13 @@
 /*
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:38
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 14:41:02
+ * @LastEditors: 徐生延
+ * @LastEditTime: 2020-08-05 10:50:10
  * @Description: 保存登录用户信息 到cookie
  */
 import Cookies from 'js-cookie'
 import config from '@/config/config'
+import store from '@/store'
 const TokenKey = config.TokenKey
 const userRoleKey = config.roleKey
 
@@ -33,4 +34,9 @@ export const userRole = {
   remove() {
     return Cookies.remove(userRoleKey)
   }
+}
+
+export function hasPermiss(roleKey){
+  let bthList = store.state.permission.sysBtn
+  return bthList.filter(item => item.menuCode === roleKey).length > 0
 }
