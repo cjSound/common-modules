@@ -1,19 +1,19 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:39
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 13:59:56
+ * @LastEditors: 徐生延
+ * @LastEditTime: 2020-08-07 10:57:07
  * @Description: 菜单 根据路由生成，根据系统权限判断是否展示对应菜单
  -->
 <template>
   <div class="menu-wrapper" v-if="!item.hidden">
     <template v-if="hasOneShowingChild(item.children,item)">
-      <el-menu-item :class="{'submenu-title-noDropdown':!isNest,'currMenu':currMenu}" :index="item.menuCode" @click="toPath(item)">
+      <el-menu-item :class="{'submenu-title-noDropdown':!isNest,'currMenu':currMenu}" :index="item.path" @click="toPath(item)">
         <item :icon="item.iconname||(item&&item.iconname)" :title="item.menuName" />
       </el-menu-item>
     </template>
 
-    <el-submenu :index="'submenu'+item.menuCode" popper-append-to-body ref="subMenu" v-else>
+    <el-submenu :index="item.path" popper-append-to-body ref="subMenu" v-else>
       <template slot="title">
         <item :icon="item && item.iconname" :title="isCollapse?'':item.menuName" v-if="item" />
       </template>

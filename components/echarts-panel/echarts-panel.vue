@@ -1,8 +1,8 @@
 <!--
  * @Author: 刘硕
  * @Date: 2020-07-24 10:25:07
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-07-24 10:34:45
+ * @LastEditors: 徐生延
+ * @LastEditTime: 2020-08-07 10:10:17
  * @Description: file content
 --> 
 <template>
@@ -28,7 +28,6 @@ export default {
     chartsOption: {
       deep: true,
       handler(val) {
-        console.log('TCL: handler -> val', JSON.stringify(val))
         this.chart.setOption(val, true)
       },
     },
