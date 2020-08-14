@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-08-26 09:45:47
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 13:38:21
+ * @LastEditTime: 2020-08-11 10:40:31
  * @Description: 用户权限
  */
 import ajax from '@/common-modules/api'
@@ -13,9 +13,26 @@ const permission = {
     state: {
         sysMenu: [],
         sysBtn: [],
+        slideList: [
+            {
+                menuName: '系统样例',
+                path: 'demo',
+                menuCode: 'demo',
+                iconname: 'component',
+                children: [
+                    {
+                        menuName: '流程',
+                        menuCode: 'demo1',
+                        path: '/demo/flow',
+                        iconname: 'star'
+                    },
+                ]
+            }
+        ]
     },
     mutations: {
         setSysMenu: (state, value) => {
+            value = process.env.NODE_ENV === 'development' ? value.concat(state.slideList) : value
             state.sysMenu = value
         },
         setSysBtn: (state, value) => {

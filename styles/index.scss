@@ -1,5 +1,6 @@
 @import './variables.scss';// 默认样式包
-@import '@/styles/variables.scss';// 业务可以替换默认样式基础配置
+// 业务可以替换默认样式基础配置
+@import '@/styles/variables.scss';
 @import './mixin.scss';
 @import './transition.scss';
 @import './element-ui.scss';
@@ -109,11 +110,11 @@ div:focus {
 }
 
 .f-r {
-  float: right;
+  float: right !important;
 }
 
 .f-l {
-  float: left;
+  float: left !important;
 }
 
 .t-l {
@@ -165,7 +166,6 @@ div:focus {
 .row-around {
   display: flex;
   justify-content: space-between;
-  flex-direction: column;
 }
 
 .flex-row {
@@ -376,7 +376,10 @@ div:focus {
   @include scrollBar;
   overflow: auto;
 }
-
+.scrollXBar {
+  @include scrollBar;
+  overflow: auto;
+}
 .obit-form-50 {
   .el-form-item {
     width: 50%;

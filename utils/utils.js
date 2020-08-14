@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 17:02:31
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-07-15 11:47:45
+ * @LastEditTime: 2020-08-12 10:53:07
  * @Description: 系统工具类
  */
 const util = {}
@@ -197,6 +197,7 @@ util.util = {
         var _str = _str.substring(0, _str.length - 1);
         return _str;
     },
+
 }
 /**
  * @description cookie模块
@@ -401,6 +402,14 @@ util.array = {
             }
         }
         return r;
+    },
+    clearNull(list) {
+        let res = []
+        list.forEach(element => {
+            if (element)
+                res.push(element)
+        });
+        return res
     }
 }
 export default util;
