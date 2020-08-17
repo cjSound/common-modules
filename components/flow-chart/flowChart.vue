@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-08-11 11:33:38
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-08-14 11:52:34
+ * @LastEditTime: 2020-08-14 16:56:16
  * @Description: file content
 -->
 <template>
@@ -27,6 +27,7 @@
 import flowNode from './flowNode'
 import { targetEndpoint, sourceEndpoint } from './style'
 import instance from './instance'
+import layout from './layout'
 export default {
   components: { flowNode },
   props: {
@@ -197,6 +198,12 @@ export default {
           }, 5000)
         }
       })
+    },
+    autoLayout() {
+      console.log('autoLayout -> layout', layout)
+
+      let info = new layout().force()
+      console.log('autoLayout -> info', info, info.linkDistance())
     },
   },
   mounted() {

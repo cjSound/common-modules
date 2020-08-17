@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-08-10 21:28:07
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-08-14 11:53:06
+ * @LastEditTime: 2020-08-14 15:21:41
  * @Description: file content
 -->
 <template>
@@ -79,7 +79,7 @@ export default {
       })
       if (this.type !== 'show') {
         let drag = instance.draggable(this.itemInfo.mainData.uuid, {
-          // containment: 'parent',
+          // containment: 'parent',  //禁锢在父节点不允许出去
           grid: [10, 10],
           drag: function (event, ui) {
             let info = _this.panelOption.movePos
