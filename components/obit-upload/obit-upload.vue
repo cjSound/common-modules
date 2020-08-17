@@ -1,16 +1,16 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-21 15:16:37
- * @LastEditors: 徐生延
- * @LastEditTime: 2020-07-21 19:07:11
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-08-17 20:01:27
  * @Description: file content
  -->
 <template>
   <span>
     <ul class="obit-video-content" v-if="isShowVideo">
-      <li v-for="(item,inx) in videosArr" :key="'videosArr'+inx">
-        <video v-bind:src="item.url" controls="controls"></video>
-        <el-button size="mini" @click="removeVideo(inx)" type="danger" icon="el-icon-close" circle></el-button>
+      <li :key="'videosArr'+inx" v-for="(item,inx) in videosArr">
+        <video controls="controls" v-bind:src="item.url"></video>
+        <el-button @click="removeVideo(inx)" circle icon="el-icon-close" size="mini" type="danger"></el-button>
       </li>
     </ul>
     <el-upload
@@ -19,6 +19,7 @@
       :auto-upload="autoUpload"
       :before-remove="handleRemove"
       :before-upload="beforeUpload"
+      :class="{'obit-video':isShowVideo}"
       :drag="drag"
       :file-list="fileList"
       :http-request="customUpload"
@@ -31,7 +32,6 @@
       :on-success="success"
       :show-file-list="showFileList"
       class="avatar-uploader"
-      :class="{'obit-video':isShowVideo}"
       ref="upload"
     >
       <slot></slot>
@@ -59,71 +59,71 @@ import util from '@/common-modules/utils/utils'
 
 export default {
   components: {
-    ElUpload: Upload
+    ElUpload: Upload,
   },
   props: {
     //   是否允许拖拽上传
     drag: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 上传文件地址 必填
     action: {
       type: String,
-      required: true
+      required: true,
     },
     // 上传的文件类型限制 比如  jpg,png
     accept: {
-      type: String
+      type: String,
     },
     // 成功回调
     success: {
-      type: Function
+      type: Function,
     },
     // 是否允许多文件上传
     multiple: {
       type: Boolean,
-      default: true
+      default: true,
     },
     size: {
       type: Number,
-      default: 10
+      default: 10,
     },
     limit: {
       type: Number,
-      default: 10
+      default: 10,
     },
     // 自定义参数
     params: {
-      type: Object
+      type: Object,
     },
     autoUpload: {
       type: Boolean,
-      default: true
+      default: true,
     },
     showFileList: {
       type: Boolean,
-      default: false
+      default: false,
     },
     listType: {
       type: String,
-      default: ''
+      default: '',
     },
     uploadType: {
       type: String,
-      default: 'Img'
+      default: 'Img',
     },
     fileList: {
       type: Array,
       default() {
         return []
-      }
-    }
+      },
+    },
   },
-  computed:{
-    isShowVideo(){
+  computed: {
+    isShowVideo() {
       return this.uploadType === 'video' && !this.showFileList
-    }
+    },
   },
   data() {
     return {
@@ -132,7 +132,7 @@ export default {
       loading: '',
       dialogVisible: false,
       dialogImageUrl: '',
-      videosArr:JSON.parse(JSON.stringify(this.fileList)),
+      videosArr: JSON.parse(JSON.stringify(this.fileList)),
     }
   },
   methods: {
@@ -143,11 +143,11 @@ export default {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
     },
-    removeVideo(fileIndex){
+    removeVideo(fileIndex) {
       this.videosArr.splice(fileIndex, 1)
       //要清空uploadFiles，不然onExceed方法无法控制
       this.$refs.upload.uploadFiles.splice(fileIndex, 1)
-      console.log('this.videosArr-del:',this.videosArr)
+      console.log('this.videosArr-del:', this.videosArr)
       this.$emit('remove', fileIndex, this.params)
     },
     handleRemove(file, fileList) {
@@ -193,14 +193,13 @@ export default {
         lock: true,
         text: '文件上传中，请稍后',
         spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
+        background: 'rgba(0, 0, 0, 0.7)',
       })
       this.$http
         .upload(this.action, param)
-        .then(res => {
+        .then((res) => {
           this.endLoading()
-          this.videosArr.push({url:res.sourceUrl})
-          console.log('this.videosArr:',this.videosArr)
+          this.videosArr.push({ url: res.sourceUrl })
           this.success && this.success(res, this.params)
         })
         .catch(() => {
@@ -208,11 +207,12 @@ export default {
         })
     },
     endLoading() {
-      this.uploadSuccessNum++
-      if (this.uploadNum === this.uploadSuccessNum) {
-        // this.$refs.upload.clearFiles()
-        this.loading.close()
-      }
+      this.loading.close()
+      // this.uploadSuccessNum++
+      // if (this.uploadNum === this.uploadSuccessNum) {
+      //   // this.$refs.upload.clearFiles()
+      //   this.loading.close()
+      // }
     },
     onRemove(file, fileList) {
       this.$emit('onRemove', file, fileList)
@@ -221,36 +221,36 @@ export default {
       if (!this.autoUpload) {
         console.log('TCL: onChange -> fileobj', fileobj)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="scss">
-.obit-video-content{
-  float:left;
-  li{
-    float:left;
-    width:148px;
-    height:148px;
-    margin-right:15px;
-    position:relative;
-    video{
-      width:100%;
-      height:100%;
-      object-fit:fill;
+.obit-video-content {
+  float: left;
+  li {
+    float: left;
+    width: 148px;
+    height: 148px;
+    margin-right: 15px;
+    position: relative;
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
     }
-    .el-button{
-      position:absolute;
-      right:-14px;
-      top:-14px;
-      color:#fff;
+    .el-button {
+      position: absolute;
+      right: -14px;
+      top: -14px;
+      color: #fff;
     }
   }
 }
 .avatar-uploader {
-  &.obit-video{
-    float:left;
+  &.obit-video {
+    float: left;
   }
   .el-upload {
     // border: 1px dashed #d9d9d9;

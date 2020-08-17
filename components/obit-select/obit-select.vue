@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-27 18:44:59
  * @LastEditors: 刘硕
- * @LastEditTime: 2020-06-29 11:20:23
+ * @LastEditTime: 2020-08-17 20:21:03
  * @Description: 封装select组件  支持同时获取value和name
  -->
 <template>
@@ -26,75 +26,75 @@ import { Select, Option } from 'element-ui'
 export default {
   components: {
     ElSelect: Select,
-    ElOption: Option
+    ElOption: Option,
   },
   props: {
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     multiple: {
       type: Boolean,
-      default: false
+      default: false,
     },
     clearable: {
       type: Boolean,
-      default: true
+      default: true,
     },
     readOnly: {
       type: Boolean,
-      default: false
+      default: false,
     },
     value: {
-      type: [Number, String, Array]
+      type: [Number, String, Array],
     },
     placeholder: {
       type: String,
-      default: '请选择'
+      default: '请选择',
     },
     labelName: {
       type: String,
-      default: 'label'
+      default: 'label',
     },
     valueName: {
       type: String,
-      default: 'id'
+      default: 'id',
     },
     selectList: {
-      type: Array
+      type: Array,
     },
     selectName: {
-      type: String
-    }
+      type: String,
+    },
   },
   data() {
     return {
       dictValue:
         this.value === null || this.value === undefined ? '' : this.value,
-      dictValueList: []
+      dictValueList: [],
     }
   },
   watch: {
     value() {
       this.dictValue =
         this.value === null || this.value === undefined ? '' : this.value
-    }
+    },
   },
   methods: {
     changeValue(value) {
       this.$emit('input', value)
       this.$emit('change', value)
-      let obj = this.selectList.find(item => {
+      let obj = this.selectList.find((item) => {
         return item[this.valueName] === value
       })
       this.$emit('update:selectName', obj ? obj[this.labelName] : '')
-    }
+    },
   },
   mounted() {
     if (this.value) {
       this.changeValue(this.value)
     }
-  }
+  },
 }
 </script>
 
