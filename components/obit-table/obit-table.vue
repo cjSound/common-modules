@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-05-17 11:39:56
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-07-31 11:49:53
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-08-18 10:06:33
  * @Description: 表格统一处理
 --> 
 <!--
@@ -178,4 +178,8 @@ export default {
 </script>
 
 <style>
+/** 解决表头和数据不对齐问题*/
+.el-table th.gutter {
+  display: table-cell !important;
+}
 </style>
