@@ -2,7 +2,7 @@
  * @Author: 刘硕
  * @Date: 2019-08-19 14:45:40
  * @LastEditors: 刘硕
- * @LastEditTime: 2020-06-29 19:32:20
+ * @LastEditTime: 2020-08-18 11:03:19
  * @Description: file content
  -->
 <template>
@@ -44,14 +44,14 @@ import util from '@/common-modules/utils/utils'
 export default {
   props: {
     visible: {
-      type: Boolean
+      type: Boolean,
     },
     addType: {
-      type: String
+      type: String,
     },
     detailsInfo: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   data() {
     let checkValue = (rule, value, callback) => {
@@ -63,7 +63,7 @@ export default {
       }
       let params = {}
       params.account = value
-      this.$http.accountCanUse(params).then(res => {
+      this.$http.accountCanUse(params).then((res) => {
         if (res) {
           return callback(new Error('该账号已使用'))
         } else {
@@ -81,21 +81,21 @@ export default {
       rules: {
         account: [{ required: true, validator: checkValue, trigger: 'blur' }],
         userName: [
-          { required: true, message: '请输入用户名称', trigger: 'blur' }
+          { required: true, message: '请输入用户名称', trigger: 'blur' },
         ],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         organizationId: [
-          { required: true, message: '请选择机构', trigger: 'change' }
+          { required: true, message: '请选择机构', trigger: 'change' },
         ],
-        roleId: [{ required: true, message: '请选择角色', trigger: 'change' }]
-      }
+        roleId: [{ required: true, message: '请选择角色', trigger: 'change' }],
+      },
     }
   },
 
   computed: {
     showTitle() {
       return this.addType === 'add' ? '新增用户' : '修改用户'
-    }
+    },
   },
   watch: {
     visible(value) {
@@ -106,7 +106,7 @@ export default {
         util.util.cleanObj(this.formData)
       }
       this.addVisible = value
-    }
+    },
   },
   mounted() {
     this.getAllRole()
@@ -115,14 +115,17 @@ export default {
     //保存
     onSubmit() {
       if (this.activeName === 'add') {
-        this.$refs['formData'].validate(valid => {
+        this.$refs['formData'].validate((valid) => {
           if (valid) {
             let param = util.util.cloneObj(this.formData)
-            param.userType = 1
-            this.$http.saveUser(param).then(res => {
+            if (this.addType === 'add') {
+              param.userType = 1
+            }
+
+            this.$http.saveUser(param).then((res) => {
               this.$message({
                 type: 'success',
-                message: this.addType === 'add' ? '新增成功' : '修改成功'
+                message: this.addType === 'add' ? '新增成功' : '修改成功',
               })
               this.$emit('reload')
               this.closeDialog()
@@ -140,11 +143,11 @@ export default {
     },
     //获取所有角色
     getAllRole() {
-      this.$http.getSystemRoleList().then(res => {
+      this.$http.getSystemRoleList().then((res) => {
         this.roleList = res
       })
-    }
-  }
+    },
+  },
 }
 </script>
 
