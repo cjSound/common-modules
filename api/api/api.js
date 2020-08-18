@@ -1,8 +1,8 @@
 /*
  * @Author: 曹捷
  * @Date: 2019-08-01 14:25:13
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 10:12:53
+ * @LastEditors: 徐生延
+ * @LastEditTime: 2020-08-18 19:54:11
  * @Description: file content
  */
 import request from './request'
@@ -61,14 +61,17 @@ var instance = function () {
             })
             return this.disposeData(response)
         },
-        async download(url, data = {}, config = {}) {
-            const response = await request({
+        async download(url, data = {}, config = {},requestMethod='get') {
+            let downloadObj = {
                 url: url,
-                method: 'get',
+                method: requestMethod,
                 type: 'download',
                 responseType: "blob",
-                params: data
-            })
+            };
+            if(requestMethod === 'get') downloadObj.params = data;
+            else downloadObj.data = data;
+            
+            const response = await request(downloadObj)
             let a = document.createElement("a");
             let blob = new Blob([response.data], {
                 type: config.mimeType || ''
