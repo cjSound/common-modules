@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:39
  * @LastEditors: 徐生延
- * @LastEditTime: 2020-07-18 16:14:43
+ * @LastEditTime: 2020-08-18 11:49:36
  * @Description:  布局layout
  -->
 <template>
@@ -26,6 +26,7 @@ import { Navbar, Sidebar, AppMain } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { routerPermission } from '@/common-modules/utils/validate'
 import config from '@/config/config'
+import latestAlarmMix from '@/mixin/latestAlarmMix'
 import { userRole } from '@/common-modules/utils/auth'
 
 export default {
@@ -35,7 +36,7 @@ export default {
     Sidebar,
     AppMain
   },
-  mixins: [ResizeMixin],
+  mixins: [ResizeMixin,latestAlarmMix],
   data() {
     return {
       config: config,
