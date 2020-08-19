@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-08-14 16:32:55
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-08-19 16:04:49
+ * @LastEditTime: 2020-08-19 16:46:33
  * @Description: file content
  */
 
@@ -68,12 +68,10 @@ export default class layout {
         let rootList = nodeList.filter(item => {
             return item.prev.length === 0
         })
-        let
-            rootList =
 
-                function getRank(list, level) {
+        function getRank(list, level) {
 
-                }
+        }
     }
 
 
