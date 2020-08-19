@@ -2,56 +2,80 @@
  * @Author: 曹捷
  * @Date: 2020-08-14 16:32:55
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-08-14 17:11:03
+ * @LastEditTime: 2020-08-19 16:04:49
  * @Description: file content
  */
 
-var nodes = [
-    { value: "66666666", type: "home", index: "0" },
-    { value: "11111111111", type: "phone", index: "1" },
-    { value: "22222222222", type: "phone", index: "2" },
-    { value: "33333333333", type: "phone", index: "3" },
-    { value: "44444444444", type: "phone", index: "4" },
-    { value: "55555555555", type: "phone", index: "5" },
-    { value: "aaa", type: "weixin", index: "6" },
-    { value: "bbb", type: "weixin", index: "7" },
-    { value: "ccc", type: "weixin", index: "8" },
-    { value: "ddd", type: "weixin", index: "9" },
-    { value: "eee", type: "weixin", index: "10" },
-    { value: "fff", type: "weixin", index: "11" },
-];
-var links = [
-    { source: 0, target: 1 },
-    { source: 0, target: 2 },
-    { source: 0, target: 3 },
-    { source: 0, target: 4 },
-    { source: 0, target: 5 },
-    { source: 2, target: 6 },
-    { source: 2, target: 7 },
-    { source: 2, target: 8 },
-    { source: 3, target: 9 },
-    { source: 3, target: 10 },
-    { source: 3, target: 11 },
-]
+import util from '@/common-modules/utils/utils'
 export default class layout {
-    constructor() {
-        this.nodes = nodes
-        this.links = links
+    constructor(domId, nodeList) {
+        this.el = document.getElementById(domId)
+        this.maxWidth = this.el.offsetWidth
+        this.maxHeight = this.el.offsetHeight
+        this.nodeList = util.util.cloneObj(nodeList)
+        this.config = {
+            // 模块之间最小宽度
+            mixX: 120,
+            mixY: 70
+        }
+        if (this.nodeList && this.nodeList.length > 0) {
+            let itemDom = document.getElementById(this.nodeList[0].mainData.uuid)
+            this.nodeWidth = itemDom.offsetWidth
+            this.nodeHeight = itemDom.offsetHeight
+            // 一行可以放几个元素
+            this.rowNum = parseInt((this.maxWidth + this.config.mixX) / (this.nodeWidth + this.config.mixX))
+            this.rankLevel()
+        }
     }
-    force() {
-        let force = d3.layout.force()
-            .nodes(this.nodes)
-            .links(this.links).size([1300, 430])
-            .linkStrength(0.1)
-            .friction(0.9)
-            .linkDistance(300)
-            .charge(-400) //负值导致节点排斥，而正值导致节点吸引。对于图形布局，应使用负值
-            .gravity(0.1)
-            .theta(0.8)
-            .alpha(0.1)
-            .start();
-        console.log('layout -> force -> this.nodes', this.nodes)
+    rankLevel() {
+        let arr = []
+        let nodeList = this.nodeList
+        let rootList = nodeList.filter(item => {
+            return item.prev.length === 0
+        })
+        this.rootNum = rootList.length
+        let _this = this
+        this.maxRank = 1
+        function getRank(list, level) {
+            list.forEach(element => {
+                element.rank = level
+                _this.maxRank = level > _this.maxRank ? level : _this.maxRank
+                let findList = arr.find(item => {
+                    return item.mainData.uuid === element.mainData.uuid
+                })
+                if (!findList || findList.length === 0) {
+                    arr.push(element)
+                    if (element.next && element.next.length > 0) {
+                        let nextArr = []
+                        element.next.forEach(element => {
+                            nextArr.push(element.uuid)
+                        });
+                        getRank(nodeList.filter(item => {
+                            return nextArr.indexOf(item.mainData.uuid) !== -1
+                        }), level + 1)
+                    }
+                }
+            });
+        }
+        getRank(rootList, 1)
+        this.nodeList = arr
+        console.log('layout -> rankLevel -> arr', arr)
+    }
+    // 计算每个位置
+    judgePostion() {
+        // 大概做几行
+        let row = parseInt(this.nodeList.length / this.rowNum)
+        let rootList = nodeList.filter(item => {
+            return item.prev.length === 0
+        })
+        let
+            rootList =
 
-        return force
+                function getRank(list, level) {
+
+                }
     }
+
+
+
 }

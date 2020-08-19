@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-08-11 11:29:00
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-08-13 11:59:57
+ * @LastEditTime: 2020-08-18 19:34:37
  * @Description: 基础样式
  */
 
@@ -29,6 +29,17 @@ export const targetEndpoint = {
   endpoint: 'Dot',
   paintStyle: { fill: '#27c8df', radius: 6 },
   hoverPaintStyle: endpointHoverStyle,
+  connector: [
+    //连线的类型，有直线（Sright），有流程图(Flowchart)、贝塞尔曲线(Bezier)，State machine（状态机）
+    'Flowchart',
+    {
+      curviness: 70,
+      stub: [40, 60],
+      gap: 8,
+      cornerRadius: 5,
+      alwaysRespectStubs: true,
+    },
+  ],
   maxConnections: -1,
   dropOptions: { hoverClass: 'hover', activeClass: 'active' },
 

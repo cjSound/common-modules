@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-08-10 21:28:07
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-08-14 15:21:41
+ * @LastEditTime: 2020-08-19 16:46:19
  * @Description: file content
 -->
 <template>
@@ -25,7 +25,6 @@
 <script>
 import instance from './instance'
 import { targetEndpoint, sourceEndpoint } from './style'
-import { jsPlumb } from 'jsPlumb'
 export default {
   props: {
     itemInfo: {
@@ -77,17 +76,20 @@ export default {
           uuid: uuid,
         })
       })
-      if (this.type !== 'show') {
+      // if (this.type !== 'show') {
+      if (this.type) {
         let drag = instance.draggable(this.itemInfo.mainData.uuid, {
           // containment: 'parent',  //禁锢在父节点不允许出去
           grid: [10, 10],
           drag: function (event, ui) {
+            // 虚拟标准线
             let info = _this.panelOption.movePos
             if (info[0] != event.pos[0] || info[1] != event.pos[1]) {
               _this.panelOption.movePos = event.pos
             }
           },
           stop: function (event, ui) {
+            // 判断宽度 流程快超出区域，区域宽度增加
             let parant = event.el.parentNode
             let rightPostion = event.el.offsetWidth + event.pos[0]
             if (rightPostion > parant.offsetWidth) {
