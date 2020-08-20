@@ -2,12 +2,14 @@
  * @Author: 曹捷
  * @Date: 2020-05-17 11:39:56
  * @LastEditors: 刘硕
- * @LastEditTime: 2020-08-18 10:06:33
+ * @LastEditTime: 2020-08-20 19:29:34
  * @Description: 表格统一处理
 --> 
 <!--
 传参demos
 tableColumns: [
+        { label: ' ', type: 'selection' },
+        { label: '序号 ', type: 'index' },
         { prop: 'detailDate', label: '日期', filterType: 'dateM' },
         {
           label: '一级汇总',
@@ -37,8 +39,8 @@ tableColumns: [
     class="com-table"
     highlight-current-row
   >
-    <el-table-column type="selection" v-if="$listeners.selectionChange" width="55"></el-table-column>
-    <el-table-column :label="indexName" type="index" v-if="indexName !==null" width="50"></el-table-column>
+    <!-- <el-table-column type="selection" v-if="$listeners.selectionChange" width="55"></el-table-column> -->
+    <!-- <el-table-column :label="indexName" type="index" v-if="indexName !==null" width="50"></el-table-column> -->
     <tableColumn :tableColumnItem="tableColumns"></tableColumn>
 
     <!-- <el-table-column

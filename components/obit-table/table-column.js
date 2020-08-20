@@ -80,21 +80,30 @@ export default {
                     }
                 }
             }
-            return (
-                <el-table-column align={this.align} label={column.label} min-width={this.minWidth} prop={column.prop}
-                    width={column.width}
-                    {...{ scopedSlots }} >
-                    {
-                        (this.tableColumnItem.children && this.tableColumnItem.children.length > 0)
-                            ?
-                            <template>
-                                <tableColumn tableColumnItem={this.tableColumnItem.children}></tableColumn>
-                            </template>
-                            :
-                            ''
-                    }
-                </el-table-column>
-            )
+            if(column.type ){
+                // 序号
+                return (
+                    <el-table-column  type={column.type}   align={this.align} label={column.label} min-width={this.minWidth}  
+                        width={column.width}  > 
+                    </el-table-column>
+                )
+            }else{
+                return (
+                    <el-table-column show-overflow-tooltip align={this.align} label={column.label} min-width={this.minWidth} prop={column.prop}
+                        width={column.width}
+                        {...{ scopedSlots }} >
+                        {
+                            (this.tableColumnItem.children && this.tableColumnItem.children.length > 0)
+                                ?
+                                <template>
+                                    <tableColumn tableColumnItem={this.tableColumnItem.children}></tableColumn>
+                                </template>
+                                :
+                                ''
+                        }
+                    </el-table-column>
+                )
+            }
         }
 
     }

@@ -7,14 +7,18 @@
     <table class="downtable" id="downtable" style="display:none;" v-if="dataList.length>0">
       <thead>
         <tr style="text-align:center;font-weight:600;font-size:16px;">
-          <td :key="index" style="text-align:center;" v-for="(item,index) in columns">{{item.label}}</td>
+          <template v-for="(item,index) in columns">
+            <td :key="index" style="text-align:center;" v-if="!item.type">{{item.label}}</td>
+          </template>
         </tr>
       </thead>
       <tbody>
         <tr :key="cindex" v-for="(item,cindex) in dataList">
-          <td :key="index" style="text-align:center;" v-for="(column,index) in columns">
-            <span>{{column.render ? column.render(item[column.prop]) :item[column.prop] |valueType(column.filterType)}}</span>
-          </td>
+          <template v-for="(column,index) in columns">
+            <td :key="index" style="text-align:center;" v-if="!column.type">
+              <span>{{column.render ? column.render(item[column.prop]) :item[column.prop] |valueType(column.filterType)}}</span>
+            </td>
+          </template>
         </tr>
       </tbody>
     </table>
@@ -24,19 +28,19 @@
 export default {
   props: {
     columns: {
-      type: Array
+      type: Array,
     },
     dataList: {
-      type: Array
+      type: Array,
     },
     title: {
       type: String,
-      default: 'title'
-    }
+      default: 'title',
+    },
   },
   data() {
     return {
-      collength: ''
+      collength: '',
     }
   },
   methods: {
@@ -104,7 +108,7 @@ export default {
         window.clearInterval(idTmr)
         CollectGarbage()
       }
-      var tableToExcel = (function() {
+      var tableToExcel = (function () {
         var uri = 'data:application/vnd.ms-excel;base64,'
         var template = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"
             xmlns="http://www.w3.org/TR/REC-html40">
@@ -115,15 +119,15 @@ export default {
             </x:ExcelWorkbook></xml><meta charset="UTF-8"></head>
             <body><table>{table}</table></body>
             </html>`,
-          base64 = function(s) {
+          base64 = function (s) {
             return window.btoa(unescape(encodeURIComponent(s)))
           },
-          format = function(s, c) {
-            return s.replace(/{(\w+)}/g, function(m, p) {
+          format = function (s, c) {
+            return s.replace(/{(\w+)}/g, function (m, p) {
               return c[p]
             })
           }
-        return function(table, name) {
+        return function (table, name) {
           if (!table.nodeType) table = document.getElementById(table)
           var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
           document.getElementById('downs').href =
@@ -133,11 +137,11 @@ export default {
         }
       })()
       method5()
-    }
+    },
   },
   mounted() {
     this.collength = this.columns.length
-  }
+  },
 }
 </script>
 
