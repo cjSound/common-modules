@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-08-11 11:33:38
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-08-14 16:56:16
+ * @LastEditTime: 2020-08-19 15:51:05
  * @Description: file content
 -->
 <template>
@@ -52,6 +52,7 @@ export default {
     }
   },
   watch: {
+    // 监听移动的流程块位置，计算虚拟坐标线
     'panelOption.movePos'(value, oldVal) {
       let res = {}
       let x = this.panelOption.movePos[0]
@@ -67,10 +68,8 @@ export default {
       }
       if (yInfo) res.y = y
       this.moveInfo = res
-      console.log('res', res)
     },
   },
-  computed: {},
   methods: {
     init() {
       instance.setContainer(this.flowID)
@@ -82,7 +81,7 @@ export default {
       if (this.initData) {
         this.flowType = 'show'
         this.nodeList = this.initData
-        instance.Defaults.ReattachConnections = true
+        instance.Defaults.ReattachConnections = true //是否重新连接使用鼠标分离的线
       } else {
         // panZoom.init()
       }
@@ -200,10 +199,10 @@ export default {
       })
     },
     autoLayout() {
-      console.log('autoLayout -> layout', layout)
-
-      let info = new layout().force()
-      console.log('autoLayout -> info', info, info.linkDistance())
+      console.log('autoLayout -> autoLayout')
+      let info = new layout(this.flowID, this.nodeList)
+      instance.repaintEverything() //重绘
+      console.log('autoLayout -> info', info)
     },
   },
   mounted() {
