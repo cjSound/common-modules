@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-20 15:22:51
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-08-24 17:50:33
+ * @LastEditTime: 2020-08-24 17:57:46
  * @Description: 地图搜索
  -->
 <template>
@@ -67,7 +67,7 @@ module.exports = {
           pName: 'Geolocation',
           events: {
             init(o) {
-              if (this.addType === 'add') {
+              if (self.addType === 'add') {
                 // o 是高德地图定位插件实例
                 o.getCurrentPosition((status, result) => {
                   console.log('init -> result', result)
