@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-20 15:22:51
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-04 16:28:18
+ * @LastEditTime: 2020-08-24 17:50:33
  * @Description: 地图搜索
  -->
 <template>
@@ -35,15 +35,21 @@
 module.exports = {
   props: {
     visible: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
+    addType: {
+      type: String,
+    },
+    value: {
+      type: String,
+    },
   },
   watch: {
     visible(value) {
       this.addVisible = value
-    }
+    },
   },
-  data: function() {
+  data: function () {
     let self = this
     return {
       markers: [],
@@ -51,7 +57,7 @@ module.exports = {
       lock: false,
       searchOption: {
         city: '长沙',
-        citylimit: false
+        citylimit: false,
       },
       address: '',
       mapCenter: [121.59996, 31.197646],
@@ -61,21 +67,29 @@ module.exports = {
           pName: 'Geolocation',
           events: {
             init(o) {
-              // o 是高德地图定位插件实例
-              o.getCurrentPosition((status, result) => {
-                console.log('init -> result', result)
-                self.address = result.formattedAddress
-                if (result && result.position) {
-                  self.mapCenter = [result.position.lng, result.position.lat]
-                  self.markers = [[result.position.lng, result.position.lat]]
-                  self.loaded = true
-                  self.$nextTick()
+              if (this.addType === 'add') {
+                // o 是高德地图定位插件实例
+                o.getCurrentPosition((status, result) => {
+                  console.log('init -> result', result)
+                  self.address = result.formattedAddress
+                  if (result && result.position) {
+                    self.mapCenter = [result.position.lng, result.position.lat]
+                    self.markers = [[result.position.lng, result.position.lat]]
+                    self.loaded = true
+                    self.$nextTick()
+                  }
+                })
+              } else {
+                // 组件回显
+                if (self.value) {
+                  self.mapCenter = self.value.split(',')
+                  self.markers = [self.value.split(',')]
                 }
-              })
-            }
-          }
-        }
-      ]
+              }
+            },
+          },
+        },
+      ],
     }
   },
   mounted() {
@@ -100,8 +114,8 @@ module.exports = {
         this.markers = [[poi.lng, poi.lat]]
         this.mapCenter = [poi.lng, poi.lat]
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
