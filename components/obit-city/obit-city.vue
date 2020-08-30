@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-19 19:49:53
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-12 11:32:17
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-08-30 12:01:32
  * @Description: 地区 多级联动
  -->
 <template>
@@ -23,31 +23,31 @@ import ajax from './../../api'
 // console.log('ajax', ajax)
 export default {
   components: {
-    ElCascader: Cascader
+    ElCascader: Cascader,
   },
   name: 'cascader',
   props: {
     value: {
       type: [Number, String, Array],
-      default: '0'
+      default: '0',
     },
     type: {
       type: String,
-      default: 'value'
+      default: 'value',
     },
     levelValue: {
       type: Number,
-      default: 3
+      default: 3,
     },
     placeholder: {
       type: String,
-      default: '请选择'
+      default: '请选择',
     },
     // 是否可以选择任意一级
     checkAll: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   mounted() {
     this.cityProps.checkStrictly = this.checkAll
@@ -61,7 +61,7 @@ export default {
         this.cValue = []
       }
       this.plugChange = false
-    }
+    },
   },
   data() {
     let vm = this
@@ -87,16 +87,16 @@ export default {
             resolve([])
             return
           }
-          ajax.methods.getCommonDictByParentId({ dictId: id }).then(res => {
+          ajax.methods.getCommonDictByParentId({ dictId: id }).then((res) => {
             if (level === vm.levelValue - 1) {
-              res.forEach(element => {
+              res.forEach((element) => {
                 element.leaf = true
               })
             }
             resolve(res)
           })
-        }
-      }
+        },
+      },
     }
   },
   methods: {
@@ -116,15 +116,15 @@ export default {
       this.$emit('change', value)
     },
     initSetValue(newValue) {
-      return new Promise(resolve => {
-        ajax.methods.getCommonDictParents({ dictId: newValue }).then(res => {
+      return new Promise((resolve) => {
+        ajax.methods.getCommonDictParents({ dictId: newValue }).then((res) => {
           //   this.$set(this, 'dictList', res.list)
           this.$set(this, 'cValue', res.ids)
           resolve()
         })
       })
-    }
-  }
+    },
+  },
 }
 </script>
 
