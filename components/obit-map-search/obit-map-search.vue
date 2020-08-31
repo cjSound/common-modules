@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-04-20 15:22:51
- * @LastEditors: 曹捷
- * @LastEditTime: 2020-08-24 17:57:46
+ * @LastEditors: 刘硕
+ * @LastEditTime: 2020-08-31 10:25:56
  * @Description: 地图搜索
  -->
 <template>
@@ -110,7 +110,7 @@ module.exports = {
       let lngSum = 0
       if (pois.length > 0) {
         let poi = pois[0]
-        self.address = poi.address
+        this.address = poi.address
         this.markers = [[poi.lng, poi.lat]]
         this.mapCenter = [poi.lng, poi.lat]
       }
