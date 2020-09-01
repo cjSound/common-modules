@@ -13,9 +13,9 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu class="user-dropdown" slot="dropdown">
-          <a href target="_blank">
+          <!-- <a href target="_blank">
             <el-dropdown-item>个人中心</el-dropdown-item>
-          </a>
+          </a>-->
           <el-dropdown-item @click.native="logout" divided>
             <span style="display:block;">退 出</span>
           </el-dropdown-item>
@@ -33,17 +33,17 @@ import { userRole } from '@/common-modules/utils/auth'
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
   },
   computed: {
     sidebar() {
       return this.$store.state.app.sidebar
-    }
+    },
   },
   data() {
     return {
       config: config,
-      userInfo: {}
+      userInfo: {},
     }
   },
   created() {
@@ -57,8 +57,8 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-    }
-  }
+    },
+  },
 }
 </script>
 
