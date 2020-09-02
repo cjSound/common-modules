@@ -7,14 +7,14 @@
  -->
 
  <template>
-  <div class="obit-main obit-main-fill" v-loading="loading">
+  <div class="obit-main obit-main-fill">
     <div class="obit-search t-r">
       <span class="p-r-10">
         <el-button @click="addDialog(0)" class="btn-md" icon="el-icon-plus" type="primary" v-permiss="'menuAdd'">新增</el-button>
       </span>
     </div>
     <div class="obit-content">
-      <el-table :data="treeData" :tree-props="{children: 'children' }" border default-expand-all row-key="menuId" style="width: 100%; ">
+      <el-table :data="treeData" v-loading="loading" :tree-props="{children: 'children' }" border default-expand-all row-key="menuId" style="width: 100%; ">
         <el-table-column label="菜单名称" prop="menuName"></el-table-column>
         <el-table-column label="类型" prop="menuName">
           <template slot-scope="scope">{{scope.row.permissionType|pressType}}</template>
@@ -102,8 +102,11 @@ export default {
   },
   methods: {
     initTree() {
+      this.loading = true
       this.$http.getSystemPermissionList().then(res => {
         this.treeData = res
+      }).finally(() => {
+        this.loading = false
       })
     },
     addDialog(id) {

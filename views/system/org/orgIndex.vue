@@ -6,14 +6,14 @@
  * @Description: 机构管理
  -->
 <template>
-  <div class="obit-main obit-main-fill" v-loading="loading">
+  <div class="obit-main obit-main-fill">
     <div class="obit-search t-r">
       <span class="p-r-10">
         <el-button @click="addDialog(0)" class="btn-md" icon="el-icon-plus" type="primary" v-permiss="'addOrg'">新增</el-button>
       </span>
     </div>
     <div class="obit-content">
-      <el-table :data="orgList" :tree-props="{children: 'children' }" border default-expand-all row-key="organizationId" style="width: 100%; ">
+      <el-table :data="orgList" v-loading="loading" :tree-props="{children: 'children' }" border default-expand-all row-key="organizationId" style="width: 100%; ">
         <el-table-column label="机构名称" prop="organizationName"></el-table-column>
         <el-table-column label="机构编码" prop="organizationCode"></el-table-column>
         <el-table-column label="简称" prop="shortName"></el-table-column>
@@ -88,13 +88,13 @@ export default {
         { prop: 'address', label: '地址' },
         { prop: 'concatName', label: '联系人' },
         { prop: 'phone', label: '电话' },
-        { prop: 'orgDesc', label: '描述' }
+        { prop: 'orgDesc', label: '描述' },
       ],
       // 新增编辑相关
       addVisable: false,
       addType: 'add',
       detailsInfo: {},
-      orgList: []
+      orgList: [],
     }
   },
   mounted() {
@@ -104,7 +104,7 @@ export default {
     // 机构新增和编辑相关  --------------start --------------------------
     addDialog(id) {
       this.detailsInfo = {
-        parentId: id
+        parentId: id,
       }
 
       this.addVisable = true
@@ -118,23 +118,27 @@ export default {
     remove(item) {
       this.$confirm('是否删除', '提示')
         .then(() => {
-          this.$http
-            .removeSystemOrg({ orgId: item.organizationId })
-            .then(res => {
-              this.getOrgList()
-              this.$message.success('删除成功!')
-            })
+          this.$http.removeSystemOrg({ orgId: item.organizationId }).then((res) => {
+            this.getOrgList()
+            this.$message.success('删除成功!')
+          })
         })
         .catch(() => {})
     },
     // 机构新增和编辑相关   -------------------end-------------------
     getOrgList() {
+      this.loading = true
       let data = {}
-      this.$http.getAllOrgTree().then(res => {
-        this.orgList = res
-      })
-    }
-  }
+      this.$http
+        .getAllOrgTree()
+        .then((res) => {
+          this.orgList = res
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
+  },
 }
 </script>
 
