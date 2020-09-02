@@ -6,16 +6,7 @@
  * @Description: 封装select组件  支持同时获取value和name
  -->
 <template>
-  <el-select
-    :clearable="clearable"
-    :disabled="disabled"
-    :multiple="multiple"
-    :placeholder="placeholder"
-    @change="changeValue"
-    class="input-md"
-    filterable
-    v-model="dictValue"
-  >
+  <el-select :clearable="clearable" :disabled="disabled" :multiple="multiple" :placeholder="placeholder" @change="changeValue" class="input-md" filterable v-model="dictValue">
     <el-option :key="item.valueName" :label="item[labelName]" :value="item[valueName]" v-for="item in selectList"></el-option>
   </el-select>
 </template>
@@ -69,15 +60,14 @@ export default {
   },
   data() {
     return {
-      dictValue:
-        this.value === null || this.value === undefined ? '' : this.value,
+      dictValue: this.value === null || this.value === undefined ? '' : this.value,
       dictValueList: [],
     }
   },
   watch: {
     value() {
-      this.dictValue =
-        this.value === null || this.value === undefined ? '' : this.value
+      this.dictValue = this.value === null || this.value === undefined ? '' : this.value
+      console.log(`dictValue:${this.valueName}`, this.dictValue)
     },
   },
   methods: {
@@ -92,6 +82,7 @@ export default {
   },
   mounted() {
     if (this.value) {
+      console.log(`dictValue:${this.valueName}`, this.dictValue)
       this.changeValue(this.value)
     }
   },

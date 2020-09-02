@@ -36,6 +36,9 @@
               </template>
             </el-table-column>
           </el-table>
+          <div class="obit-pager m-t-15">
+            <el-pagination :current-page="searchParams.pageNum" :page-size="searchParams.pageSize" :page-sizes="[10, 20, 30, 50]" :total="total" @current-change="handleCurrentChange" @size-change="handleSizeChange" layout="total, sizes, prev, pager, next, jumper"></el-pagination>
+          </div>
         </contentForm>
       </el-col>
       <el-col :span="13">
@@ -67,25 +70,8 @@
         </contentForm>
       </el-col>
     </el-row>
-    <div class="obit-pager">
-      <el-pagination
-        :current-page="searchParams.pageNum"
-        :page-size="searchParams.pageSize"
-        :page-sizes="[10, 20, 30, 50]"
-        :total="total"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-        layout="total, sizes, prev, pager, next, jumper"
-      ></el-pagination>
-    </div>
     <dictAdd :addType="addType" :detailsInfo="detailsInfo" :visible.sync="addVisable" @reload="queryDataList(true)"></dictAdd>
-    <dictValueAdd
-      :addType="addValueType"
-      :detailsInfo="valueDetailsInfo"
-      :selectCode="selectCode"
-      :visible.sync="addValueVisable"
-      @reload="getSysdictValue"
-    ></dictValueAdd>
+    <dictValueAdd :addType="addValueType" :detailsInfo="valueDetailsInfo" :selectCode="selectCode" :visible.sync="addValueVisable" @reload="getSysdictValue"></dictValueAdd>
   </div>
 </template>
 
@@ -100,12 +86,12 @@ export default {
     return {
       tableColumns: [
         { prop: 'codeField', label: '字典名称' },
-        { prop: 'codeDesc', label: '字典描述' }
+        { prop: 'codeDesc', label: '字典描述' },
       ],
       dictColumns: [
         { prop: 'codeField', label: '父字典编码' },
         { prop: 'codeValue', label: '编码值' },
-        { prop: 'valueDesc', label: '值描述' }
+        { prop: 'valueDesc', label: '值描述' },
       ],
       // 父字典新增编辑相关
       addVisable: false,
@@ -117,7 +103,12 @@ export default {
       valueDetailsInfo: {},
       // end
       selectCode: '',
-      dictValueList: []
+      dictValueList: [],
+      searchParams: {
+        pageNum: 1,
+        pageSize: 10,
+        orderBy: '',
+      },
     }
   },
   mounted() {
@@ -138,7 +129,7 @@ export default {
     removeInfo(item) {
       this.$confirm('是否删除', '提示')
         .then(() => {
-          this.$http.removeSysDict({ codeField: item.codeField }).then(res => {
+          this.$http.removeSysDict({ codeField: item.codeField }).then((res) => {
             this.queryDataList()
             this.$message.success('删除成功!')
           })
@@ -155,11 +146,9 @@ export default {
     },
     getSysdictValue() {
       if (this.selectCode) {
-        this.$http
-          .getCommonDictValueList({ codeField: this.selectCode })
-          .then(res => {
-            this.dictValueList = res
-          })
+        this.$http.getCommonDictValueList({ codeField: this.selectCode }).then((res) => {
+          this.dictValueList = res
+        })
       }
     },
     // 子字典新增和编辑相关  --------------start --------------------------
@@ -179,15 +168,15 @@ export default {
     removeInfoValue(item) {
       this.$confirm('是否删除', '提示')
         .then(() => {
-          this.$http.removeSysDictValue({ id: item.id }).then(res => {
+          this.$http.removeSysDictValue({ id: item.id }).then((res) => {
             this.getSysdictValue()
             this.$message.success('删除成功!')
           })
         })
         .catch(() => {})
-    }
+    },
     // 子字典新增和编辑相关   -------------------end-------------------
-  }
+  },
 }
 </script>
 
