@@ -1,20 +1,24 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:39
- * @LastEditors: 徐生延
- * @LastEditTime: 2020-08-18 11:49:36
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-09-07 15:51:24
  * @Description:  布局layout
  -->
 <template>
   <div :class="classObj" class="app-wrapper">
-    <div @click="handleClickOutside" class="drawer-bg" v-if="device==='mobile'&&sidebar.opened" />
+    <div
+      @click="handleClickOutside"
+      class="drawer-bg"
+      v-if="device === 'mobile' && sidebar.opened"
+    />
     <sidebar class="sidebar-container" />
     <div class="main-container" v-if="loadPermission">
       <!-- fixedHeader 是否固定header区域 -->
-      <div :class="{'fixed-header':fixedHeader}">
+      <div :class="{ 'fixed-header': fixedHeader }">
         <navbar />
       </div>
-      <div :class="{'fixed-header-main':fixedHeader}" class="obt-main">
+      <div :class="{ 'fixed-header-main': fixedHeader }" class="obt-main">
         <app-main />
       </div>
     </div>
@@ -22,56 +26,55 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components'
-import ResizeMixin from './mixin/ResizeHandler'
-import { routerPermission } from '@/common-modules/utils/validate'
-import config from '@/config/config'
-import latestAlarmMix from '@/mixin/latestAlarmMix'
-import { userRole } from '@/common-modules/utils/auth'
+import { Navbar, Sidebar, AppMain } from "./components";
+import ResizeMixin from "./mixin/ResizeHandler";
+import { routerPermission } from "@/common-modules/utils/validate";
+import config from "@/config/config";
+import AppMainMix from "@/mixin/AppMainMix";
 
 export default {
-  name: 'Layout',
+  name: "Layout",
   components: {
     Navbar,
     Sidebar,
-    AppMain
+    AppMain,
   },
-  mixins: [ResizeMixin,latestAlarmMix],
+  mixins: [ResizeMixin, AppMainMix],
   data() {
     return {
       config: config,
-      loadPermission: false
-    }
+      loadPermission: false,
+    };
   },
   computed: {
     sidebar() {
-      return this.$store.state.app.sidebar
+      return this.$store.state.app.sidebar;
     },
     device() {
-      return this.$store.state.app.device
+      return this.$store.state.app.device;
     },
     fixedHeader() {
-      return this.$store.state.settings.fixedHeader
+      return this.$store.state.settings.fixedHeader;
     },
     classObj() {
       let obj = {
         hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
+        mobile: this.device === "mobile",
+      };
+      if (this.config.theme) {
+        obj[this.config.theme] = true;
       }
-      if(this.config.theme){
-        obj[this.config.theme] =true
-      }
-      return obj
-    }
+      return obj;
+    },
   },
   methods: {
     handleClickOutside() {
-      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+      this.$store.dispatch("app/closeSideBar", { withoutAnimation: false });
     },
     initMenu() {
-      this.$store.dispatch('permission/getUserPermission').then(res => {
+      this.$store.dispatch("permission/getUserPermission").then((res) => {
         if (
           !routerPermission(
             this.$store.state.permission.sysMenu,
@@ -79,30 +82,19 @@ export default {
             this.$route.meta
           )
         ) {
-          this.$router.push({ path: '/401' })
+          this.$router.push({ path: "/401" });
         }
-        this.loadPermission = true
-      })
-    }
+        this.loadPermission = true;
+      });
+    },
   },
-  mounted() {
-    let userInfo = userRole.get()
-    if(userInfo && JSON.parse(userInfo).userType === 1){
-      this.initMenu()
-    }else{
-      if(this.$route.path === '/main'){
-        this.$router.push('/client/monitorIndex');
-      }else{
-        this.$router.push('/401');
-      }
-    }
-  }
-}
+  mounted() {},
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~@/common-modules/styles/mixin.scss';
-@import '~@/common-modules/styles/variables.scss';
+@import "~@/common-modules/styles/mixin.scss";
+@import "~@/common-modules/styles/variables.scss";
 
 .app-wrapper {
   @include clearfix;
