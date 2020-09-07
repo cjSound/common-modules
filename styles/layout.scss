@@ -5,7 +5,7 @@
   @include scrollBar;
   background: $mainBackground;
   position: relative;
-  color: $titleColor;
+  color: $navTitle;
 
   // height: calc(100vh - 50px);
   .obit-main {
@@ -20,7 +20,6 @@
       bottom: 0;
       padding: 10px 10px 0 10px;
       background: $mainBackground;
-      ;
       z-index: 5;
       overflow: auto;
       @include scrollBar;
@@ -31,7 +30,7 @@
     }
   }
 
-  // 内容填充 100% 
+  // 内容填充 100%
   .obit-main-fill {
     height: calc(100vh - 60px);
     display: flex;
@@ -80,7 +79,6 @@
 
   .obit-search {
     padding: 10px;
-
   }
 
   .obit-content {
@@ -148,10 +146,11 @@
   justify-content: space-between;
   border: 1px solid #ebebeb;
   border-radius: 8px;
-  transition: .2s;
+  transition: 0.2s;
   margin: 0px 10px 20px;
   padding: 20px 10px 10px;
-  box-shadow: 0 0 8px 0 rgba(232, 237, 250, .6), 0 2px 4px 0 rgba(232, 237, 250, .5);
+  box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
+    0 2px 4px 0 rgba(232, 237, 250, 0.5);
 
   .input-md {
     margin-right: 0;
@@ -177,7 +176,7 @@
 .table-content {
   border: 1px solid #ebebeb;
   border-radius: 3px;
-  transition: .2s;
+  transition: 0.2s;
   padding: 24px;
 
   .table-header {
@@ -197,9 +196,9 @@
 }
 
 .table-content:hover {
-  box-shadow: 0 0 8px 0 rgba(232, 237, 250, .6), 0 2px 4px 0 rgba(232, 237, 250, .5);
+  box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
+    0 2px 4px 0 rgba(232, 237, 250, 0.5);
 }
-
 
 .el-upload--picture-card {
   background: $bodybg;
