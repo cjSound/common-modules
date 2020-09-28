@@ -37,6 +37,7 @@ tableColumns: [
     @current-change="handleCurrentChange"
     @selection-change="handleSelectionChange"
     class="com-table"
+    :max-height="maxHeight"
     highlight-current-row
   >
     <!-- <el-table-column type="selection" v-if="$listeners.selectionChange" width="55"></el-table-column> -->
@@ -116,6 +117,10 @@ export default {
     minWidth: {
       type: String,
       default: '80px',
+    },
+    maxHeight: {
+      type: [Number,String],
+      default: 'auto',
     },
     /**
      * 操作列 宽度
