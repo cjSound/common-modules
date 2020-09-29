@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-19 19:49:53
  * @LastEditors: 刘硕
- * @LastEditTime: 2020-08-30 12:01:32
+ * @LastEditTime: 2020-09-29 16:14:09
  * @Description: 地区 多级联动
  -->
 <template>
@@ -14,6 +14,7 @@
     @change="handleChange"
     clearable
     v-model="cValue"
+    v-if="opened"
   ></el-cascader>
 </template>
 
@@ -53,9 +54,13 @@ export default {
     this.cityProps.checkStrictly = this.checkAll
   },
   watch: {
-    value(newValue) {
-      if (newValue && !this.plugChange) {
-        // this.initSetValue(newValue)
+    value(newValue, oldValue) {
+      // console.log('value -> newValue', newValue, this.plugChange)
+      if (!oldValue && newValue && !this.plugChange) {
+        this.opened = false
+        this.$nextTick(() => {
+          this.opened = true
+        })
       }
       if (!newValue) {
         this.cValue = []
@@ -68,6 +73,8 @@ export default {
     return {
       dictList: [],
       plugChange: false,
+      // 组件只有在初始化的时候才加载  lazyLoad，在初始化给value赋值，重新渲染  Cascader组件 调用lazyLoad
+      opened: true,
       cValue: [],
       cityProps: {
         // expandTrigger: 'hover',
