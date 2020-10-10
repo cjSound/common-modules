@@ -2,45 +2,26 @@
  * @Author: 曹捷
  * @Date: 2020-04-20 15:22:51
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-09-22 20:25:53
+ * @LastEditTime: 2020-10-09 15:51:03
  * @Description: 地图搜索
  -->
 <template>
   <div v-if="visible">
-    <el-dialog :close-on-click-modal="false"
-               :visible.sync="addVisible"
-               @closed="closeDialog"
-               append-to-body
-               class="mapDialog"
-               fullscreen
-               title="地址"
-               width="40%">
+    <el-dialog :close-on-click-modal="false" :visible.sync="addVisible" @closed="closeDialog" append-to-body class="mapDialog" fullscreen title="地址" width="40%">
       <div class="amap-page-container">
-        <el-amap-search-box :on-search-result="onSearchResult"
-                            :search-option="searchOption"
-                            class="search-box"
-                            v-if="lock"></el-amap-search-box>
-        <el-amap :center="mapCenter"
-                 :plugin="plugin"
-                 :zoom="12"
-                 v-if="lock"
-                 vid="amapDemo">
-          <el-amap-marker :key="index"
-                          :position="marker"
-                          v-for="(marker,index) in markers"></el-amap-marker>
+        <el-amap-search-box :on-search-result="onSearchResult" :search-option="searchOption" class="search-box" v-if="lock"></el-amap-search-box>
+        <el-amap :center="mapCenter" :plugin="plugin" :zoom="12" v-if="lock" vid="amapDemo">
+          <el-amap-marker :key="index" :position="marker" v-for="(marker, index) in markers"></el-amap-marker>
         </el-amap>
       </div>
-      <span class="dialog-footer"
-            slot="footer">
-        <el-button @click="onSubmit"
-                   type="primary">保 存</el-button>
+      <span class="dialog-footer" slot="footer">
+        <el-button @click="onSubmit" type="primary">保 存</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
-
-  <script>
+<script>
 module.exports = {
   props: {
     visible: {
@@ -58,7 +39,7 @@ module.exports = {
       this.addVisible = value
     },
   },
-  data: function () {
+  data: function() {
     let self = this
     return {
       markers: [],
@@ -127,7 +108,6 @@ module.exports = {
   },
 }
 </script>
-
 
 <style lang="scss">
 .mapDialog {
