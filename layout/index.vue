@@ -2,16 +2,12 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:39
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-09-07 15:51:24
+ * @LastEditTime: 2020-10-21 10:57:15
  * @Description:  布局layout
  -->
 <template>
   <div :class="classObj" class="app-wrapper">
-    <div
-      @click="handleClickOutside"
-      class="drawer-bg"
-      v-if="device === 'mobile' && sidebar.opened"
-    />
+    <div @click="handleClickOutside" class="drawer-bg" v-if="device === 'mobile' && sidebar.opened" />
     <sidebar class="sidebar-container" />
     <div class="main-container" v-if="loadPermission">
       <!-- fixedHeader 是否固定header区域 -->
@@ -40,23 +36,23 @@ export default {
     AppMain,
   },
   mixins: [ResizeMixin, AppMainMix],
-  data() {
+  data () {
     return {
       config: config,
       loadPermission: false,
     };
   },
   computed: {
-    sidebar() {
+    sidebar () {
       return this.$store.state.app.sidebar;
     },
-    device() {
+    device () {
       return this.$store.state.app.device;
     },
-    fixedHeader() {
+    fixedHeader () {
       return this.$store.state.settings.fixedHeader;
     },
-    classObj() {
+    classObj () {
       let obj = {
         hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,
@@ -70,10 +66,10 @@ export default {
     },
   },
   methods: {
-    handleClickOutside() {
+    handleClickOutside () {
       this.$store.dispatch("app/closeSideBar", { withoutAnimation: false });
     },
-    initMenu() {
+    initMenu () {
       this.$store.dispatch("permission/getUserPermission").then((res) => {
         if (
           !routerPermission(
@@ -88,13 +84,15 @@ export default {
       });
     },
   },
-  mounted() {},
+  mounted () {
+    document.title = `${config.title}${config.navbarTitle}`
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common-modules/styles/mixin.scss";
-@import "~@/common-modules/styles/variables.scss";
+@import '~@/common-modules/styles/mixin.scss';
+@import '~@/common-modules/styles/variables.scss';
 
 .app-wrapper {
   @include clearfix;

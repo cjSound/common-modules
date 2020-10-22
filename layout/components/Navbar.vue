@@ -4,7 +4,7 @@
     <hamburger :is-active="sidebar.opened" @toggleClick="toggleSideBar" class="hamburger-container" />
     <!-- breadcrumbTop true 配置 面包屑在header里面 -->
     <breadcrumb class="breadcrumb-container" v-if="config.breadcrumbTop" />
-    <div class="navbarTitle" v-if="config.navbarTitle">{{config.navbarTitle}}</div>
+    <div class="navbarTitle" v-else-if="config.navbarTitle">{{config.navbarTitle}}</div>
     <div class="right-menu">
       <span class="userName">欢迎，{{userInfo.userName}}</span>
       <el-dropdown class="avatar-container" trigger="click">
@@ -36,25 +36,24 @@ export default {
     Hamburger,
   },
   computed: {
-    sidebar() {
+    sidebar () {
       return this.$store.state.app.sidebar
     },
   },
-  data() {
+  data () {
     return {
       config: config,
       userInfo: {},
     }
   },
-  created() {
+  created () {
     this.userInfo = JSON.parse(userRole.get())
-    console.log('created -> this.userInfo', this.userInfo)
   },
   methods: {
-    toggleSideBar() {
+    toggleSideBar () {
       this.$store.dispatch('app/toggleSideBar')
     },
-    async logout() {
+    async logout () {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },

@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-06-02 09:11:01
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 10:59:37
+ * @LastEditTime: 2020-10-21 11:36:53
  * @Description: file content
 --> 
 <template>
@@ -29,7 +29,7 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
       title: 'Vue Admin Template'
     }

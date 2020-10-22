@@ -1,14 +1,15 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:39
- * @LastEditors: 徐生延
- * @LastEditTime: 2020-08-07 10:57:07
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-10-21 16:01:32
  * @Description: 菜单 根据路由生成，根据系统权限判断是否展示对应菜单
  -->
 <template>
   <div class="menu-wrapper" v-if="!item.hidden">
     <template v-if="hasOneShowingChild(item.children,item)">
-      <el-menu-item :class="{'submenu-title-noDropdown':!isNest,'currMenu':currMenu}" :index="item.path" @click="toPath(item)">
+      <el-menu-item :class="{'submenu-title-noDropdown':!isNest,'currMenu':currMenu}" :index="item.path"
+        @click="toPath(item)">
         <item :icon="item.iconname||(item&&item.iconname)" :title="item.menuName" />
       </el-menu-item>
     </template>
@@ -17,14 +18,8 @@
       <template slot="title">
         <item :icon="item && item.iconname" :title="isCollapse?'':item.menuName" v-if="item" />
       </template>
-      <sidebar-item
-        :base-path="resolvePath(child.path)"
-        :is-nest="true"
-        :item="child"
-        :key="child.menuCode"
-        class="nest-menu"
-        v-for="child in item.children"
-      />
+      <sidebar-item :base-path="resolvePath(child.path)" :is-nest="true" :item="child" :key="child.menuCode"
+        class="nest-menu" v-for="child in item.children" />
     </el-submenu>
   </div>
 </template>
@@ -40,15 +35,15 @@ export default {
   components: { Item },
   computed: {
     ...mapGetters(['sidebar']),
-    sidebar() {
+    sidebar () {
       return this.$store.state.app.sidebar
     },
-    isCollapse() {
+    isCollapse () {
       return this.sidebar.opened === 2
     }
   },
   watch: {
-    $route(value) {
+    $route (value) {
       this.currMenu = value.path === this.item.path
     }
   },
@@ -67,16 +62,16 @@ export default {
       default: ''
     }
   },
-  data() {
+  data () {
     // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
     this.onlyOneChild = null
     return {
       currMenu: false
     }
   },
-  mounted() {},
+  mounted () { },
   methods: {
-    toPath(item) {
+    toPath (item) {
       item.name = item.menuName
       this.$store.dispatch('tagsView/addVisitedView', item)
       if (this.$route.path !== item.path) {
@@ -85,10 +80,10 @@ export default {
         })
       }
     },
-    hasOneShowingChild(children = [], parent) {
+    hasOneShowingChild (children = [], parent) {
       return parent.children && parent.children.length > 0 ? false : true
     },
-    resolvePath(routePath) {
+    resolvePath (routePath) {
       if (isExternal(routePath)) {
         return routePath
       }

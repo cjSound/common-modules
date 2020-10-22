@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:38
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-04 10:06:15
+ * @LastEditTime: 2020-10-21 16:02:18
  * @Description: 面包屑  两种形式 
   1放在header里面
   2放在body里面 breadcrumb-content
@@ -21,26 +21,29 @@
 <script>
 import util from '@/common-modules/utils/utils'
 export default {
-  data() {
+  data () {
     return {
       levelList: null,
       listMean: []
     }
   },
   watch: {
-    $route() {
+    $route () {
       this.getBreadcrumb()
     },
-    '$store.state.app.lastBreadcrumb': function(newInfo, oldInfo) {
+    '$store.state.app.lastBreadcrumb': function (newInfo, oldInfo) {
       this.getBreadcrumb()
     }
   },
-  created() {
+  created () {
     this.listMean = util.localstorage.get('listM')
     this.getBreadcrumb()
   },
   methods: {
-    getBreadcrumb() {
+    /**
+     * 获取当前路径 所有上级的面 包屑 
+     */
+    getBreadcrumb () {
       // only show routes with meta.title
       let arr = []
       this.$route.matched.forEach(element => {
@@ -60,14 +63,14 @@ export default {
       }
       this.levelList = arr
     },
-    isDashboard(route) {
+    isDashboard (route) {
       const name = route && route.menuCode
       if (!name) {
         return false
       }
       return name.trim().toLocaleLowerCase() === 'main'.toLocaleLowerCase()
     },
-    handleLink(item) {
+    handleLink (item) {
       const { path } = item
       if (path) {
         if (path === this.$route.path) {
