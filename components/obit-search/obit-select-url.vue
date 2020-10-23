@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-06-22 20:37:04
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-10-22 10:01:20
+ * @LastEditTime: 2020-10-22 15:17:54
  * @Description: 自定义查询条件 接口下拉列表
 --> 
 <template>
@@ -55,9 +55,10 @@ export default {
     },
     initData (searchText) {
       searchText = searchText ? searchText : ''
+      let config = this.$http.getConfig()
       this.$http.getDataByUrl(`${this.itemInfo.ajaxurl}${searchText}`).then(res => {
         let list
-        if (res.status == 200 && res.code === '000') {
+        if (res.status == 200 && res.code === config.successCode) {
           list = res.data
         } else if (res instanceof Array) {
           list = res
