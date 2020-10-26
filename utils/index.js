@@ -2,14 +2,14 @@
  * @Author: 曹捷
  * @Date: 2020-07-16 13:11:13
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-10-22 16:47:29
+ * @LastEditTime: 2020-10-26 16:40:28
  * @Description: 返回注册全局api  到vue实例
  */
 import store from '@/store'
-
 export let util = require('./utils').default
 
-
+// 图表 charts工具类操作
+export const vchart = require('./vchart').default;
 /**
  * 额外增加面包屑和取消面包屑
  */

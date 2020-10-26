@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-06-02 09:52:39
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-04 09:57:30
+ * @LastEditTime: 2020-10-26 11:11:38
  * @Description: file content
  */
 import Cookies from 'js-cookie'
@@ -35,22 +35,22 @@ const mutations = {
   TOGGLE_DEVICE: (state, device) => {
     state.device = device
   },
-  setLastBreadcrumb(state, info) {
+  setLastBreadcrumb (state, info) {
     state.lastBreadcrumb = info
   },
-  removeLastBreadcrumb(state) {
+  removeLastBreadcrumb (state) {
     state.lastBreadcrumb = {}
   }
 }
 
 const actions = {
-  toggleSideBar({ commit }) {
+  toggleSideBar ({ commit }) {
     commit('TOGGLE_SIDEBAR')
   },
-  closeSideBar({ commit }, { withoutAnimation }) {
+  closeSideBar ({ commit }, { withoutAnimation }) {
     commit('CLOSE_SIDEBAR', withoutAnimation)
   },
-  toggleDevice({ commit }, device) {
+  toggleDevice ({ commit }, device) {
     commit('TOGGLE_DEVICE', device)
   }
 }
@@ -59,5 +59,8 @@ export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
+  getters: {
+    lastBreadcrumb: state => state.lastBreadcrumb
+  }
 }
