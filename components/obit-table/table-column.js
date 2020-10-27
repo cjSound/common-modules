@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-07-30 20:59:56
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-07-31 17:26:52
+ * @LastEditTime: 2020-10-27 09:53:25
  * @Description: 嵌套table column列 可以合并表头
  */
 export default {
@@ -14,7 +14,7 @@ export default {
     },
     inject: ['align', 'minWidth'],
     methods: {
-        cloneObj(obj) {
+        cloneObj (obj) {
             var newObj = {}
             if (obj instanceof Array) {
                 newObj = []
@@ -33,14 +33,14 @@ export default {
             渲染出来table 列的顺序会不正确， 第一项永远会跑到最后一个
             暂时改变数组顺序来解决此问题
          * */
-        sortArrEnd() {
+        sortArrEnd () {
             let list = this.cloneObj(this.tableColumnItem)
             let end = list.splice(list.length - 1, 1)
             list.unshift(end[0])
             return list
         }
     },
-    render(h) {
+    render (h) {
         if (this.tableColumnItem instanceof Array) {
             let list = this.sortArrEnd()
             return (
@@ -80,16 +80,16 @@ export default {
                     }
                 }
             }
-            if(column.type ){
+            if (column.type) {
                 // 序号
                 return (
-                    <el-table-column  type={column.type}   align={this.align} label={column.label} min-width={this.minWidth}  
-                        width={column.width}  > 
+                    <el-table-column type={column.type} align={this.align} label={column.label} min-width={this.minWidth}
+                        width={column.width}  >
                     </el-table-column>
                 )
-            }else{
+            } else {
                 return (
-                    <el-table-column show-overflow-tooltip align={this.align} label={column.label} min-width={this.minWidth} prop={column.prop}
+                    <el-table-column sortable={column.sortable} show-overflow-tooltip align={this.align} label={column.label} min-width={this.minWidth} prop={column.prop}
                         width={column.width}
                         {...{ scopedSlots }} >
                         {

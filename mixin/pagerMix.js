@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-07-19 09:19:35
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-10-22 18:56:21
+ * @LastEditTime: 2020-10-27 10:06:38
  * @Description: table分页  抽取相关mix
  */
 import util from '@/common-modules/utils/utils'
@@ -14,7 +14,8 @@ export default {
             searchParams: {
                 pageNum: 1,
                 pageSize: 20,
-                orderBy: ''
+                orderBy: '',
+                sort: ''
             },
             pageSizeList: [20, 30, 50],
             total: 0,
@@ -86,6 +87,15 @@ export default {
                 console.log('queryDataList -> error', error)
                 this.loading = false
             }
+        },
+        /**
+         * 排序触发
+         * @param {*} param0 
+         */
+        sortChange ({ column, prop, order }) {
+            this.searchParams.orderBy = prop
+            this.searchParams.sort = order.indexOf('desc') !== -1 ? 'desc' : 'asc'
+            this.queryDataList(true)
         },
         // 分页组件，翻页
         handleCurrentChange (val) {
