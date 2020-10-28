@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-07-19 09:19:35
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-10-27 10:06:38
+ * @LastEditTime: 2020-10-27 15:43:04
  * @Description: table分页  抽取相关mix
  */
 import util from '@/common-modules/utils/utils'
@@ -36,6 +36,7 @@ export default {
             // 多选选择的列表
             handleSelectionList: [],
             handleSelectionKey: '',
+            deleteKey: ''
         }
     },
     watch: {
@@ -156,27 +157,25 @@ export default {
             let param = {
                 ids: this.handleSelectionList
             }
-            this.$confirm('是否删除', '提示')
-                .then(() => {
-                    this.$http[key](param).then(res => {
-                        this.$message.success('删除成功')
-                        this.reload()
-                    })
+            key = key ? key : this.deleteKey
+            this.$confirm('是否删除', '提示').then(() => {
+                this.$http[key](param).then(res => {
+                    this.$message.success('删除成功')
+                    this.reload()
                 })
-                .catch(() => { })
+            }).catch(() => { })
         },
-        deleteInfo (key, item) {
+        deleteInfo (item, key) {
             let param = {
                 ids: [item[this.handleSelectionKey]]
             }
-            this.$confirm('是否删除', '提示')
-                .then(() => {
-                    this.$http[key](param).then(res => {
-                        this.$message.success('删除成功')
-                        this.reload()
-                    })
+            key = key ? key : this.deleteKey
+            this.$confirm('是否删除', '提示').then(() => {
+                this.$http[key](param).then(res => {
+                    this.$message.success('删除成功')
+                    this.reload()
                 })
-                .catch(() => { })
+            }).catch(() => { })
         }
     }
 }
