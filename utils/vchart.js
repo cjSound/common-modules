@@ -2,12 +2,13 @@
  * @Author: 曹捷
  * @Date: 2020-10-26 16:36:29
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-10-26 16:51:52
+ * @LastEditTime: 2020-11-05 10:34:29
  * @Description: 图表 charts工具类操作
  */
 export default {
+
   /**
-   * 
+   * v-charts 组件 设置
    * @param {Array[Object]} list 
    * 接口返回数据 [{date:'',value:2}]
    * @param {Object} chartData 

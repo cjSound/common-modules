@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-07-16 13:11:13
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-10-26 16:40:28
+ * @LastEditTime: 2020-11-05 11:12:34
  * @Description: 返回注册全局api  到vue实例
  */
 import store from '@/store'
