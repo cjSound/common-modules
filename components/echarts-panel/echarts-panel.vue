@@ -2,7 +2,7 @@
  * @Author: 刘硕
  * @Date: 2020-07-24 10:25:07
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-11-05 17:02:40
+ * @LastEditTime: 2020-11-05 17:16:14
  * @Description: file content
 --> 
 <template>
@@ -59,6 +59,9 @@ export default {
   mounted () {
     this.init()
   },
+  beforeDestroy () {
+    this.chart.dispose()
+  }
 }
 </script>
 
