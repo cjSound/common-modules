@@ -2,7 +2,7 @@
  * @Author: 刘硕
  * @Date: 2020-07-24 10:25:07
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-11-05 17:16:14
+ * @LastEditTime: 2020-11-23 16:45:13
  * @Description: file content
 --> 
 <template>
@@ -53,6 +53,9 @@ export default {
         this.chart = echarts.init(this.$refs.echarts, this.theme)
       }
       this.chart.setOption(this.chartsOption)
+      this.chart.on('click', (params) => {
+        this.$emit('click', params)
+      });
     },
   },
 
