@@ -1,13 +1,14 @@
 <!--
  * @Author: 刘硕
  * @Date: 2019-08-19 14:45:40
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-08-18 11:03:19
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-11-23 20:16:27
  * @Description: file content
  -->
 <template>
   <div v-if="visible">
-    <el-dialog :close-on-click-modal="false" :title="showTitle" :visible.sync="addVisible" @closed="closeDialog" width="40%">
+    <el-dialog :close-on-click-modal="false" :title="showTitle" :visible.sync="addVisible" @closed="closeDialog"
+      width="40%">
       <el-form :inline="true" :model="formData" :rules="rules" class="obit-form-100" ref="formData">
         <el-form-item label="账号" prop="account">
           <el-input placeholder="请输入账号" v-model="formData.account"></el-input>
@@ -18,6 +19,9 @@
         <el-form-item label="用户编码">
           <el-input placeholder="请输入用户编码" v-model="formData.userCode"></el-input>
         </el-form-item>
+        <el-form-item label="电话" prop="tel">
+          <el-input placeholder="请输入电话" v-model="formData.tel"></el-input>
+        </el-form-item>
         <el-form-item label="密码" prop="password" v-if="this.addType == 'add'">
           <el-input placeholder="请输入密码" show-password v-model="formData.password"></el-input>
         </el-form-item>
@@ -26,7 +30,8 @@
         </el-form-item>
         <el-form-item label="角色" prop="roleId">
           <el-select filterable placeholder="请选择角色" v-model="formData.roleId">
-            <el-option :key="item.roleId" :label="item.roleName" :value="item.roleId" v-for="item in roleList"></el-option>
+            <el-option :key="item.roleId" :label="item.roleName" :value="item.roleId" v-for="item in roleList">
+            </el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -53,7 +58,7 @@ export default {
       type: Object,
     },
   },
-  data() {
+  data () {
     let checkValue = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('请输入账号'))
@@ -88,17 +93,25 @@ export default {
           { required: true, message: '请选择机构', trigger: 'change' },
         ],
         roleId: [{ required: true, message: '请选择角色', trigger: 'change' }],
+        tel: [
+          {
+            required: true,
+            pattern: /^1[34578]\d{9}$/,
+            message: '请输入正确的电话号码',
+            trigger: 'blur',
+          },
+        ],
       },
     }
   },
 
   computed: {
-    showTitle() {
+    showTitle () {
       return this.addType === 'add' ? '新增用户' : '修改用户'
     },
   },
   watch: {
-    visible(value) {
+    visible (value) {
       if (value && this.addType === 'edit') {
         this.$set(this, 'formData', util.util.cloneObj(this.detailsInfo))
         this.oldAccount = this.formData.account
@@ -108,12 +121,12 @@ export default {
       this.addVisible = value
     },
   },
-  mounted() {
+  mounted () {
     this.getAllRole()
   },
   methods: {
     //保存
-    onSubmit() {
+    onSubmit () {
       if (this.activeName === 'add') {
         this.$refs['formData'].validate((valid) => {
           if (valid) {
@@ -136,13 +149,13 @@ export default {
         })
       }
     },
-    closeDialog() {
+    closeDialog () {
       util.util.cleanObj(this.formData)
       this.activeName = 'add'
       this.$emit('update:visible', false)
     },
     //获取所有角色
-    getAllRole() {
+    getAllRole () {
       this.$http.getSystemRoleList().then((res) => {
         this.roleList = res
       })

@@ -1,13 +1,15 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-04-27 18:44:59
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-08-17 20:21:03
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-11-23 20:53:36
  * @Description: 封装select组件  支持同时获取value和name
  -->
 <template>
-  <el-select :clearable="clearable" :disabled="disabled" :multiple="multiple" :placeholder="placeholder" @change="changeValue" class="input-md" filterable v-model="dictValue">
-    <el-option :key="item.valueName" :label="item[labelName]" :value="item[valueName]" v-for="item in selectList"></el-option>
+  <el-select :clearable="clearable" :disabled="disabled" :multiple="multiple" :placeholder="placeholder"
+    @change="changeValue" class="input-md" filterable v-model="dictValue">
+    <el-option :key="item.valueName" :label="item[labelName]" :value="item[valueName]" v-for="item in selectList">
+    </el-option>
   </el-select>
 </template>
 
@@ -57,33 +59,45 @@ export default {
     selectName: {
       type: String,
     },
+    valueType: {
+      type: String,
+      default: ''
+    }
   },
-  data() {
+  data () {
     return {
-      dictValue: this.value === null || this.value === undefined ? '' : this.value,
+      dictValue: '',
       dictValueList: [],
     }
   },
   watch: {
-    value() {
-      this.dictValue = this.value === null || this.value === undefined ? '' : this.value
-      console.log(`dictValue:${this.valueName}`, this.dictValue)
+    value () {
+      this.typeToValue()
+      // console.log(`dictValue:${this.valueName}`, this.dictValue)
     },
   },
   methods: {
-    changeValue(value) {
+    typeToValue () {
+      let value = this.value === null || this.value === undefined ? '' : this.value
+      if (this.valueType === 'Int') {
+        value = parseInt(value)
+      }
+      this.dictValue = value
+    },
+    changeValue (value) {
       this.$emit('input', value)
-      this.$emit('change', value)
       let obj = this.selectList.find((item) => {
         return item[this.valueName] === value
       })
+      this.$emit('change', value)
+      this.$emit('changeInfo', obj)
       this.$emit('update:selectName', obj ? obj[this.labelName] : '')
     },
   },
-  mounted() {
+  mounted () {
     if (this.value) {
-      console.log(`dictValue:${this.valueName}`, this.dictValue)
       this.changeValue(this.value)
+      this.typeToValue()
     }
   },
 }
