@@ -1,22 +1,14 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-06-22 20:37:04
- * @LastEditors: 徐生延
- * @LastEditTime: 2020-07-14 15:26:53
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-10-22 15:17:54
  * @Description: 自定义查询条件 接口下拉列表
 --> 
 <template>
-  <obitSelect
-    :labelName="itemInfo.labelname"
-    :placeholder="placeholder"
-    :remote="remote"
-    :selectList="selectList"
-    :valueName="itemInfo.valuename"
-    @change="changeValue"
-    @remoteMethod="initData"
-    clearable
-    v-model="cValue"
-  ></obitSelect>
+  <obitSelect :labelName="itemInfo.labelname" :placeholder="placeholder" :remote="remote" :selectList="selectList"
+    :valueName="itemInfo.valuename" @change="changeValue" @remoteMethod="initData" clearable v-model="cValue">
+  </obitSelect>
 </template>
 
 <script>
@@ -36,7 +28,7 @@ export default {
     },
     selectCode: { type: String }
   },
-  data() {
+  data () {
     return {
       remote: false, //是否为远程搜索
       cValue: this.value,
@@ -44,28 +36,34 @@ export default {
     }
   },
   watch: {
-    value() {
+    value () {
       this.cValue =
         this.value === null || this.value === undefined ? '' : this.value
     },
     /**
      * 查询字段的改变 触发对应下拉改变
      */
-    selectCode(value) {
+    selectCode (value) {
       this.initData(this.itemInfo.initValue)
     }
   },
   components: { obitSelect },
   methods: {
-    changeValue(value) {
+    changeValue (value) {
       this.$emit('input', value)
       this.$emit('change', value)
     },
-    initData(searchText) {
+    initData (searchText) {
       searchText = searchText ? searchText : ''
+      let config = this.$http.getConfig()
       this.$http.getDataByUrl(`${this.itemInfo.ajaxurl}${searchText}`).then(res => {
-        if (res.status == 200 && res.code === '000') {
-          let list = res.data
+        let list
+        if (res.status == 200 && res.code === config.successCode) {
+          list = res.data
+        } else if (res instanceof Array) {
+          list = res
+        }
+        if (list) {
           list.forEach((element, index) => {
             let type = Object.prototype.toString.call(element)
             if (type.indexOf('String') !== -1) {
@@ -80,7 +78,7 @@ export default {
       })
     }
   },
-  created() {
+  created () {
     if (this.itemInfo.remote === 1) {
       this.remote = true
     }
@@ -91,7 +89,7 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted () {
     this.initData(this.itemInfo.initValue)
   }
 }

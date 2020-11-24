@@ -2,14 +2,14 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 17:02:31
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-08-12 10:53:07
+ * @LastEditTime: 2020-11-12 16:27:02
  * @Description: 系统工具类
  */
 const util = {}
 
 util.util = {
     /*克隆一个对象*/
-    cloneObj(obj) {
+    cloneObj (obj) {
         var newObj = {};
         let type = Object.prototype.toString.call(obj)
         if (type.indexOf('Array') !== -1) {
@@ -21,7 +21,7 @@ util.util = {
         }
         return newObj;
     },
-    cleanObj(obj) {
+    cleanObj (obj) {
         for (var key in obj) {
             if (obj[key] instanceof Array) {
                 obj[key] = [];
@@ -80,7 +80,7 @@ util.util = {
         return null;
     },
     /*对敏感信息 进行*号处理  比如id  身份证号,手机号*/
-    infoPrivacy(el) {
+    infoPrivacy (el) {
         let ht = el.innerHTML;
         let ls = el.innerHTML.length;
         let rep, length = 0;
@@ -109,7 +109,7 @@ util.util = {
      * @param {*} newdata 
      * 要赋值给原数据对象的内容
      */
-    extendObj(source, newdata) {
+    extendObj (source, newdata) {
         if (source == null) return;
         for (var property in newdata) {
             if (typeof newdata[property] === "object") {
@@ -136,7 +136,7 @@ util.util = {
      * @param {*} newdata 
      * 要赋值给原数据对象的内容
      */
-    assignObj(source, newdata) {
+    assignObj (source, newdata) {
         if (source == null) return;
         for (var property in source) {
             if (typeof source[property] === "object" && typeof newdata[property] === "object") {
@@ -148,7 +148,7 @@ util.util = {
         return source;
     },
     /*在传递数据的时候对对象进行中文编码处理*/
-    encodeParemt(paremt) {
+    encodeParemt (paremt) {
         var a = {};
         for (var i in paremt) {
             a[i] = encodeURI(paremt[i]);
@@ -187,7 +187,7 @@ util.util = {
         }
         return res;
     },
-    parseParam(queryConfig) { //吧对象转为url字符拼接
+    parseParam (queryConfig) { //吧对象转为url字符拼接
         var _str = "";
         for (var o in queryConfig) {
             if (queryConfig[o] != -1) {
@@ -390,7 +390,7 @@ util.export = {
     }
 }
 util.array = {
-    treeToArray(nodes, childrenName) {
+    treeToArray (nodes, childrenName) {
         var r = [];
         if (Array.isArray(nodes)) {
             for (var i = 0, l = nodes.length; i < l; i++) {
@@ -403,13 +403,38 @@ util.array = {
         }
         return r;
     },
-    clearNull(list) {
+    clearNull (list) {
         let res = []
         list.forEach(element => {
             if (element)
                 res.push(element)
         });
         return res
+    },
+    /**数组根据数组对象中的某个属性值进行排序的方法 
+   * 使用例子：newArray.sort(sortBy('number',false)) //表示根据number属性降序排列;若第二个参数不传递，默认表示升序排序
+   * @param attr 排序的属性 如number属性
+   * @param rev true表示升序排列，false降序排序
+   * */
+    sortBy: function (attr, rev) {
+        //第二个参数没有传递 默认升序排列
+        if (rev == undefined) {
+            rev = 1;
+        } else {
+            rev = (rev) ? 1 : -1;
+        }
+
+        return function (a, b) {
+            a = a[attr];
+            b = b[attr];
+            if (a < b) {
+                return rev * -1;
+            }
+            if (a > b) {
+                return rev * 1;
+            }
+            return 0;
+        }
     }
 }
 export default util;

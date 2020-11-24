@@ -1,16 +1,20 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-05-17 11:39:56
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-08-20 19:29:34
- * @Description: 表格统一处理
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-10-27 10:09:53
+ * @Description: 表格统一处理 示例如下
 --> 
 <!--
 传参demos
 tableColumns: [
+        // 支持多选，多选触发table  handleCurrentChange 方法
         { label: ' ', type: 'selection' },
+        // 支持显示序号，新增如下对象
         { label: '序号 ', type: 'index' },
+        // 自定义过滤转换
         { prop: 'detailDate', label: '日期', filterType: 'dateM' },
+        // 支持表格头合并单元格  示例如下
         {
           label: '一级汇总',
           children: [
@@ -26,20 +30,14 @@ tableColumns: [
           ],
         },
         { prop: 'overdueDealer', label: '逾期专干' },
-        { prop: 'createTime', label: '导入时间' },
+        // 对字段进行自定义排序  custom 后端排序 触发表格sortChange方法
+        { prop: 'createTime', label: '导入时间' ,sortable:'custom'},
       ],
 --> 
 <template>
-  <el-table
-    :border="tableBorder"
-    :data="dataList"
-    :style="{width:width}"
-    @current-change="handleCurrentChange"
-    @selection-change="handleSelectionChange"
-    class="com-table"
-    :max-height="maxHeight"
-    highlight-current-row
-  >
+  <el-table @sort-change="sortChange" :border="tableBorder" :data="dataList" :style="{width:width}"
+    @current-change="handleCurrentChange" @selection-change="handleSelectionChange" class="com-table"
+    :max-height="maxHeight" highlight-current-row>
     <!-- <el-table-column type="selection" v-if="$listeners.selectionChange" width="55"></el-table-column> -->
     <!-- <el-table-column :label="indexName" type="index" v-if="indexName !==null" width="50"></el-table-column> -->
     <tableColumn :tableColumnItem="tableColumns"></tableColumn>
@@ -59,21 +57,19 @@ tableColumns: [
       </template>
     </el-table-column>-->
     <!-- 默认操作列 有编辑删除 查看三个按钮 额外需要新增的可以采用slot=operate -->
-    <el-table-column
-      :width="operationWidth"
-      align="center"
-      fixed="right"
-      label="操作"
-      v-if="$listeners.editEven || $listeners.deleteEven || $listeners.lookEven"
-    >
+    <el-table-column :width="operationWidth" align="center" fixed="right" label="操作"
+      v-if="$listeners.editEven || $listeners.deleteEven || $listeners.lookEven">
       <template slot-scope="scope">
-        <el-tooltip class="item" content="修改" effect="dark" placement="top" v-if="$listeners.editEven" v-permiss="editPermiss">
+        <el-tooltip class="item" content="修改" effect="dark" placement="top" v-if="$listeners.editEven"
+          v-permiss="editPermiss">
           <i @click="clickEvent(scope.row,'editEven')" class="el-icon el-icon-setting pointer obit-link p-r-10"></i>
         </el-tooltip>
-        <el-tooltip class="item" content="删除" effect="dark" placement="top" v-if="$listeners.deleteEven" v-permiss="deletePermiss">
+        <el-tooltip class="item" content="删除" effect="dark" placement="top" v-if="$listeners.deleteEven"
+          v-permiss="deletePermiss">
           <i @click="clickEvent(scope.row,'deleteEven')" class="el-icon el-icon-delete pointer obit-link"></i>
         </el-tooltip>
-        <el-tooltip class="item" content="查看详情" effect="dark" placement="top" v-if="$listeners.lookEven" v-permiss="deletePermiss">
+        <el-tooltip class="item" content="查看详情" effect="dark" placement="top" v-if="$listeners.lookEven"
+          v-permiss="deletePermiss">
           <i @click="clickEvent(scope.row,'lookEven')" class="el-icon el-icon-view pointer obit-link"></i>
         </el-tooltip>
 
@@ -119,7 +115,7 @@ export default {
       default: '80px',
     },
     maxHeight: {
-      type: [Number,String],
+      type: [Number, String],
       default: 'auto',
     },
     /**
@@ -156,7 +152,7 @@ export default {
       default: config.tableBorder ? config.tableBorder : false,
     },
   },
-  provide() {
+  provide () {
     let props = this._props
     let res = {}
     for (const key in props) {
@@ -166,7 +162,7 @@ export default {
   },
   methods: {
     // 多选 将id 存入handleSelectionList 集合
-    handleSelectionChange(item) {
+    handleSelectionChange (item) {
       // let arr = []
       // item.forEach(element => {
       //   arr.push(element[this.handleSelectionKey])
@@ -174,12 +170,20 @@ export default {
       // this.handleSelectionList = arr
       this.$emit('selectionChange', item)
     },
-    clickEvent(item, eventKey) {
+    clickEvent (item, eventKey) {
       this.$emit(eventKey, item)
     },
-    handleCurrentChange(item) {
+    handleCurrentChange (item) {
       this.$emit('handleCurrentChange', item)
     },
+    /**
+     * 排序需求
+     */
+    sortChange (column) {
+      console.log('sortChange -> column', column)
+      this.$emit('sortChange', column)
+
+    }
   },
 }
 </script>

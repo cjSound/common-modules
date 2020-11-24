@@ -1,8 +1,8 @@
 <!--
  * @Author: 刘硕
  * @Date: 2020-07-24 10:25:07
- * @LastEditors: 徐生延
- * @LastEditTime: 2020-08-07 10:10:17
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-11-23 16:45:13
  * @Description: file content
 --> 
 <template>
@@ -18,8 +18,12 @@ export default {
       type: Object,
       required: true,
     },
+    theme: {
+      type: String,
+      default: 'default'
+    }
   },
-  data() {
+  data () {
     return {
       chart: null,
     }
@@ -27,30 +31,40 @@ export default {
   watch: {
     chartsOption: {
       deep: true,
-      handler(val) {
+      handler (val) {
         this.chart.setOption(val, true)
       },
     },
+    theme (newTheme, oldTheme) {
+      this.chart.dispose();
+      this.chart = echarts.init(this.$refs.chart, theme);
+    }
   },
 
   methods: {
-    getChart() {
+    getChart () {
       return this.chart
     },
-    init() {
+    init () {
       if (this.chart != null && this.chart != '' && this.chart != undefined) {
         this.chart.dispose()
       }
       if (this.chart === null) {
-        this.chart = echarts.init(this.$refs.echarts, '')
+        this.chart = echarts.init(this.$refs.echarts, this.theme)
       }
       this.chart.setOption(this.chartsOption)
+      this.chart.on('click', (params) => {
+        this.$emit('click', params)
+      });
     },
   },
 
-  mounted() {
+  mounted () {
     this.init()
   },
+  beforeDestroy () {
+    this.chart.dispose()
+  }
 }
 </script>
 

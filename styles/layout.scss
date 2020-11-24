@@ -1,205 +1,215 @@
 // app-main  路由子内容主题样式
+.app-wrapper {
+	overflow: auto;
+	@include scrollBar;
+	.main-container {
+		overflow: hidden;
+	}
+}
 .obt-main {
-  padding: 5px;
-  overflow: auto;
-  @include scrollBar;
-  background: $mainBackground;
-  position: relative;
-  color: $navTitle;
+	padding: 5px;
+	overflow: auto;
+	@include scrollBar;
+	background: $mainBackground;
+	position: relative;
+	color: $navTitle;
 
-  // height: calc(100vh - 50px);
-  .obit-main {
-    background: $bodybg;
+	// height: calc(100vh - 50px);
+	.obit-main {
+		background: $bodybg;
 
-    // padding: 10px;
-    .obit-main-add {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 10px 10px 0 10px;
-      background: $mainBackground;
-      z-index: 5;
-      overflow: auto;
-      @include scrollBar;
-    }
+		// padding: 10px;
+		.obit-main-add {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			padding: 10px 10px 0 10px;
+			background: $mainBackground;
+			z-index: 5;
+			overflow: auto;
+			@include scrollBar;
+		}
 
-    .el-button--primary {
-      color: $titleColor;
-    }
-  }
+		.el-button--primary {
+			color: $--color-text-primary;
+		}
+	}
 
-  // 内容填充 100%
-  .obit-main-fill {
-    height: calc(100vh - 60px);
-    display: flex;
-    flex-direction: column;
+	// 内容填充 100%
+	.obit-main-fill {
+		height: calc(100vh - 60px);
+		display: flex;
+		flex-direction: column;
 
-    .obit-content {
-      flex-grow: 1;
-      overflow: auto;
-      @include scrollBar;
-    }
-  }
+		.obit-content {
+			flex-grow: 1;
+			overflow: auto;
+			@include scrollBar;
+		}
+	}
 
-  // 面包屑在body里面
-  .has-breadcrumb {
-    .obit-main-fill {
-      height: calc(100vh - 83px);
-    }
+	// 面包屑在body里面
+	.has-breadcrumb {
+		.obit-main-fill {
+			height: calc(100vh - 83px);
+		}
 
-    .obit-main-add {
-      top: 19px;
-    }
-  }
+		.obit-main-add {
+			top: 19px;
+		}
+	}
 
-  .full-main {
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    top: 10px;
-  }
+	.full-main {
+		left: 10px;
+		right: 10px;
+		bottom: 10px;
+		top: 10px;
+	}
 
-  .submit-main {
-    position: absolute;
-    left: 10px;
-    right: 10px;
-    bottom: 48px;
-    top: 10px;
-  }
+	.submit-main {
+		position: absolute;
+		left: 10px;
+		right: 10px;
+		bottom: 48px;
+		top: 10px;
+	}
 
-  .height-100-head {
-    height: calc(100% - 50px);
-  }
+	.height-100-head {
+		height: calc(100% - 50px);
+	}
 
-  .height-100 {
-    height: 100%;
-  }
+	.height-100 {
+		height: 100%;
+	}
 
-  .obit-search {
-    padding: 10px;
-  }
+	.obit-search {
+		padding: 10px;
+	}
 
-  .obit-content {
-    padding: 0 10px;
+	.obit-content {
+		padding: 0 10px;
 
-    .el-table__body-wrapper {
-      @include scrollBar;
-    }
-  }
+		.el-table__body-wrapper {
+			@include scrollBar;
+		}
+	}
 
-  .obit-pager {
-    text-align: right;
-    padding-top: 5px;
-  }
+	.obit-pager {
+		text-align: right;
+		padding-top: 5px;
+	}
 }
 
 // 固定header
 .fixed-header-main {
-  margin-top: 50px;
+	margin-top: 50px;
 }
 
 .input-md {
-  width: 220px;
-  vertical-align: top;
-  margin: 0 20px 10px 0;
-  line-height: 36px;
+	width: 220px;
+	vertical-align: top;
+	margin: 0 20px 10px 0;
+	line-height: 36px;
 
-  .el-input__inner {
-    height: 36px;
-    line-height: 36px;
-  }
+	.el-input__inner {
+		height: 36px;
+		line-height: 36px;
+	}
 }
 
 .input-com {
-  vertical-align: top;
-  height: 36px;
-  line-height: 36px;
+	vertical-align: top;
+	height: 36px;
+	line-height: 36px;
 
-  .el-input__inner {
-    height: 36px;
-    line-height: 36px;
-  }
+	.el-input__inner {
+		height: 36px;
+		line-height: 36px;
+	}
 
-  .el-range-input {
-    height: 34px;
-    line-height: 36px;
-  }
+	.el-range-input {
+		height: 34px;
+		line-height: 36px;
+	}
 
-  .el-range-separator {
-    width: 7%;
-  }
+	.el-range-separator {
+		width: 7%;
+	}
 }
 
 .btn-md {
-  padding: 10px 20px;
-  font-size: 14px;
-  border-radius: 4px;
+	padding: 10px 20px;
+	font-size: 14px;
+	border-radius: 4px;
 }
 
 // 搜索 多条件搜索 form 表单样式
 .obit-serach-form {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  border: 1px solid #ebebeb;
-  border-radius: 8px;
-  transition: 0.2s;
-  margin: 0px 10px 20px;
-  padding: 20px 10px 10px;
-  box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
-    0 2px 4px 0 rgba(232, 237, 250, 0.5);
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	border: 1px solid #ebebeb;
+	border-radius: 8px;
+	transition: 0.2s;
+	margin: 0px 10px 20px;
+	padding: 20px 10px 10px;
+	box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
+		0 2px 4px 0 rgba(232, 237, 250, 0.5);
 
-  .input-md {
-    margin-right: 0;
-  }
+	.input-md {
+		margin-right: 0;
+	}
 
-  .search-br {
-    width: 340px;
-    height: 0;
-  }
+	.search-br {
+		width: 340px;
+		height: 0;
+	}
 
-  .search-btn {
-    width: 100%;
-    margin-right: 10px;
-    margin-bottom: 5px;
-    text-align: center;
-  }
+	.search-btn {
+		width: 100%;
+		margin-right: 10px;
+		margin-bottom: 5px;
+		text-align: center;
+	}
 
-  .el-form-item {
-    margin-bottom: 5px;
-  }
+	.el-form-item {
+		margin-bottom: 5px;
+	}
 }
 
 .table-content {
-  border: 1px solid #ebebeb;
-  border-radius: 3px;
-  transition: 0.2s;
-  padding: 24px;
+	border: 1px solid #ebebeb;
+	border-radius: 3px;
+	transition: 0.2s;
+	padding: 24px;
 
-  .table-header {
-    font-weight: 400;
-    color: #1f2f3d;
-    font-size: 22px;
-    margin: 5px 0 20px;
-  }
+	.table-header {
+		font-weight: 400;
+		color: #1f2f3d;
+		font-size: 22px;
+		margin: 5px 0 20px;
+	}
 }
 
 .center-header {
-  font-weight: 400;
-  color: #1f2f3d;
-  font-size: 28px;
-  text-align: center;
-  padding: 10px;
+	font-weight: 400;
+	color: #1f2f3d;
+	font-size: 28px;
+	text-align: center;
+	padding: 10px;
 }
 
 .table-content:hover {
-  box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
-    0 2px 4px 0 rgba(232, 237, 250, 0.5);
+	box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
+		0 2px 4px 0 rgba(232, 237, 250, 0.5);
 }
 
 .el-upload--picture-card {
-  background: $bodybg;
+	background: $bodybg;
+}
+
+.obit-btns {
 }
