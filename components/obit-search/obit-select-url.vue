@@ -2,12 +2,13 @@
  * @Author: 曹捷
  * @Date: 2020-06-22 20:37:04
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-10-22 15:17:54
+ * @LastEditTime: 2020-11-25 15:50:00
  * @Description: 自定义查询条件 接口下拉列表
 --> 
 <template>
   <obitSelect :labelName="itemInfo.labelname" :placeholder="placeholder" :remote="remote" :selectList="selectList"
-    :valueName="itemInfo.valuename" @change="changeValue" @remoteMethod="initData" clearable v-model="cValue">
+    :valueName="itemInfo.valuename" :disabled="disabled" :selectName.sync="selectLableName" @change="changeValue"
+    @remoteMethod="initData" clearable v-model="cValue">
   </obitSelect>
 </template>
 
@@ -26,13 +27,19 @@ export default {
       type: String,
       default: '请选择对应值'
     },
-    selectCode: { type: String }
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    selectCode: { type: String },
+    selectName: { type: String }
   },
   data () {
     return {
       remote: false, //是否为远程搜索
       cValue: this.value,
-      selectList: []
+      selectList: [],
+      selectLableName: this.selectName
     }
   },
   watch: {
@@ -52,6 +59,8 @@ export default {
     changeValue (value) {
       this.$emit('input', value)
       this.$emit('change', value)
+      this.$emit('update:selectName', this.selectLableName)
+
     },
     initData (searchText) {
       searchText = searchText ? searchText : ''

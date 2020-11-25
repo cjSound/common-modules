@@ -2,23 +2,18 @@
  * @Author: 曹捷
  * @Date: 2019-08-22 15:24:21
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-30 12:45:03
+ * @LastEditTime: 2020-11-25 15:49:38
  * @Description: 字典组件
  -->
 <template>
-  <el-select
-    :clearable="clearable"
-    :disabled="disabled"
-    :multiple="multiple"
-    :placeholder="placeholder"
-    class="input-md"
-    v-if="type==='select'"
-    v-model="dictValue"
-  >
-    <el-option :key="item[valueName]" :label="item[labelName]" :value="item[valueName]" v-for="item in dictValueList"></el-option>
+  <el-select :clearable="clearable" :disabled="disabled" :multiple="multiple" :placeholder="placeholder"
+    class="input-md" v-if="type==='select'" v-model="dictValue">
+    <el-option :key="item[valueName]" :label="item[labelName]" :value="item[valueName]" v-for="item in dictValueList">
+    </el-option>
   </el-select>
   <el-radio-group :disabled="disabled" @change="changeDict" v-else-if="type==='radio'" v-model="dictValue">
-    <el-radio :key="item[valueName]" :label="item[valueName]" v-for="item in dictValueList">{{item[labelName]}}</el-radio>
+    <el-radio :key="item[valueName]" :label="item[valueName]" v-for="item in dictValueList">{{item[labelName]}}
+    </el-radio>
   </el-radio-group>
 </template>
 
@@ -42,10 +37,6 @@ export default {
     },
     // 是否可以多选
     multiple: {
-      type: Boolean,
-      default: false
-    },
-    readOnly: {
       type: Boolean,
       default: false
     },
@@ -77,20 +68,20 @@ export default {
       default: 'select'
     }
   },
-  data() {
+  data () {
     return {
       dictValue: '',
       dictValueList: []
     }
   },
   watch: {
-    value() {
+    value () {
       this.initValue()
     },
-    dictCode() {
+    dictCode () {
       this.initData()
     },
-    dictValue(value, oldvalue) {
+    dictValue (value, oldvalue) {
       if (value instanceof Array) {
         if (value.length !== oldvalue.length) {
           this.changeDict(value)
@@ -101,7 +92,7 @@ export default {
     }
   },
   methods: {
-    initValue() {
+    initValue () {
       if (this.value === null || this.value === undefined) {
         this.dictValue = this.multiple ? [] : ''
       } else {
@@ -116,19 +107,19 @@ export default {
         }
       }
     },
-    initData() {
+    initData () {
       let param = { codeField: this.dictCode }
       ajax.methods.getCommonDictValueList(param).then(res => {
         this.dictValueList = res
         this.initValue()
       })
     },
-    changeDict(value) {
+    changeDict (value) {
       this.$emit('input', value)
       this.$emit('change', value)
     }
   },
-  mounted() {
+  mounted () {
     // this.initValue()
     this.initData()
   }

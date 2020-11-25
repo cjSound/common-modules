@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-07-19 09:19:35
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-10-27 15:43:04
+ * @LastEditTime: 2020-11-25 15:37:37
  * @Description: table分页  抽取相关mix
  */
 import util from '@/common-modules/utils/utils'
@@ -134,6 +134,11 @@ export default {
             this.detailsInfo = item
             this.addVisable = true
             this.addType = 'edit'
+        },
+        lookDialog (item) {
+            this.detailsInfo = item
+            this.addVisable = true
+            this.addType = 'look'
         },
         // 重置form标单内容  初始化
         resetForm (name) {
