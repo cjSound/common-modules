@@ -2,14 +2,14 @@
  * @Author: 曹捷
  * @Date: 2020-06-02 10:27:20
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 10:35:13
+ * @LastEditTime: 2020-12-01 16:46:52
  * @Description: 通用过滤器 
  */
 import numeral from 'numeral'
 import moment from 'moment'
 // 内容转义  多种转义模式
 // 暂时有数字转义
-export function valueType(value, filterType) {
+export function valueType (value, filterType) {
     if (filterType) {
         if (value !== null) {
             if (filterType === 'numMoney') {

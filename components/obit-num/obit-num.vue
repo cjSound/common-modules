@@ -3,7 +3,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-20 15:22:51
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-09-22 20:27:38
+ * @LastEditTime: 2020-12-01 10:53:32
  * @Description: 数字滚屏显示
  -->
 <template>
@@ -28,7 +28,7 @@ export default {
     endVal: {
       type: Number,
       required: false,
-      default: 2017,
+      default: 0,
     },
     // 滚屏总时长
     duration: {
@@ -46,7 +46,7 @@ export default {
       type: Number,
       required: false,
       default: 0,
-      validator(value) {
+      validator (value) {
         return value >= 0
       },
     },
@@ -83,12 +83,12 @@ export default {
     // 缓和回调
     easingFn: {
       type: Function,
-      default(t, b, c, d) {
+      default (t, b, c, d) {
         return (c * (-Math.pow(2, (-10 * t) / d) + 1) * 1024) / 1023 + b
       },
     },
   },
-  data() {
+  data () {
     return {
       localStartVal: this.startVal,
       displayValue: this.formatNumber(this.startVal),
@@ -102,37 +102,37 @@ export default {
     }
   },
   computed: {
-    countDown() {
+    countDown () {
       return this.startVal > this.endVal
     },
   },
   watch: {
-    startVal() {
+    startVal () {
       if (this.autoplay) {
         this.start()
       }
     },
-    endVal() {
+    endVal () {
       if (this.autoplay) {
         this.start()
       }
     },
   },
-  mounted() {
+  mounted () {
     if (this.autoplay) {
       this.start()
     }
     this.$emit('mountedCallback')
   },
   methods: {
-    start() {
+    start () {
       this.localStartVal = this.startVal
       this.startTime = null
       this.localDuration = this.duration
       this.paused = false
       this.rAF = requestAnimationFrame(this.count)
     },
-    pauseResume() {
+    pauseResume () {
       if (this.paused) {
         this.resume()
         this.paused = false
@@ -141,21 +141,21 @@ export default {
         this.paused = true
       }
     },
-    pause() {
+    pause () {
       cancelAnimationFrame(this.rAF)
     },
-    resume() {
+    resume () {
       this.startTime = null
       this.localDuration = +this.remaining
       this.localStartVal = +this.printVal
       requestAnimationFrame(this.count)
     },
-    reset() {
+    reset () {
       this.startTime = null
       cancelAnimationFrame(this.rAF)
       this.displayValue = this.formatNumber(this.startVal)
     },
-    count(timestamp) {
+    count (timestamp) {
       if (!this.startTime) this.startTime = timestamp
       this.timestamp = timestamp
       const progress = timestamp - this.startTime
@@ -205,10 +205,10 @@ export default {
         this.$emit('callback')
       }
     },
-    isNumber(val) {
+    isNumber (val) {
       return !isNaN(parseFloat(val))
     },
-    formatNumber(num) {
+    formatNumber (num) {
       num = num.toFixed(this.decimals)
       num += ''
       const x = num.split('.')
@@ -223,7 +223,7 @@ export default {
       return this.prefix + x1 + x2 + this.suffix
     },
   },
-  destroyed() {
+  destroyed () {
     cancelAnimationFrame(this.rAF)
   },
 }

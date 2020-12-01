@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-11-05 10:58:20
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-11-23 17:56:04
+ * @LastEditTime: 2020-12-01 11:53:06
  * @Description: 基础默认的配置
  */
 /**
@@ -70,6 +70,7 @@ class options {
     this.key = key
   }
   title (title) {
+    console.log('title: ', title);
     this.vm[this.key].title.text = title
   }
 }

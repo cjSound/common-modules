@@ -2,11 +2,12 @@
  * @Author: 曹捷
  * @Date: 2020-10-21 17:13:01
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-10-27 09:30:08
+ * @LastEditTime: 2020-12-01 15:04:55
  * @Description: 搜索条件
 -->
 <template>
-  <el-form :inline="true" :model="params" class="com-serach-form" label-width="110px" ref="searchForm">
+  <el-form :inline="true" :model="params" class="com-serach-form" :class="border?'border':''" label-width="110px"
+    ref="searchForm">
     <el-form-item :label="item.name" :prop="item.key" v-for="(item) in paramList" :key="item.key">
       <!-- {type:'date',name:'开始时间',key:''} -->
       <el-date-picker v-if="item.type ==='date'" class="input-md" :placeholder="`请选择${item.name}`"
@@ -44,7 +45,11 @@ export default {
     type: {
       type: String,
       default: 'center'
-    }
+    },
+    border: {
+      type: Boolean,
+      default: true
+    },
   },
   methods: {
     toSearch () {
@@ -59,11 +64,7 @@ export default {
 </script>
 
 <style lang="scss">
-.com-serach-form {
-  // display: flex;
-  // flex-direction: row;
-  // flex-wrap: wrap;
-  // justify-content: space-between;
+.com-serach-form.border {
   border: 1px solid #ebebeb;
   border-radius: 8px;
   transition: 0.2s;
@@ -72,6 +73,12 @@ export default {
   margin-bottom: 10px;
   box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
     0 2px 4px 0 rgba(232, 237, 250, 0.5);
+}
+.com-serach-form {
+  // display: flex;
+  // flex-direction: row;
+  // flex-wrap: wrap;
+  // justify-content: space-between;
 
   .input-md {
     margin-right: 0;
