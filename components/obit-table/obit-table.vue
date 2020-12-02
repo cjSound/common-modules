@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-05-17 11:39:56
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-10-27 10:09:53
+ * @LastEditTime: 2020-11-25 15:32:57
  * @Description: 表格统一处理 示例如下
 --> 
 <!--
@@ -60,6 +60,10 @@ tableColumns: [
     <el-table-column :width="operationWidth" align="center" fixed="right" label="操作"
       v-if="$listeners.editEven || $listeners.deleteEven || $listeners.lookEven">
       <template slot-scope="scope">
+        <el-tooltip class="item" content="查看详情" effect="dark" placement="top" v-if="$listeners.lookEven"
+          v-permiss="deletePermiss">
+          <i @click="clickEvent(scope.row,'lookEven')" class="el-icon el-icon-view pointer obit-link p-r-10"></i>
+        </el-tooltip>
         <el-tooltip class="item" content="修改" effect="dark" placement="top" v-if="$listeners.editEven"
           v-permiss="editPermiss">
           <i @click="clickEvent(scope.row,'editEven')" class="el-icon el-icon-setting pointer obit-link p-r-10"></i>
@@ -68,11 +72,6 @@ tableColumns: [
           v-permiss="deletePermiss">
           <i @click="clickEvent(scope.row,'deleteEven')" class="el-icon el-icon-delete pointer obit-link"></i>
         </el-tooltip>
-        <el-tooltip class="item" content="查看详情" effect="dark" placement="top" v-if="$listeners.lookEven"
-          v-permiss="deletePermiss">
-          <i @click="clickEvent(scope.row,'lookEven')" class="el-icon el-icon-view pointer obit-link"></i>
-        </el-tooltip>
-
         <slot :data="scope.row" name="operate"></slot>
       </template>
     </el-table-column>

@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-27 18:44:59
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-11-23 20:53:36
+ * @LastEditTime: 2020-11-25 16:24:45
  * @Description: 封装select组件  支持同时获取value和name
  -->
 <template>
@@ -73,7 +73,6 @@ export default {
   watch: {
     value () {
       this.typeToValue()
-      // console.log(`dictValue:${this.valueName}`, this.dictValue)
     },
   },
   methods: {
@@ -85,13 +84,16 @@ export default {
       this.dictValue = value
     },
     changeValue (value) {
+      // 初始化还么有selectList ，如果赋值selectName，会导致找不到而被置空
+      if (this.selectList && this.selectList.length > 0) {
+        let obj = this.selectList.find((item) => {
+          return item[this.valueName] === value
+        })
+        this.$emit('update:selectName', obj ? obj[this.labelName] : '')
+        this.$emit('changeInfo', obj)
+      }
       this.$emit('input', value)
-      let obj = this.selectList.find((item) => {
-        return item[this.valueName] === value
-      })
       this.$emit('change', value)
-      this.$emit('changeInfo', obj)
-      this.$emit('update:selectName', obj ? obj[this.labelName] : '')
     },
   },
   mounted () {

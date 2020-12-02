@@ -1,0 +1,107 @@
+// flex 布局相关 start ------------------------------
+.flex-container {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	height: 100%;
+}
+
+.flex {
+	display: flex;
+}
+
+.flex-t-c {
+	display: flex;
+	align-items: center;
+}
+.flex-t-a {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+.flex-column {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+// 左右上下结构，子元素固定宽度，自适应间距
+.flex-row {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+
+// 从左到右 两端对齐  上下居中
+.flex-l-r {
+	display: flex;
+	justify-content: space-between;
+}
+.flex-l {
+	display: flex;
+	justify-content: space-between;
+}
+.flex-l-a {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+// 排序从上到下 在x轴上面居中，在Y轴上面两端对齐
+.flex-t-b {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.flex-around {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.flex-t-around {
+	display: flex;
+	justify-content: space-around;
+	flex-direction: column;
+}
+
+// flex  column  center
+.flex-c-c {
+	display: flex !important;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+.flex-c {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.flex-j-c {
+	justify-content: center;
+}
+.flex-a-c {
+	align-items: center;
+}
+
+// 排序从左到右 ,在Y居中
+.flex-h-c {
+	display: flex;
+	align-items: center;
+}
+
+.flex-group {
+	flex: 1;
+	display: flex;
+}
+.flex1 {
+	flex: 1;
+	.flex1-content {
+		position: absolute;
+		left: 0;
+		right: 0;
+	}
+}
+
+// flex 布局相关 end ------------------------------------------
