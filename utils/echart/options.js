@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-11-05 10:58:20
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-01 11:53:06
+ * @LastEditTime: 2020-12-04 11:48:25
  * @Description: 基础默认的配置
  */
 /**
@@ -72,6 +72,20 @@ class options {
   title (title) {
     console.log('title: ', title);
     this.vm[this.key].title.text = title
+  }
+  grid (top = 0, right = 0, bottom = 0, left = 0) {
+    if (top) {
+      this.vm[this.key].grid.top = `${top}%`
+    }
+    if (right) {
+      this.vm[this.key].grid.right = `${right}%`
+    }
+    if (bottom) {
+      this.vm[this.key].grid.bottom = `${bottom}%`
+    }
+    if (left) {
+      this.vm[this.key].grid.left = `${left}%`
+    }
   }
 }
 export let Options = options;
