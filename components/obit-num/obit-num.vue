@@ -3,7 +3,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-20 15:22:51
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-01 10:53:32
+ * @LastEditTime: 2020-12-07 21:46:37
  * @Description: 数字滚屏显示
  -->
 <template>
@@ -209,6 +209,9 @@ export default {
       return !isNaN(parseFloat(val))
     },
     formatNumber (num) {
+      if (!num) {
+        return 0
+      }
       num = num.toFixed(this.decimals)
       num += ''
       const x = num.split('.')
