@@ -2,11 +2,15 @@
  * @Author: 刘硕
  * @Date: 2020-07-24 10:25:07
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-11-23 16:45:13
+ * @LastEditTime: 2020-12-07 09:09:43
  * @Description: file content
 --> 
 <template>
-  <div class="echarts-panel" ref="echarts"></div>
+  <div class="echarts-panel" :class="hasData?'':'pcenter'">
+    <div class="echarts-panel" ref="echarts" v-show="hasData"></div>
+    <nodata v-show="!hasData" />
+  </div>
+
 </template>
 
 <script>
@@ -26,6 +30,19 @@ export default {
   data () {
     return {
       chart: null,
+    }
+  },
+  computed: {
+    hasData () {
+      let res = true
+      if (this.chartsOption && this.chartsOption.dataset) {
+        let dataset = this.chartsOption.dataset
+        console.log('this.chartsOption.source: ', this.chartsOption.source);
+        if (!dataset.source || dataset.source.length === 0) {
+          res = false
+        }
+      }
+      return res
     }
   },
   watch: {
@@ -72,5 +89,10 @@ export default {
 .echarts-panel {
   width: 100%;
   height: 100%;
+}
+.pcenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>
