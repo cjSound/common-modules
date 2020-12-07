@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-11-23 14:59:24
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-11-23 17:24:21
+ * @LastEditTime: 2020-12-07 11:26:38
  * @Description: series 相关操作
  */
 let typeInfo = {
@@ -32,16 +32,26 @@ export default class {
     });
     // this.vm.$set(this.vm[this.key], 'series', arr)
   }
-  showLable () {
+  /**
+   * 初始化label
+   * @param {*} position 
+   * 支持：top / left / right / bottom / inside / insideLeft / insideRight / insideTop / insideBottom / insideTopLeft / insideBottomLeft / insideTopRight / insideBottomRight
+   * String  
+   * 每一列label的位置，每一列都相等
+   * Array
+   * 每一列 细分，数组下标对应
+   */
+  showLable (position) {
     let list = this.vm[this.key].series
-    let label = {
-      normal: {
-        show: true,
-        position: 'top'
-      }
-    }
+    position = position ? position : 'top'
     list.forEach((element, index) => {
-      this.vm.$set(element, 'label', label)
+      let pos = Object.prototype.toString.call(position).indexOf('Array') === -1 ? position : position[index]
+      this.vm.$set(element, 'label', {
+        normal: {
+          show: true,
+          position: pos
+        }
+      })
     });
   }
   addHover () {
