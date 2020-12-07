@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-10-21 17:13:01
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-01 15:04:55
+ * @LastEditTime: 2020-12-07 19:07:28
  * @Description: 搜索条件
 -->
 <template>
@@ -11,10 +11,12 @@
     <el-form-item :label="item.name" :prop="item.key" v-for="(item) in paramList" :key="item.key">
       <!-- {type:'date',name:'开始时间',key:''} -->
       <el-date-picker v-if="item.type ==='date'" class="input-md" :placeholder="`请选择${item.name}`"
-        v-model="params[item.key]" value-format="yyyy-MM-dd"></el-date-picker>
+        v-model="params[item.key]" :editable="false" value-format="yyyy-MM-dd" :clearable="item.clearable!==false ">
+      </el-date-picker>
       <!-- {type:'month',name:'年月',key:''} -->
       <el-date-picker v-else-if="item.type ==='month'" class="input-md" type="month" :placeholder="`请选择${item.name}`"
-        v-model="params[item.key]" value-format="yyyy-MM-dd"></el-date-picker>
+        v-model="params[item.key]" :editable="false" value-format="yyyy-MM-dd" :clearable="item.clearable!==false ">
+      </el-date-picker>
       <!-- { type: 'ajax', key: 'province', name: '省份', valuename: 'codeValue', labelname: 'valueDesc', ajaxurl: 'codeValue/findByCodeFiled?codeField=pasi_area' }, -->
       <obitSelectUrl v-else-if="item.type==='ajax'" :itemInfo="item" :placeholder="`请选择${item.name}`"
         v-model="params[item.key]">

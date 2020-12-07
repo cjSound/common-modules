@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-11-23 14:59:24
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-07 11:26:38
+ * @LastEditTime: 2020-12-07 18:44:28
  * @Description: series 相关操作
  */
 let typeInfo = {
@@ -47,6 +47,7 @@ export default class {
     list.forEach((element, index) => {
       let pos = Object.prototype.toString.call(position).indexOf('Array') === -1 ? position : position[index]
       this.vm.$set(element, 'label', {
+        interval: 1,
         normal: {
           show: true,
           position: pos
