@@ -2,11 +2,11 @@
  * @Author: 刘硕
  * @Date: 2020-07-24 10:25:07
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-07 09:09:43
+ * @LastEditTime: 2020-12-08 11:51:13
  * @Description: file content
 --> 
 <template>
-  <div class="echarts-panel" :class="hasData?'':'pcenter'">
+  <div class="echarts-panel" :id="createKey" :class="hasData?'':'pcenter'">
     <div class="echarts-panel" ref="echarts" v-show="hasData"></div>
     <nodata v-show="!hasData" />
   </div>
@@ -15,9 +15,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
+import DomSize from './../../utils/domsize'
 export default {
   props: {
+    type: {
+      type: String,
+      default: 'canvas'
+    },
     chartsOption: {
       type: Object,
       required: true,
@@ -30,6 +34,7 @@ export default {
   data () {
     return {
       chart: null,
+      createKey: ''
     }
   },
   computed: {
@@ -37,7 +42,6 @@ export default {
       let res = true
       if (this.chartsOption && this.chartsOption.dataset) {
         let dataset = this.chartsOption.dataset
-        console.log('this.chartsOption.source: ', this.chartsOption.source);
         if (!dataset.source || dataset.source.length === 0) {
           res = false
         }
@@ -54,33 +58,46 @@ export default {
     },
     theme (newTheme, oldTheme) {
       this.chart.dispose();
-      this.chart = echarts.init(this.$refs.chart, theme);
+      this.chart = echarts.init(this.$refs.chart, theme, { renderer: this.type });
     }
   },
-
   methods: {
     getChart () {
       return this.chart
     },
+    resize () {
+      this.chart.resize();
+    },
     init () {
+      let _this = this
       if (this.chart != null && this.chart != '' && this.chart != undefined) {
         this.chart.dispose()
       }
       if (this.chart === null) {
-        this.chart = echarts.init(this.$refs.echarts, this.theme)
+        this.chart = echarts.init(this.$refs.echarts, this.theme, { renderer: this.type })
       }
       this.chart.setOption(this.chartsOption)
       this.chart.on('click', (params) => {
         this.$emit('click', params)
       });
+      this.$nextTick(() => {
+        DomSize.bind(document.getElementById(this.createKey), function () {
+          console.log('createKey: ', 1123);
+          _this.resize()
+        })
+      })
     },
   },
 
   mounted () {
+    this.createKey = Math.random() * 1000 + this.$util.util.randomString(10)
     this.init()
+
+
   },
   beforeDestroy () {
     this.chart.dispose()
+    DomSize.remove(document.getElementById(this.createKey))
   }
 }
 </script>

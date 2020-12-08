@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 17:02:31
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-04 16:16:54
+ * @LastEditTime: 2020-12-08 10:16:00
  * @Description: 系统工具类
  */
 const util = {}
@@ -32,6 +32,9 @@ util.util = {
             }
 
         }
+    },
+    isArray (item) {
+        return Object.prototype.toString.call(item).indexOf('Array') !== -1
     },
     /**
      * 数组删除指定的内容
@@ -78,6 +81,14 @@ util.util = {
 
         }
         return null;
+    },
+    randomString (len) { //生成一个随机字符串
+        len = len || 32;
+        var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'; /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+        var maxPos = $chars.length;
+        var pwd = '';
+        for (let i = 0; i < len; i++) { pwd += $chars.charAt(Math.floor(Math.random() * maxPos)); }
+        return pwd;
     },
     /*对敏感信息 进行*号处理  比如id  身份证号,手机号*/
     infoPrivacy (el) {
@@ -391,7 +402,7 @@ util.export = {
                     targetDom[0].style.width = ''
                     resolve(pdf);
                 })
-            }, 200)
+            }, 1000)
         });
     }
 }

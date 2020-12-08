@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-11-23 14:59:24
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-07 18:44:28
+ * @LastEditTime: 2020-12-08 10:27:03
  * @Description: series 相关操作
  */
 let typeInfo = {
@@ -18,16 +18,30 @@ export default class {
     this.key = key
   }
   /**
-   * ['line','line']
+   * series初始化
    * @param {Array[String]} typesArray 
+   * @desc 1、简版，直接定义类型  和通用配置
+   * ['line','line']
+   * @desc 2、详细版  定义具体的类型对象，会继承初始配置  和通用配置
+   * { type: 'bar', stack: '预警数量' }, { type: 'bar', stack: '预警数量' }, 'bar'
    */
   init (typesArray, options = {}) {
     typesArray.forEach((element, index) => {
       let item = this.vm[this.key].series[index]
       if (item) {
-        this.vm.$set(item, 'type', element)
+        if (Object.prototype.toString.call(element).indexOf('Object') !== -1) {
+          this.vm.$set(this.vm[this.key].series, index, Object.assign(item, element))
+        } else {
+          this.vm.$set(item, 'type', element)
+        }
       } else {
-        this.vm[this.key].series.push(Object.assign({ type: element }, options))
+        let seriesInfo = {}
+        if (Object.prototype.toString.call(element).indexOf('Object') !== -1) {
+          seriesInfo = element
+        } else {
+          seriesInfo = { type: element }
+        }
+        this.vm[this.key].series.push(Object.assign(seriesInfo, options))
       }
     });
     // this.vm.$set(this.vm[this.key], 'series', arr)

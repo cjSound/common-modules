@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-11-05 10:58:20
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-04 11:48:25
+ * @LastEditTime: 2020-12-08 10:48:33
  * @Description: 基础默认的配置
  */
 /**
@@ -13,7 +13,12 @@ export let defaultOptions = {
     dimensions: [],
     source: []
   },
-  legend: {},
+  legend: {
+    selected: {
+      //不想显示的都设置成false  对应series name 
+    }
+  },
+
   title: {
     text: ''
   },
@@ -45,7 +50,11 @@ export let noCoordOptions = {
     dimensions: [],
     source: []
   },
-  legend: {},
+  legend: {
+    selected: {
+      //不想显示的都设置成false  对应series name 
+    }
+  },
   title: {
     text: ''
   },
