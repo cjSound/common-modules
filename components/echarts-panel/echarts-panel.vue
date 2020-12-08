@@ -2,7 +2,7 @@
  * @Author: 刘硕
  * @Date: 2020-07-24 10:25:07
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-08 11:51:13
+ * @LastEditTime: 2020-12-08 11:54:58
  * @Description: file content
 --> 
 <template>
@@ -82,7 +82,6 @@ export default {
       });
       this.$nextTick(() => {
         DomSize.bind(document.getElementById(this.createKey), function () {
-          console.log('createKey: ', 1123);
           _this.resize()
         })
       })
