@@ -2,12 +2,13 @@
  * @Author: 曹捷
  * @Date: 2020-04-27 18:44:59
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-11-25 16:24:45
+ * @LastEditTime: 2020-12-08 17:35:36
  * @Description: 封装select组件  支持同时获取value和name
  -->
 <template>
-  <el-select :clearable="clearable" :disabled="disabled" :multiple="multiple" :placeholder="placeholder"
-    @change="changeValue" class="input-md" filterable v-model="dictValue">
+  <el-select :clearable="clearable" :disabled="disabled" :multiple="multiple" :remote="remote"
+    :remote-method="remoteMethod" :placeholder="placeholder" @change="changeValue" class="input-md" filterable
+    v-model="dictValue">
     <el-option :key="item.valueName" :label="item[labelName]" :value="item[valueName]" v-for="item in selectList">
     </el-option>
   </el-select>
@@ -25,6 +26,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false,
+    },
+    remote: {
+      type: Boolean,
+      default: false
     },
     multiple: {
       type: Boolean,
@@ -76,6 +81,9 @@ export default {
     },
   },
   methods: {
+    remoteMethod (text) {
+      this.$emit('remoteMethod', text)
+    },
     typeToValue () {
       let value = this.value === null || this.value === undefined ? '' : this.value
       if (this.valueType === 'Int') {
