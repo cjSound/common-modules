@@ -2,7 +2,7 @@
  * @Author: 刘硕
  * @Date: 2020-07-24 10:25:07
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-09 16:44:03
+ * @LastEditTime: 2020-12-09 17:25:47
  * @Description: file content
 --> 
 <template>
@@ -53,7 +53,10 @@ export default {
     chartsOption: {
       deep: true,
       handler (val) {
-          this.chart.setOption(val, true)
+        this.chart.setOption(val, true)
+        this.$nextTick(() => {
+          this.resize()
+        })
       },
     },
     theme (newTheme, oldTheme) {
@@ -74,7 +77,7 @@ export default {
         this.chart.dispose()
       }
       if (this.chart === null) {
-          this.chart = echarts.init(this.$refs.echarts, this.theme, { renderer: this.type })
+        this.chart = echarts.init(this.$refs.echarts, this.theme, { renderer: this.type })
       }
       this.chart.setOption(this.chartsOption)
       this.chart.on('click', (params) => {
