@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-07-30 20:59:56
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-10-27 09:53:25
+ * @LastEditTime: 2020-12-09 13:13:10
  * @Description: 嵌套table column列 可以合并表头
  */
 export default {
@@ -38,6 +38,11 @@ export default {
             let end = list.splice(list.length - 1, 1)
             list.unshift(end[0])
             return list
+        },
+        clickEvent (event, data, item) {
+            if (item.click) {
+                item.click(event, data, item)
+            }
         }
     },
     render (h) {
@@ -64,7 +69,7 @@ export default {
                         return (
                             <el-tooltip content={column.render ? column.render(scope.row) + '' : scope.row[column.prop] + ''}
                                 class="item" effect="dark" placement="top" >
-                                <span domPropsInnerHTML={innerInfo}>  </span>
+                                <span domPropsInnerHTML={innerInfo} onClick={(event) => { this.clickEvent(event, scope.row, column) }}>  </span>
                                 {/*
                                 效果等同
                                  <span domProps={{ innerHTML: innerInfo }}>  </span> */}
@@ -72,7 +77,7 @@ export default {
                         )
                     } else {
                         return (
-                            <span domPropsInnerHTML={innerInfo}>  </span>
+                            <span domPropsInnerHTML={innerInfo} onClick={(event) => { this.clickEvent(event, scope.row, column) }}>  </span>
                             // column.slot ?
                             //     <span scopedSlots={{ default: column.slot() }}> </span>
                             //     : ''

@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-07-19 09:19:35
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-11-25 15:37:37
+ * @LastEditTime: 2020-12-09 15:02:16
  * @Description: table分页  抽取相关mix
  */
 import util from '@/common-modules/utils/utils'

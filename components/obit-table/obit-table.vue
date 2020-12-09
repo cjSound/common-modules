@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-05-17 11:39:56
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-11-25 15:32:57
+ * @LastEditTime: 2020-12-09 15:47:52
  * @Description: 表格统一处理 示例如下
 --> 
 <!--
@@ -29,7 +29,14 @@ tableColumns: [
             { prop: 'agreementNo', label: '合同号' },
           ],
         },
-        { prop: 'overdueDealer', label: '逾期专干' },
+        // 支持自定义渲染HTML  和绑定点击事件 示例如下
+        {
+          prop: 'alarmNum', label: '预警', sortable: 'custom', render (item) {
+            return `<span class="obit-link">${item.alarmNum}</span>`
+          }, click (event, data, item) {
+            console.log('item: ', data);
+          }
+        },
         // 对字段进行自定义排序  custom 后端排序 触发表格sortChange方法
         { prop: 'createTime', label: '导入时间' ,sortable:'custom'},
       ],
