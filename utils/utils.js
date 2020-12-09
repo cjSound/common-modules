@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 17:02:31
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-08 10:16:00
+ * @LastEditTime: 2020-12-08 18:10:36
  * @Description: 系统工具类
  */
 const util = {}
@@ -200,15 +200,16 @@ util.util = {
     },
     parseParam (queryConfig, baseUrl) { //吧对象转为url字符拼接
         console.log('baseUrl: ', baseUrl);
+        console.log('queryConfig: ', queryConfig);
         var _str = "";
         for (var o in queryConfig) {
-            if (queryConfig[o] != -1) {
+            if (queryConfig[o] && queryConfig[o] != -1) {
                 _str += o + "=" + queryConfig[o] + "&";
             }
         }
         var _str = _str.substring(0, _str.length - 1);
         if (baseUrl) {
-            let icon = baseUrl.indexOf('?') !== -1 ? '' : '?'
+            let icon = baseUrl.indexOf('?') !== -1 ? '&' : '?'
             return `${baseUrl}${icon}${_str}`
         }
         return _str;

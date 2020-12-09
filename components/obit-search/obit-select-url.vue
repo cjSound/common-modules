@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-06-22 20:37:04
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-11-25 15:50:00
+ * @LastEditTime: 2020-12-08 17:23:51
  * @Description: 自定义查询条件 接口下拉列表
 --> 
 <template>
@@ -51,6 +51,9 @@ export default {
      * 查询字段的改变 触发对应下拉改变
      */
     selectCode (value) {
+      this.initData(this.itemInfo.initValue)
+    },
+    'itemInfo.ajaxurl' () {
       this.initData(this.itemInfo.initValue)
     }
   },
