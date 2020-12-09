@@ -2,11 +2,11 @@
  * @Author: 曹捷
  * @Date: 2019-08-01 14:25:13
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-10-22 15:29:00
+ * @LastEditTime: 2020-12-09 17:02:14
  * @Description: 系统统一 请求 过滤等
  */
 import request from './request'
-import { Message } from "element-ui"
+import { Message, Loading } from "element-ui"
 import config from './../../../config/config'
 var instance = function () {
     return {
@@ -84,22 +84,33 @@ var instance = function () {
                 type: 'download',
                 responseType: "blob",
             };
+            const loading = Loading.service({
+                lock: true,
+                text: '下载中...',
+                spinner: 'el-icon-loading',
+                background: 'rgba(0, 0, 0, 0.7)'
+            })
             if (requestMethod === 'get') downloadObj.params = data;
             else downloadObj.data = data;
-
-            const response = await request(downloadObj)
-            let a = document.createElement("a");
-            let blob = new Blob([response.data], {
-                type: config.mimeType || ''
-            });
-            a.href = URL.createObjectURL(blob);
-            let filename = response.headers['filename']
-            console.log('download -> filename', filename)
-            if (filename) {
-                filename = decodeURIComponent(filename)
+            try {
+                const response = await request(downloadObj)
+                loading.close();
+                let a = document.createElement("a");
+                let blob = new Blob([response.data], {
+                    type: config.mimeType || ''
+                });
+                a.href = URL.createObjectURL(blob);
+                let filename = response.headers['filename']
+                console.log('download -> filename', filename)
+                if (filename) {
+                    filename = decodeURIComponent(filename)
+                }
+                a.download = config.fileName || filename
+                a.click();
+            } catch (error) {
+                loading.close();
             }
-            a.download = config.fileName || filename
-            a.click();
+
         }
     }
 }

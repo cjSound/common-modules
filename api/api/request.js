@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-01 14:25:13
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-02 15:18:32
+ * @LastEditTime: 2020-12-09 16:59:45
  * @Description: ajax 请求
  */
 import axios from 'axios'
