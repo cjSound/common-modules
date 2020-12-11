@@ -6,27 +6,28 @@
     <breadcrumb class="breadcrumb-container" v-if="config.breadcrumbTop" />
     <div class="navbarTitle" v-else-if="config.navbarTitle">{{config.navbarTitle}}</div>
     <div class="right-menu">
-      <span class="userName">欢迎，{{userInfo.userName}}</span>
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <img class="user-avatar" src="@/assets/images/logoTop.png" />
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu class="user-dropdown" slot="dropdown">
-          <!-- <a href target="_blank">
-            <el-dropdown-item>个人中心</el-dropdown-item>
-          </a>-->
-          <el-dropdown-item @click.native="logout" divided>
-            <span style="display:block;">退 出</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <navbarRight v-if="config.navbarRight"></navbarRight>
+      <div v-else>
+        <span class="userName">欢迎，{{userInfo.userName}}</span>
+        <el-dropdown class="avatar-container" trigger="click">
+          <div class="avatar-wrapper">
+            <img class="user-avatar" src="@/assets/images/logoTop.png" />
+            <i class="el-icon-caret-bottom" />
+          </div>
+          <el-dropdown-menu class="user-dropdown" slot="dropdown">
+            <el-dropdown-item @click.native="logout" divided>
+              <span style="display:block;">退 出</span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import config from '@/config/config'
+console.log('🚀 ~ file: Navbar.vue ~ line 30 ~ config', config)
 import Breadcrumb from '@/common-modules/components/Breadcrumb'
 import Hamburger from '@/common-modules/components/Hamburger'
 import { userRole } from '@/common-modules/utils/auth'
@@ -34,6 +35,7 @@ export default {
   components: {
     Breadcrumb,
     Hamburger,
+    navbarRight: config.navbarRight ? config.navbarRight.default : ''
   },
   computed: {
     sidebar () {
@@ -61,7 +63,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss"  >
 .navbar {
   height: 50px;
   overflow: hidden;
