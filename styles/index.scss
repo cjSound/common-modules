@@ -128,7 +128,14 @@ div:focus {
 .t-c {
 	text-align: center;
 }
-
+.obit-oneline {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	-o-text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+	-moz-text-overflow: ellipsis;
+}
 .crow-left {
 	> div {
 		float: left;

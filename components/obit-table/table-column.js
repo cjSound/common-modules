@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-07-30 20:59:56
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-11 14:39:46
+ * @LastEditTime: 2020-12-11 16:32:58
  * @Description: 嵌套table column列 可以合并表头
  */
 export default {
@@ -96,7 +96,6 @@ export default {
                     </el-table-column>
                 )
             } else {
-                console.log('🚀 ~ file: table-column.js ~ line 89 ~ render ~ column.type', column.type)
                 return (
                     <el-table-column sortable={column.sortable} show-overflow-tooltip align={this.align} label={column.label} min-width={this.minWidth} prop={column.prop}
                         width={column.width}
