@@ -2,7 +2,7 @@
  * @Author: 刘硕
  * @Date: 2020-07-24 10:25:07
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-09 17:25:47
+ * @LastEditTime: 2020-12-14 19:43:09
  * @Description: file content
 --> 
 <template>
@@ -44,6 +44,17 @@ export default {
         let dataset = this.chartsOption.dataset
         if (!dataset.source || dataset.source.length === 0) {
           res = false
+        }
+      }
+      if (this.chartsOption && this.chartsOption.series) {
+        let info = {}
+        if (Object.prototype.toString.call(this.chartsOption.series).indexOf('Array') !== -1) {
+          info = this.chartsOption.series[0]
+        } else {
+          info = this.chartsOption.series
+        }
+        if (info && info.data && info.data.length > 0) {
+          res = true
         }
       }
       return res
