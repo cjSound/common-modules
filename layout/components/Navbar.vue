@@ -27,7 +27,6 @@
 
 <script>
 import config from '@/config/config'
-console.log('🚀 ~ file: Navbar.vue ~ line 30 ~ config', config)
 import Breadcrumb from '@/common-modules/components/Breadcrumb'
 import Hamburger from '@/common-modules/components/Hamburger'
 import { userRole } from '@/common-modules/utils/auth'

@@ -199,8 +199,6 @@ util.util = {
         return res;
     },
     parseParam (queryConfig, baseUrl) { //吧对象转为url字符拼接
-        console.log('baseUrl: ', baseUrl);
-        console.log('queryConfig: ', queryConfig);
         var _str = "";
         for (var o in queryConfig) {
             if (queryConfig[o] && queryConfig[o] != -1) {

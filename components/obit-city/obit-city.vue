@@ -1,21 +1,13 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-19 19:49:53
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-09-29 16:14:09
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-12-14 16:31:24
  * @Description: 地区 多级联动
  -->
 <template>
-  <el-cascader
-    :options="dictList"
-    :placeholder="placeholder"
-    :props="cityProps"
-    :show-all-levels="false"
-    @change="handleChange"
-    clearable
-    v-model="cValue"
-    v-if="opened"
-  ></el-cascader>
+  <el-cascader :options="dictList" :placeholder="placeholder" :props="cityProps" :show-all-levels="false"
+    @change="handleChange" clearable v-model="cValue" v-if="opened"></el-cascader>
 </template>
 
 <script>
@@ -50,12 +42,12 @@ export default {
       default: false,
     },
   },
-  mounted() {
+  mounted () {
     this.cityProps.checkStrictly = this.checkAll
   },
   watch: {
-    value(newValue, oldValue) {
-      // console.log('value -> newValue', newValue, this.plugChange)
+    value (newValue, oldValue) {
+      // console.log('value -> newValue', oldValue, newValue, this.plugChange)
       if (!oldValue && newValue && !this.plugChange) {
         this.opened = false
         this.$nextTick(() => {
@@ -68,7 +60,7 @@ export default {
       this.plugChange = false
     },
   },
-  data() {
+  data () {
     let vm = this
     return {
       dictList: [],
@@ -82,10 +74,11 @@ export default {
         label: 'name',
         lazy: true,
         checkStrictly: false,
-        async lazyLoad(node, resolve) {
+        async lazyLoad (node, resolve) {
           const { level } = node
           let id = level === 0 ? 0 : node.data.id
           // 规避不能正常回显的bug
+          // console.log('🚀lazyLoad999', vm.cValue, vm.value)
 
           if (!vm.cValue.length && vm.value && vm.value.length) {
             await vm.initSetValue(vm.value)
@@ -107,7 +100,7 @@ export default {
     }
   },
   methods: {
-    handleChange(values) {
+    handleChange (values) {
       this.plugChange = true
       let value
       if (this.type === 'value') {
@@ -122,7 +115,8 @@ export default {
       this.$emit('input', value)
       this.$emit('change', value)
     },
-    initSetValue(newValue) {
+    initSetValue (newValue) {
+      // console.log('🚀 ~ file: obit-city.vue ~ line 118 ~ initSetValue ~ newValue', newValue)
       return new Promise((resolve) => {
         ajax.methods.getCommonDictParents({ dictId: newValue }).then((res) => {
           //   this.$set(this, 'dictList', res.list)
