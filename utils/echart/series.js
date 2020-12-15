@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-11-23 14:59:24
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-08 10:27:03
+ * @LastEditTime: 2020-12-15 08:45:39
  * @Description: series 相关操作
  */
 let typeInfo = {
@@ -16,6 +16,14 @@ export default class {
   constructor (vm, key) {
     this.vm = vm
     this.key = key
+    /**
+     * 各个图例  默认的参数 合并继承
+     */
+    this.defaultOptions = {
+      'bar': {
+        barMaxWidth: 56
+      }
+    }
   }
   /**
    * series初始化
@@ -30,7 +38,7 @@ export default class {
       let item = this.vm[this.key].series[index]
       if (item) {
         if (Object.prototype.toString.call(element).indexOf('Object') !== -1) {
-          this.vm.$set(this.vm[this.key].series, index, Object.assign(item, element))
+          this.vm.$set(this.vm[this.key].series, index, Object.assign(item, this.defaultOptions[element.type], element))
         } else {
           this.vm.$set(item, 'type', element)
         }
@@ -41,7 +49,7 @@ export default class {
         } else {
           seriesInfo = { type: element }
         }
-        this.vm[this.key].series.push(Object.assign(seriesInfo, options))
+        this.vm[this.key].series.push(Object.assign(seriesInfo, this.defaultOptions[seriesInfo.type], options))
       }
     });
     // this.vm.$set(this.vm[this.key], 'series', arr)
