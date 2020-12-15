@@ -2,12 +2,14 @@
  * @Author: 曹捷
  * @Date: 2020-11-23 14:59:24
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-15 08:45:39
+ * @LastEditTime: 2020-12-15 19:24:57
  * @Description: series 相关操作
  */
 let typeInfo = {
   min: '最小值', max: '最大值', average: '平均值', median: '中位数'
 }
+
+import util from './util'
 export default class {
   /**
    * echart series 相关API调用操作  虚拟dom 赋值
@@ -34,6 +36,7 @@ export default class {
    * { type: 'bar', stack: '预警数量' }, { type: 'bar', stack: '预警数量' }, 'bar'
    */
   init (typesArray, options = {}) {
+    util.isNotType(typesArray, 'Array', 'echart APIS series.init(typesArray)')
     typesArray.forEach((element, index) => {
       let item = this.vm[this.key].series[index]
       if (item) {
@@ -117,7 +120,7 @@ export default class {
   }
   /**
    * 新增图表标线。
-   * @param {*} pointTypes 
+   * @param {* Array} pointTypes 
    * typeInfo 
    * @param {*} options 
    * https://echarts.apache.org/zh/option.html#series-line.markLine
@@ -128,10 +131,11 @@ export default class {
       data.push({
         type: element, name: typeInfo[element],
         label: {
+          position: 'insideEndTop',
           formatter: '{b}: {c}'
         }
       })
-    });
+    })
     let markLine = Object.assign({ data }, options)
     if (Object.prototype.toString.call(this.vm[this.key].series).indexOf('Object') !== -1) {
       this.vm.$set(this.vm[this.key].series, 'markLine', markLine)

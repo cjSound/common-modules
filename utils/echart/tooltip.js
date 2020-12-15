@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-12-08 10:42:03
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-08 11:28:17
+ * @LastEditTime: 2020-12-15 19:21:44
  * @Description: 提示框组件。
 https://echarts.apache.org/zh/option.html#tooltip
     可以通过点击图例控制哪些系列不显示

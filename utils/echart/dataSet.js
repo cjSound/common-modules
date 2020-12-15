@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-11-23 15:38:35
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-11-23 16:50:03
+ * @LastEditTime: 2020-12-15 14:53:10
  * @Description: 数据中心
  */
 export default class {
@@ -39,7 +39,6 @@ export default class {
           this.vm[this.key].series.push({ name: element[keys[1]] })
         }
       }
-
     });
     this.vm.$set(this.vm[this.key].dataset, 'dimensions', dimensions)
   }

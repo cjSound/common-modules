@@ -2,7 +2,7 @@
  * @Author: 刘硕
  * @Date: 2020-07-24 10:25:07
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-14 19:43:09
+ * @LastEditTime: 2020-12-15 15:43:25
  * @Description: file content
 --> 
 <template>
@@ -106,8 +106,6 @@ export default {
   mounted () {
     this.createKey = Math.random() * 1000 + this.$util.util.randomString(10)
     this.init()
-
-
   },
   beforeDestroy () {
     this.chart.dispose()
