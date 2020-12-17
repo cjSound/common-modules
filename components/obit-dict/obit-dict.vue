@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-22 15:24:21
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-11-25 15:49:38
+ * @LastEditTime: 2020-12-17 16:50:01
  * @Description: 字典组件
  -->
 <template>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import ajax from './../../api'
+import { System } from './../../api'
 import { Select, Option } from 'element-ui'
 
 export default {
@@ -109,7 +109,7 @@ export default {
     },
     initData () {
       let param = { codeField: this.dictCode }
-      ajax.methods.getCommonDictValueList(param).then(res => {
+      System.API.getCommonDictValueList(param).then(res => {
         this.dictValueList = res
         this.initValue()
       })

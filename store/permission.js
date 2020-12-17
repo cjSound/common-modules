@@ -2,10 +2,10 @@
  * @Author: 曹捷
  * @Date: 2020-08-26 09:45:47
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-17 12:28:28
+ * @LastEditTime: 2020-12-17 16:42:42
  * @Description: 用户权限
  */
-import ajax from './../api/config'
+import { System } from './../api'
 import { Message } from 'element-ui'
 import util from '@/common-modules/utils/utils'
 const permission = {
@@ -55,12 +55,12 @@ const permission = {
                     util.localstorage.put('listM', arr)
                 }
                 // 如果有静态菜单 静态优先
-                if (ajax.CONFIG.configMenu && ajax.CONFIG.configMenu instanceof Array) {
-                    saveMenuAndCrumb(ajax.CONFIG.configMenu)
+                if (System.CONFIG.configMenu && System.CONFIG.configMenu instanceof Array) {
+                    saveMenuAndCrumb(System.CONFIG.configMenu)
                     allresolve()
                 } else {
                     let menu = new Promise((resolve, reject) => {
-                        ajax.API.getSystemMenuList().then(res => {
+                        System.API.getSystemMenuList().then(res => {
                             saveMenuAndCrumb(res)
                             resolve()
                         }).catch(err => {
@@ -68,7 +68,7 @@ const permission = {
                         })
                     })
                     let btn = new Promise((resolve, reject) => {
-                        ajax.API.getSystemButtonList().then(res => {
+                        System.API.getSystemButtonList().then(res => {
                             commit('setSysBtn', res)
                             resolve()
                         }).catch(err => {

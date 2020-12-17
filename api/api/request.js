@@ -2,13 +2,13 @@
  * @Author: 曹捷
  * @Date: 2019-08-01 14:25:13
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-16 17:25:26
+ * @LastEditTime: 2020-12-17 16:52:25
  * @Description: ajax 请求
  */
 import axios from 'axios'
 import { userRole } from './../../utils/auth'
 import { Message } from "element-ui"
-import ajax from './../index'
+import { System } from './../index'
 // 创建axios实例
 const service = axios.create({
     // baseURL: URL, // api的base_url
@@ -69,7 +69,7 @@ service.interceptors.response.use(
                         userId: user.userId,
                         refleshToken: user.refleshToken
                     }
-                    ajax.methods.reflesh(params).then(res => {
+                    System.API.reflesh(params).then(res => {
                         user.accessToken = res.accessToken
                         // util.cookie.set('user', user)
                         userRole.set(user)
@@ -82,7 +82,8 @@ service.interceptors.response.use(
             } else if (res.code === '0005' || res.code === 'LOGIN.001') {
                 // 登陆超时 或者是token异常 ，跳登陆页面
                 Message.error(res.errorMsg)
-                ajax.router.push({
+                console.log('🚀 ~ file: request.js ~ line 86 ~ ajax', System)
+                System.ROUTER.push({
                     path: '/login'
                 })
                 // router.push({ path: '/login' })

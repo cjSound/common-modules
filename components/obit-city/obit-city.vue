@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-19 19:49:53
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-14 16:31:24
+ * @LastEditTime: 2020-12-17 16:49:06
  * @Description: 地区 多级联动
  -->
 <template>
@@ -12,8 +12,7 @@
 
 <script>
 import { Cascader } from 'element-ui'
-import ajax from './../../api'
-// console.log('ajax', ajax)
+import { System } from './../../api'
 export default {
   components: {
     ElCascader: Cascader,
@@ -87,7 +86,7 @@ export default {
             resolve([])
             return
           }
-          ajax.methods.getCommonDictByParentId({ dictId: id }).then((res) => {
+          System.API.getCommonDictByParentId({ dictId: id }).then((res) => {
             if (level === vm.levelValue - 1) {
               res.forEach((element) => {
                 element.leaf = true
@@ -118,7 +117,7 @@ export default {
     initSetValue (newValue) {
       // console.log('🚀 ~ file: obit-city.vue ~ line 118 ~ initSetValue ~ newValue', newValue)
       return new Promise((resolve) => {
-        ajax.methods.getCommonDictParents({ dictId: newValue }).then((res) => {
+        System.API.getCommonDictParents({ dictId: newValue }).then((res) => {
           //   this.$set(this, 'dictList', res.list)
           this.$set(this, 'cValue', res.ids)
           resolve()

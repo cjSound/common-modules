@@ -2,40 +2,50 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:38
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-17 15:15:17
+ * @LastEditTime: 2020-12-17 16:41:30
  * @Description: 保存登录用户信息 到cookie
  */
 import Cookies from 'js-cookie'
-// import SYSTEM from './../api/config'
-import info from './../api/index'
-let SYSTEM = new info()
+import { System } from './../api'
+import { API, CONFIG } from './../api'
+// import info from './../api/index'
+// let SYSTEM = new info()
 import store from '@/store'
-const TokenKey = SYSTEM.CONFIG.TokenKey
-const userRoleKey = SYSTEM.CONFIG.roleKey
 
-
+function getTokenKey () {
+  if (System && System.CONFIG && System.CONFIG.TokenKey) {
+    return System.CONFIG.TokenKey
+  }
+  return 'tokenKey'
+}
+function getRoleKey () {
+  if (System.CONFIG && System.CONFIG.roleKey) {
+    return System.CONFIG.roleKey
+  }
+  return 'roleKey'
+}
 export function getToken () {
-  return Cookies.get(TokenKey)
+  return Cookies.get(getTokenKey())
 }
 
 export function setToken (token) {
-  return Cookies.set(TokenKey, token)
+  return Cookies.set(getTokenKey(), token)
 }
 
 export function removeToken () {
-  return Cookies.remove(TokenKey)
+  return Cookies.remove(getTokenKey())
 }
 
 export const userRole = {
   get () {
-    let user = Cookies.get(userRoleKey)
+    let user = Cookies.get(getRoleKey())
     return user ? user : '{}'
   },
   set (role) {
-    return Cookies.set(userRoleKey, role)
+    return Cookies.set(getRoleKey(), role)
   },
   remove () {
-    return Cookies.remove(userRoleKey)
+    return Cookies.remove(getRoleKey())
   }
 }
 

@@ -2,13 +2,12 @@
  * @Author: 曹捷
  * @Date: 2020-04-21 09:40:10
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-17 12:26:38
+ * @LastEditTime: 2020-12-17 16:40:39
  * @Description: file content
  */
-import ajax from './../api/config'
-import { userRole, getToken, setToken, removeToken } from '@/common-modules/utils/auth'
+import { System } from './../api'
+import { userRole, getToken, setToken, removeToken } from './../utils/auth'
 import md5 from 'js-md5'
-
 
 const getDefaultState = () => {
   return {
@@ -40,8 +39,7 @@ const actions = {
   login ({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      console.log('🚀 ~ file: user.js ~ line 44 ~ ajax.methods.login ~ ajax', ajax)
-      ajax.API.login({ userName: username.trim(), password: md5(password), systemType: 'manager' }).then(response => {
+      System.API.login({ userName: username.trim(), password: md5(password), systemType: 'manager' }).then(response => {
         console.log('login -> response', response)
         const { accessToken } = response
         commit('SET_TOKEN', accessToken)
