@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-06-02 16:16:21
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 15:08:46
+ * @LastEditTime: 2020-12-17 17:37:38
  * @Description: file content
 --> 
 <template>
@@ -26,7 +26,7 @@ export default {
     }
   },
   methods: {
-    toggleClick() {
+    toggleClick () {
       this.$emit('toggleClick')
     }
   }
@@ -34,6 +34,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import './../styles/variables.scss';
 .hamburger {
   display: inline-block;
   vertical-align: middle;

@@ -2,12 +2,12 @@
  * @Author: 曹捷
  * @Date: 2020-08-26 09:45:47
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-17 16:42:42
+ * @LastEditTime: 2020-12-17 17:34:35
  * @Description: 用户权限
  */
 import { System } from './../api'
 import { Message } from 'element-ui'
-import util from '@/common-modules/utils/utils'
+import util from './../utils/utils.js'
 const permission = {
     namespaced: true,
     state: {

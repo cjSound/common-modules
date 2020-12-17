@@ -2,10 +2,11 @@
  * @Author: 曹捷
  * @Date: 2020-12-16 17:05:16
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-16 17:24:13
+ * @LastEditTime: 2020-12-17 19:16:15
  * @Description: fileContent
  */
 import svgIcon from './SvgIcon/svg-icon.vue'
+console.log('🚀 ~ file: index.js ~ line 9 ~ svgIcon', svgIcon)
 import nodata from './nodata/nodata.vue'
 import obitCity from './obit-city/obit-city.vue'
 import obitDict from './obit-dict/obit-dict.vue'
@@ -17,7 +18,7 @@ import obitTableTree from './obit-table-tree/table-tree'
 import obitOrg from './obit-org/obit-org'
 import obitCascader from './obit-cascader/obit-cascader'
 import obitSelect from './obit-select/obit-select'
-export {
+export default {
   svgIcon,
   nodata,
   obitCity,

@@ -2,13 +2,12 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:38
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-17 17:28:37
+ * @LastEditTime: 2020-12-17 19:14:20
  * @Description: 保存登录用户信息 到cookie
  */
 import Cookies from 'js-cookie'
 import { System } from './../api'
 import store from './../store/permission'
-console.log('🚀 ~ file: auth.js ~ line 14 ~ store', store)
 
 function getTokenKey () {
   if (System && System.CONFIG && System.CONFIG.TokenKey) {

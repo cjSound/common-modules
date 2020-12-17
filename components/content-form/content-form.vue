@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-19 14:18:42
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-06-03 17:45:28
+ * @LastEditTime: 2020-12-17 17:37:01
  * @Description: file content
  -->
 
@@ -32,7 +32,7 @@ export default {
   props: {
     fromtitle: {
       type: Object,
-      default() {
+      default () {
         return {
           title1: '模块标题',
           title2: '模块信息说明'
@@ -48,6 +48,7 @@ export default {
 </script>
 <style scoped lang="scss">
 //页面中的from盒子
+@import './../styles/variables.scss';
 .fromTitle {
   width: 100%;
   box-sizing: border-box;

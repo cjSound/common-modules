@@ -52,7 +52,7 @@ export default {
     // 详情页面需要传的数据
     detailInfor: {
       type: Object,
-      default() {
+      default () {
         return {
           stadus: '',
           desc1: '',
@@ -65,6 +65,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import './../styles/variables.scss';
 .title-wrap {
   width: 100%;
   min-height: 50px;

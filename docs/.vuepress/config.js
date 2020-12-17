@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-02-26 11:45:28
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-16 16:58:48
+ * @LastEditTime: 2020-12-17 20:44:00
  * @Description: file content
  */
 const path = require('path')
@@ -21,6 +21,11 @@ module.exports = {
       href: '/favicon.ico'
     }]
   ],
+  locales: {
+    '/': {
+      lang: 'zh-CN', // 将会被设置为 <html> 的 lang 属性
+    },
+  },
   themeConfig: {
     logo: '/img/logo.png',
     nav: [{
@@ -43,6 +48,13 @@ module.exports = {
         children: [
           'views/guide/install.md',
           'views/guide/get-started.md'
+        ]
+      },
+      {
+        title: '基础组件',
+        collapsable: false,
+        children: [
+          'views/components/icon.md',
         ]
       }
     ]
