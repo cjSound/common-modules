@@ -1,11 +1,11 @@
 /*
  * @Author: 曹捷
  * @Date: 2020-04-21 09:40:10
- * @LastEditors: 徐生延
- * @LastEditTime: 2020-07-18 15:04:27
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-12-17 12:26:38
  * @Description: file content
  */
-import ajax from '@/common-modules/api'
+import ajax from './../api/config'
 import { userRole, getToken, setToken, removeToken } from '@/common-modules/utils/auth'
 import md5 from 'js-md5'
 
@@ -37,10 +37,11 @@ const mutations = {
 
 const actions = {
   // user login
-  login({ commit }, userInfo) {
+  login ({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      ajax.methods.login({ userName: username.trim(), password: md5(password), systemType: 'manager' }).then(response => {
+      console.log('🚀 ~ file: user.js ~ line 44 ~ ajax.methods.login ~ ajax', ajax)
+      ajax.API.login({ userName: username.trim(), password: md5(password), systemType: 'manager' }).then(response => {
         console.log('login -> response', response)
         const { accessToken } = response
         commit('SET_TOKEN', accessToken)
@@ -55,14 +56,14 @@ const actions = {
   },
 
   // get user info
-  getInfo({ commit, state }) {
+  getInfo ({ commit, state }) {
     return new Promise((resolve, reject) => {
       resolve(userRole.get())
     })
   },
 
   // user logout
-  logout({ commit, state }) {
+  logout ({ commit, state }) {
     removeToken()
     commit('RESET_STATE')
     console.log('logout -> userRole', userRole)
@@ -71,7 +72,7 @@ const actions = {
   },
 
   // remove token
-  resetToken({ commit }) {
+  resetToken ({ commit }) {
     return new Promise(resolve => {
       userRole.remove()
       removeToken()

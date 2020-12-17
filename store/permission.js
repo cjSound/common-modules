@@ -2,12 +2,11 @@
  * @Author: 曹捷
  * @Date: 2020-08-26 09:45:47
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-10-21 10:26:51
+ * @LastEditTime: 2020-12-17 12:28:28
  * @Description: 用户权限
  */
-import ajax from '@/common-modules/api'
+import ajax from './../api/config'
 import { Message } from 'element-ui'
-import config from '@/config/config'
 import util from '@/common-modules/utils/utils'
 const permission = {
     namespaced: true,
@@ -56,12 +55,12 @@ const permission = {
                     util.localstorage.put('listM', arr)
                 }
                 // 如果有静态菜单 静态优先
-                if (config.configMenu && config.configMenu instanceof Array) {
-                    saveMenuAndCrumb(config.configMenu)
+                if (ajax.CONFIG.configMenu && ajax.CONFIG.configMenu instanceof Array) {
+                    saveMenuAndCrumb(ajax.CONFIG.configMenu)
                     allresolve()
                 } else {
                     let menu = new Promise((resolve, reject) => {
-                        ajax.methods.getSystemMenuList().then(res => {
+                        ajax.API.getSystemMenuList().then(res => {
                             saveMenuAndCrumb(res)
                             resolve()
                         }).catch(err => {
@@ -69,7 +68,7 @@ const permission = {
                         })
                     })
                     let btn = new Promise((resolve, reject) => {
-                        ajax.methods.getSystemButtonList().then(res => {
+                        ajax.API.getSystemButtonList().then(res => {
                             commit('setSysBtn', res)
                             resolve()
                         }).catch(err => {
