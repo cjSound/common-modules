@@ -2,14 +2,16 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:38
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-10-22 16:26:10
+ * @LastEditTime: 2020-12-17 15:15:17
  * @Description: 保存登录用户信息 到cookie
  */
 import Cookies from 'js-cookie'
-import config from '@/config/config'
+// import SYSTEM from './../api/config'
+import info from './../api/index'
+let SYSTEM = new info()
 import store from '@/store'
-const TokenKey = config.TokenKey
-const userRoleKey = config.roleKey
+const TokenKey = SYSTEM.CONFIG.TokenKey
+const userRoleKey = SYSTEM.CONFIG.roleKey
 
 
 export function getToken () {
