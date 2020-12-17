@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:39
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-16 17:19:11
+ * @LastEditTime: 2020-12-17 08:51:42
  * @Description:  布局layout
  -->
 <template>
@@ -25,8 +25,8 @@
 import { Navbar, Sidebar, AppMain } from "./components";
 import ResizeMixin from "./mixin/ResizeHandler";
 import { routerPermission } from "./../utils/validate.js";
-import config from "./../config/config";
-import AppMainMix from "./../mixin/AppMainMix";
+import config from "./../../config/config";
+import AppMainMix from "./../../mixin/AppMainMix";
 
 export default {
   name: "Layout",

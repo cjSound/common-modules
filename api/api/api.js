@@ -2,13 +2,13 @@
  * @Author: 曹捷
  * @Date: 2019-08-01 14:25:13
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-09 17:02:14
+ * @LastEditTime: 2020-12-17 09:05:43
  * @Description: 系统统一 请求 过滤等
  */
 import request from './request'
 import { Message, Loading } from "element-ui"
-import config from './../../../config/config'
-var instance = function () {
+// import config from './../../../config/config'
+var instance = function (config = {}) {
     return {
         /**
          * 获取ajax相关参数
@@ -114,6 +114,7 @@ var instance = function () {
         }
     }
 }
-export default new instance()
+// export default new instance()
+export default instance
 
 // export default class {}
