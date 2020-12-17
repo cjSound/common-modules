@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:38
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-17 16:41:30
+ * @LastEditTime: 2020-12-17 17:24:06
  * @Description: 保存登录用户信息 到cookie
  */
 import Cookies from 'js-cookie'
