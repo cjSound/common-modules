@@ -2,16 +2,16 @@
  * @Author: 曹捷
  * @Date: 2019-08-01 14:25:13
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-17 09:18:16
+ * @LastEditTime: 2020-12-17 09:32:27
  * @Description: file content
  */
 let URL = 'http://rap2.taobao.org:38080/app/mock/228700'
 export default function (api) {
     return {
         /**
-             * 获取ajax相关参数
-             * 不同的系统后端返回code等可能不一致
-             */
+         * 获取ajax相关参数
+         * 不同的系统后端返回code等可能不一致
+         */
         getConfig () {
             return api.getConfig()
         },

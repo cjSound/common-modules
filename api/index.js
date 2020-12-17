@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-01 14:25:13
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-17 09:20:07
+ * @LastEditTime: 2020-12-17 09:22:20
  * @Description: file content
  */
 import API from './api/api'
@@ -20,6 +20,10 @@ class obitAjax {
         this.config = config
         this.router = router
     }
+    /**
+     * 加入业务API
+     * @param {*} list 
+     */
     init (list) {
         this.methods = {
             ...common(this.api),
