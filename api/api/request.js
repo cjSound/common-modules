@@ -2,11 +2,11 @@
  * @Author: 曹捷
  * @Date: 2019-08-01 14:25:13
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-09 16:59:45
+ * @LastEditTime: 2020-12-16 17:25:26
  * @Description: ajax 请求
  */
 import axios from 'axios'
-import { userRole } from '@/common-modules/utils/auth'
+import { userRole } from './../../utils/auth'
 import { Message } from "element-ui"
 import ajax from './../index'
 // 创建axios实例

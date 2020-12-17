@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-06-22 17:06:07
- * @LastEditors: 徐生延
- * @LastEditTime: 2020-07-14 15:27:45
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-12-16 17:10:36
  * @Description: 自定义查询条件 自动新增拼接sql
 --> 
 <template>
@@ -11,108 +11,69 @@
       <el-collapse-item :title="title">
         <el-form :inline="true" :model="formData" class="search-ruleForm" label-width="100px" ref="ruleForm">
           <div :key="index" class="search-item" v-for="(item,index) in formData.searchParamsList">
-            <el-form-item
-              :prop="'searchParamsList.' + index + '.setCode'"
-              :rules="{
+            <el-form-item :prop="'searchParamsList.' + index + '.setCode'" :rules="{
                 required: true, message: '字段名不能为空', trigger: 'change'
-            }"
-            >
-              <obitSelect
-                :selectList="dataList"
-                @change="changeSetting($event,index)"
-                labelName="fieldContext"
-                placeholder="请选择要查询的字段"
-                v-model="item.setCode"
-                valueName="fieldName"
-              ></obitSelect>
+            }">
+              <obitSelect :selectList="dataList" @change="changeSetting($event,index)" labelName="fieldContext"
+                placeholder="请选择要查询的字段" v-model="item.setCode" valueName="fieldName"></obitSelect>
             </el-form-item>
-            <el-form-item
-              :prop="'searchParamsList.' + index + '.selectCode'"
-              :rules="{
+            <el-form-item :prop="'searchParamsList.' + index + '.selectCode'" :rules="{
                 required: true, message: '字段名不能为空', trigger: 'change'
-            }"
-            >
-              <obitSelect
-                :clearable="false"
-                :selectList="item.selectList"
-                @change="changeSelect($event,index)"
-                labelName="value"
-                placeholder="请选择查询条件"
-                v-model="item.selectCode"
-                valueName="key"
-              ></obitSelect>
+            }">
+              <obitSelect :clearable="false" :selectList="item.selectList" @change="changeSelect($event,index)"
+                labelName="value" placeholder="请选择查询条件" v-model="item.selectCode" valueName="key"></obitSelect>
             </el-form-item>
             <!-- 以下是具体的值类型 -->
             <!-- 配置的ajax搜索下拉列表 -->
-            <el-form-item
-              :prop="'searchParamsList.' + index + '.value1'"
-              :rules="[{
+            <el-form-item :prop="'searchParamsList.' + index + '.value1'" :rules="[{
                 required: true, message: '值不能为空', trigger: 'change'
             },{
                 validator:validatorBetween, trigger: 'change'
-            }]"
-              v-if="item.type===4"
-            >
+            }]" v-if="item.type===4">
               <obitSelectUrl :itemInfo="item" :selectCode="item.setCode" v-model="item.value1"></obitSelectUrl>
             </el-form-item>
             <!-- 时间类型 包含单个或者区间范围 -----------------------start -->
-            <el-form-item
-              :prop="'searchParamsList.' + index + '.value1'"
-              :rules="[{
+            <el-form-item :prop="'searchParamsList.' + index + '.value1'" :rules="[{
                 required: true, message: '查询时间不能为空', trigger: 'change'
             },{
                 validator:validatorBetween, trigger: 'change'
-            }]"
-              v-if="item.type===1"
-            >
-              <el-date-picker class="input-md" placeholder="请选择查询时间" type="date" v-model="item.value1" value-format="yyyy-MM-dd"></el-date-picker>
+            }]" v-if="item.type===1">
+              <el-date-picker class="input-md" placeholder="请选择查询时间" type="date" v-model="item.value1"
+                value-format="yyyy-MM-dd"></el-date-picker>
             </el-form-item>
-            <el-form-item
-              :prop="'searchParamsList.' + index + '.value1'"
-              :rules="[{
+            <el-form-item :prop="'searchParamsList.' + index + '.value1'" :rules="[{
                 required: true, message: '查询结束时间不能为空', trigger: 'change'
             },{
                 validator:validatorBetween, trigger: 'change'
-            }]"
-              v-if="item.type===1 && item.selectCode==='between'"
-            >
-              <el-date-picker class="input-md" placeholder="请选择查询结束时间" type="date" v-model="item.value2" value-format="yyyy-MM-dd"></el-date-picker>
+            }]" v-if="item.type===1 && item.selectCode==='between'">
+              <el-date-picker class="input-md" placeholder="请选择查询结束时间" type="date" v-model="item.value2"
+                value-format="yyyy-MM-dd"></el-date-picker>
             </el-form-item>
             <!-- 时间类型 包含单个或者区间范围 -----------------------end -->
 
             <!-- 数值类型 包含单个或者区间范围 -----------------------start -->
-            <el-form-item
-              :prop="'searchParamsList.' + index + '.value1'"
-              :rules="[{
+            <el-form-item :prop="'searchParamsList.' + index + '.value1'" :rules="[{
                 required: true, message: '查询值不能为空', trigger: 'change'
             },{
                 validator:validatorBetween, trigger: 'change'
-            }]"
-              v-if="item.type===3"
-            >
-              <el-input :step="0.01" class="input-md" placeholder="请输入查询值" type="number" v-model.number="item.value1"></el-input>
+            }]" v-if="item.type===3">
+              <el-input :step="0.01" class="input-md" placeholder="请输入查询值" type="number" v-model.number="item.value1">
+              </el-input>
             </el-form-item>
-            <el-form-item
-              :prop="'searchParamsList.' + index + '.value2'"
-              :rules="[{
+            <el-form-item :prop="'searchParamsList.' + index + '.value2'" :rules="[{
                 required: true, message: '查询值不能为空', trigger: 'change'
             },{
                 validator:validatorBetween, trigger: 'change'
-            }]"
-              v-if="item.type===3 && item.selectCode==='between'"
-            >
-              <el-input :step="0.01" class="input-md" min="0.00" placeholder="请选择要查询的最大值" type="number" v-model.number="item.value2"></el-input>
+            }]" v-if="item.type===3 && item.selectCode==='between'">
+              <el-input :step="0.01" class="input-md" min="0.00" placeholder="请选择要查询的最大值" type="number"
+                v-model.number="item.value2"></el-input>
             </el-form-item>
             <!-- 数值类型 包含单个或者区间范围 -----------------------end -->
 
             <!-- 字符串类型  只可匹配 = || like -----------------------start -->
-            <el-form-item
-              :prop="'searchParamsList.' + index + '.value1'"
-              :rules="[{
+            <el-form-item :prop="'searchParamsList.' + index + '.value1'" :rules="[{
                 required: true, message: '查询值不能为空', trigger: 'change'
-            } ]"
-              v-if="item.type===2"
-            >
+            } ]" v-if="item.type===2">
               <el-input class="input-md" placeholder="请输入查询值" v-model="item.value1"></el-input>
             </el-form-item>
             <!-- <el-button @click="addParams" circle icon="el-icon-plus" size="small"></el-button> -->
@@ -133,7 +94,7 @@ import obitSelect from './../obit-select/obit-select'
 import obitSelectUrl from './obit-select-url'
 import { Message } from 'element-ui'
 
-import util from '@/common-modules/utils/utils'
+import util from './../../utils/utils.js'
 export default {
   props: {
     value: {
@@ -149,7 +110,7 @@ export default {
     }
   },
   components: { obitSelect, obitSelectUrl },
-  data() {
+  data () {
     return {
       formData: {
         searchParamsList: []
@@ -210,7 +171,7 @@ export default {
     }
   },
   methods: {
-    validatorBetween(rule, value, callback) {
+    validatorBetween (rule, value, callback) {
       let fields = rule.field.split('.')
       let index = fields[1]
       let item = this.formData.searchParamsList[index]
@@ -230,14 +191,14 @@ export default {
       }
       callback()
     },
-    listToSearchList() {
+    listToSearchList () {
       this.$http.getQuerySetting({ business: this.searchCode }).then(res => {
         // let list = util.util.cloneObj(this.dataList)
         this.dataList = res.data
       })
     },
     // 字段名改变
-    changeSetting(event, index) {
+    changeSetting (event, index) {
       let arr = this.dataList.filter(item => {
         return item.fieldName === event
       })
@@ -273,11 +234,11 @@ export default {
       param.value2 = ''
     },
     // 查询条件改变
-    changeSelect(event, index) {
+    changeSelect (event, index) {
       let param = this.formData.searchParamsList[index]
       param.value2 = ''
     },
-    addParams() {
+    addParams () {
       this.formData.searchParamsList.push({
         setCode: '', //字段名
         selectCode: '', //查询条件  = > <
@@ -294,11 +255,11 @@ export default {
         fatherId: ''
       })
     },
-    removeParam(index) {
+    removeParam (index) {
       this.formData.searchParamsList.splice(index, 1)
       //   Message.warning('提示:至少')
     },
-    onSubmit() {
+    onSubmit () {
       this.$refs['ruleForm'].validate(valid => {
         if (valid) {
           let sql = ` `
@@ -340,7 +301,7 @@ export default {
       })
     }
   },
-  mounted() {
+  mounted () {
     this.listToSearchList()
   }
 }

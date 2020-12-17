@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:38
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-02 11:27:21
+ * @LastEditTime: 2020-12-16 17:09:37
  * @Description: 面包屑  两种形式 
   1放在header里面
   2放在body里面 breadcrumb-content
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import util from '@/common-modules/utils/utils'
+import util from './../../utils/utils.js'
 export default {
   data () {
     return {

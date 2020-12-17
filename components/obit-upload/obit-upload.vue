@@ -1,8 +1,8 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-21 15:16:37
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-08-17 20:01:27
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-12-16 17:10:57
  * @Description: file content
  -->
 <template>
@@ -13,27 +13,11 @@
         <el-button @click="removeVideo(inx)" circle icon="el-icon-close" size="mini" type="danger"></el-button>
       </li>
     </ul>
-    <el-upload
-      :accept="accept"
-      :action="action"
-      :auto-upload="autoUpload"
-      :before-remove="handleRemove"
-      :before-upload="beforeUpload"
-      :class="{'obit-video':isShowVideo}"
-      :drag="drag"
-      :file-list="fileList"
-      :http-request="customUpload"
-      :limit="limit"
-      :list-type="listType"
-      :multiple="multiple"
-      :on-change="onChange"
-      :on-exceed="onExceed"
-      :on-preview="handlePictureCardPreview"
-      :on-success="success"
-      :show-file-list="showFileList"
-      class="avatar-uploader"
-      ref="upload"
-    >
+    <el-upload :accept="accept" :action="action" :auto-upload="autoUpload" :before-remove="handleRemove"
+      :before-upload="beforeUpload" :class="{'obit-video':isShowVideo}" :drag="drag" :file-list="fileList"
+      :http-request="customUpload" :limit="limit" :list-type="listType" :multiple="multiple" :on-change="onChange"
+      :on-exceed="onExceed" :on-preview="handlePictureCardPreview" :on-success="success" :show-file-list="showFileList"
+      class="avatar-uploader" ref="upload">
       <slot></slot>
       <!-- <span slot="file" slot-scope="{file}" v-if="listType !==''">
         <img :src="file.url" alt class="el-upload-list__item-thumbnail" />
@@ -55,7 +39,7 @@
 
 <script>
 import { Upload, Loading } from 'element-ui'
-import util from '@/common-modules/utils/utils'
+import util from './../../utils/utils.js'
 
 export default {
   components: {
@@ -115,17 +99,17 @@ export default {
     },
     fileList: {
       type: Array,
-      default() {
+      default () {
         return []
       },
     },
   },
   computed: {
-    isShowVideo() {
+    isShowVideo () {
       return this.uploadType === 'video' && !this.showFileList
     },
   },
-  data() {
+  data () {
     return {
       uploadNum: 0,
       uploadSuccessNum: 0,
@@ -136,21 +120,21 @@ export default {
     }
   },
   methods: {
-    submit() {
+    submit () {
       this.$refs.upload.submit()
     },
-    handlePictureCardPreview(file) {
+    handlePictureCardPreview (file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
     },
-    removeVideo(fileIndex) {
+    removeVideo (fileIndex) {
       this.videosArr.splice(fileIndex, 1)
       //要清空uploadFiles，不然onExceed方法无法控制
       this.$refs.upload.uploadFiles.splice(fileIndex, 1)
       console.log('this.videosArr-del:', this.videosArr)
       this.$emit('remove', fileIndex, this.params)
     },
-    handleRemove(file, fileList) {
+    handleRemove (file, fileList) {
       let fileIndex
       fileList.forEach((element, index) => {
         if (file.name === element.name) {
@@ -159,10 +143,10 @@ export default {
       })
       this.$emit('remove', fileIndex, this.params)
     },
-    onExceed() {
+    onExceed () {
       this.$message.error(`上传数量一次不能超过${this.limit}个`)
     },
-    beforeUpload(file) {
+    beforeUpload (file) {
       var fileType = file.name
         .substring(file.name.lastIndexOf('.') + 1)
         .toLowerCase()
@@ -180,7 +164,7 @@ export default {
       }
       return true
     },
-    customUpload(fileobj) {
+    customUpload (fileobj) {
       let param = new FormData()
       param.append('file', fileobj.file)
       //上传压缩裁剪
@@ -206,7 +190,7 @@ export default {
           this.endLoading()
         })
     },
-    endLoading() {
+    endLoading () {
       this.loading.close()
       // this.uploadSuccessNum++
       // if (this.uploadNum === this.uploadSuccessNum) {
@@ -214,10 +198,10 @@ export default {
       //   this.loading.close()
       // }
     },
-    onRemove(file, fileList) {
+    onRemove (file, fileList) {
       this.$emit('onRemove', file, fileList)
     },
-    onChange(fileobj) {
+    onChange (fileobj) {
       if (!this.autoUpload) {
         console.log('TCL: onChange -> fileobj', fileobj)
       }

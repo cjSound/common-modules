@@ -1,27 +1,18 @@
 <!--
  * @Author: 曹捷
  * @Date: 2020-04-14 16:28:00
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-06-28 10:30:44
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-12-16 17:10:23
  * @Description: 改造cascader modal  是数组，实际使用是最后一级
  -->
 <template>
-  <el-cascader
-    :disabled="disabled"
-    :options="options"
-    :placeholder="placeholder"
-    :props="pData"
-    :show-all-levels="false"
-    @change="cascChange"
-    clearable
-    v-if="loading"
-    v-model="cascValue"
-  ></el-cascader>
+  <el-cascader :disabled="disabled" :options="options" :placeholder="placeholder" :props="pData"
+    :show-all-levels="false" @change="cascChange" clearable v-if="loading" v-model="cascValue"></el-cascader>
 </template>
 
 <script>
 import { Cascader } from 'element-ui'
-import util from '@/common-modules/utils/utils'
+import util from './../../utils/utils.js'
 
 export default {
   components: {
@@ -67,16 +58,16 @@ export default {
     }
   },
   watch: {
-    value(newValue, oldValue) {
+    value (newValue, oldValue) {
       if (!oldValue && newValue) {
         this.getParentIdList(newValue)
       }
     },
-    options() {
+    options () {
       this.initCasList()
     }
   },
-  data() {
+  data () {
     return {
       cascValue: [],
       casList: [],
@@ -84,7 +75,7 @@ export default {
       pData: { expandTrigger: 'hover', checkStrictly: true }
     }
   },
-  mounted() {
+  mounted () {
     this.pData.value = this.valueName
     this.pData.label = this.label
     this.pData.children = this.children
@@ -93,17 +84,17 @@ export default {
     this.$set(this, 'cascValue', this.getParentIdList(this.value))
   },
   methods: {
-    cascChange(param) {
+    cascChange (param) {
       let value = param.slice(-1)[0]
       this.$emit('input', value)
     },
     // 将tree数据转为1维数组
-    initCasList() {
+    initCasList () {
       let arr = util.util.cloneObj(this.options)
 
       let list = [].concat(arr)
       let childrenName = this.children
-      function getCasList(arr) {
+      function getCasList (arr) {
         arr.forEach(element => {
           if (element[childrenName] && element[childrenName].length > 0) {
             list = list.concat(element[childrenName])
@@ -118,10 +109,10 @@ export default {
       this.casList = list
     },
     // 在1维数组里面 遍历找上级id
-    getParentIdList(value) {
+    getParentIdList (value) {
       let list = [`${value}`]
       let _this = this
-      function getParentId(value) {
+      function getParentId (value) {
         for (let i = 0; i < _this.casList.length; i++) {
           let item = _this.casList[i]
 

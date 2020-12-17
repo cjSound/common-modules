@@ -1,19 +1,8 @@
 <template>
   <div class="hello">
     <h1 @click="test">{{ msg }}</h1>
-    <table-tree
-      :childrenNum="'childrenNum'"
-      :closed="'closed'"
-      :data-list="bigdata"
-      :expanded="'isExpanded'"
-      :left="10"
-      :name="'displayName'"
-      :page="pageNum"
-      @pagechange="pageChange"
-      class="table"
-      title="值"
-      v-if="bigdata.length>0"
-    >
+    <table-tree :childrenNum="'childrenNum'" :closed="'closed'" :data-list="bigdata" :expanded="'isExpanded'" :left="10"
+      :name="'displayName'" :page="pageNum" @pagechange="pageChange" class="table" title="值" v-if="bigdata.length>0">
       <div slot="类型" slot-scope="{item}">{{item.displayType}}</div>
       <div slot="值" slot-scope="{item}">{{item.value}}</div>
       <div slot="操作" slot-scope="{item,keys,closed}">
@@ -27,7 +16,7 @@
 <script>
 import { data, data2, data3 } from './data.js'
 import tableTree from './table-tree'
-import util from '@/common-modules/utils/utils'
+import util from './../../utils/utils.js'
 
 export default {
   name: 'HelloWorld',
@@ -35,7 +24,7 @@ export default {
   props: {
     msg: String
   },
-  data() {
+  data () {
     return {
       // dataList: data,
       bigdata: [],
@@ -46,7 +35,7 @@ export default {
     }
   },
   methods: {
-    pageChange(info) {
+    pageChange (info) {
       console.log('分页改变了', info)
       var key = info.keys.join('-')
 
@@ -58,10 +47,10 @@ export default {
       console.log(this.saveList, key, item, list)
       this.$set(item, 'children', list)
     },
-    pageChange2(info) {
+    pageChange2 (info) {
       console.log('分页改变了2', info)
     },
-    transData(a, idStr, pidStr, chindrenStr) {
+    transData (a, idStr, pidStr, chindrenStr) {
       var r = [],
         hash = {},
         id = idStr,
@@ -86,7 +75,7 @@ export default {
       }
       return r
     },
-    test(item, keys, closed) {
+    test (item, keys, closed) {
       // this.$set(this.bigdata[0].children[0].children[4].children[0],'childrenNum',50);
       // this.$set(this.dataList[0].children[0].children[0].children[0],'children',data2);
       // var item =this.dataList[0].children[0].children[1];
@@ -98,10 +87,10 @@ export default {
       // this.$set(this.dataList[0].children[0].children[1],'children',[])
       // console.log(this.dataList)
     },
-    test1(item, keys, closed) {
+    test1 (item, keys, closed) {
       closed.closed = false
     },
-    keyset(arr, keys, values) {
+    keyset (arr, keys, values) {
       for (var i in values) {
         if (values[i].children != null && values[i].children.length > 0) {
           if (values[i].children.length > this.pageNum) {
@@ -117,7 +106,7 @@ export default {
         }
       }
     },
-    getinfo(key, item) {
+    getinfo (key, item) {
       var keys = [].concat(key)
       var index = keys.splice(0, 1)[0]
       index = index > this.pageNum ? index % this.pageNum : index
@@ -128,7 +117,7 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted () {
     var arr = []
     this.keyset(arr, [], bigdata)
 

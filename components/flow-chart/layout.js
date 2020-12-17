@@ -2,13 +2,13 @@
  * @Author: 曹捷
  * @Date: 2020-08-14 16:32:55
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-08-20 09:56:30
+ * @LastEditTime: 2020-12-16 17:10:02
  * @Description: file content
  */
 
-import util from '@/common-modules/utils/utils'
+import util from './../../utils/utils.js'
 export default class layout {
-    constructor(domId, nodeList) {
+    constructor (domId, nodeList) {
         this.el = document.getElementById(domId)
         this.maxWidth = this.el.offsetWidth
         this.maxHeight = this.el.offsetHeight
@@ -27,7 +27,7 @@ export default class layout {
             this.rankLevel()
         }
     }
-    rankLevel() {
+    rankLevel () {
         let arr = []
         let nodeList = this.nodeList
         let rootList = nodeList.filter(item => {
@@ -36,7 +36,7 @@ export default class layout {
         this.rootNum = rootList.length
         let _this = this
         this.maxRank = 1
-        function getRank(list, level) {
+        function getRank (list, level) {
             list.forEach(element => {
                 element.rank = level
                 _this.maxRank = level > _this.maxRank ? level : _this.maxRank
@@ -51,7 +51,7 @@ export default class layout {
         console.log('layout -> rankLevel -> arr', arr)
     }
     // 计算每个位置
-    judgePostion() {
+    judgePostion () {
         let _this = this
         let arr = []
         // 大概做几行
@@ -67,7 +67,7 @@ export default class layout {
             arr.push(element)
             setChildPos(element)
         });
-        function setChildPos(parentRoot) {
+        function setChildPos (parentRoot) {
             let nextNode = _this.getNextNodes(parentRoot)
             let nextX = parentRoot.mainData.pageX + _this.config.mixX
             if (nextNode.length === 1) {
@@ -98,7 +98,7 @@ export default class layout {
      * @param {*} element 
      * 节点对象
      */
-    _hasExist(arr, element) {
+    _hasExist (arr, element) {
         let findList = arr.find(item => {
             return item.mainData.uuid === element.mainData.uuid
         })
@@ -108,7 +108,7 @@ export default class layout {
      * 获取  下一级节点 List集合
      * @param {*} parentRoot 
      */
-    getNextNodes(parentRoot) {
+    getNextNodes (parentRoot) {
         if (parentRoot.next && parentRoot.next.length > 0) {
             let nextArr = []
             parentRoot.next.forEach(parentRoot => {

@@ -1,13 +1,31 @@
-<!--
- * @Author: 徐生延
- * @Date: 2020-06-04 14:35:16
- * @LastEditors: 徐生延
- * @LastEditTime: 2020-06-04 17:24:56
- * @Description: file content
---> 
-# submodule
-# 111
-222
-3
-3222
-321
+# hello-world
+
+## node.js 12+
+
+## Project setup
+
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+
+```
+npm run build
+```
+
+### Lints and fixes files
+
+```
+npm run lint
+```
+
+### Customize configuration
+
+See [Configuration Reference](https://cli.vuejs.org/config/).
