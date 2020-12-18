@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-19 14:18:42
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-17 17:37:01
+ * @LastEditTime: 2020-12-18 09:19:19
  * @Description: file content
  -->
 
@@ -48,7 +48,7 @@ export default {
 </script>
 <style scoped lang="scss">
 //页面中的from盒子
-@import './../styles/variables.scss';
+@import './../../styles/variables.scss';
 .fromTitle {
   width: 100%;
   box-sizing: border-box;

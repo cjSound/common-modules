@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-06-02 16:16:21
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-17 17:37:38
+ * @LastEditTime: 2020-12-18 09:19:30
  * @Description: file content
 --> 
 <template>
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import './../styles/variables.scss';
+@import './../../styles/variables.scss';
 .hamburger {
   display: inline-block;
   vertical-align: middle;
