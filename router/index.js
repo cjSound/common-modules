@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-04-22 14:28:38
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-18 11:14:20
+ * @LastEditTime: 2020-12-18 15:07:00
  * @Description: 路由基础文件
  */
 import Vue from 'vue'
@@ -14,7 +14,7 @@ let modules = modulesFiles.keys().reduce((modules, element) => {
   return modules
 }, {});
 //  name 判断权限的关键字，必须和后台菜单设置里面的menuCode相等，才有此菜单
-export const constantRoutes = [
+export let constantRoutes = [
   {
     path: '/404',
     component: () => import('@/common-modules/views/404'),
@@ -51,7 +51,7 @@ const createRouter = (options = {}) => {
   if (arr.length > 0) {
     arr.forEach(element => {
       if (modules[element]) {
-        constantRoutes.concat(modules[element])
+        constantRoutes = constantRoutes.concat(modules[element])
       } else {
         console.error(`obit front platform  找不到 ${element} Router 模块`)
       }
