@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-09-02 09:48:37
  * @LastEditors: 曹捷
- * @LastEditTime: 2019-12-17 11:34:01
+ * @LastEditTime: 2020-12-22 15:23:31
  * @Description: file content
  -->
 <template>
@@ -13,6 +13,7 @@
         <a @click="downTemple" class="obit-link">下载Excel模板</a>
       </p>
       <el-form :inline="true">
+        <slot></slot>
         <el-form-item label="上传模板：">
           <obitUpload :action="action" :multiple="false" :size="10" :success="success" accept="xls, xlsx">
             <el-button size="small" type="primary">
@@ -48,24 +49,24 @@ export default {
     }
   },
   watch: {
-    visible(value) {
+    visible (value) {
       this.addVisible = value
     }
   },
-  data() {
+  data () {
     return {
       addVisible: this.visible
     }
   },
-  created() {},
+  created () { },
   methods: {
-    success(data) {
+    success (data) {
       this.$emit('success', data)
     },
-    closeDialog() {
+    closeDialog () {
       this.$emit('update:visible', false)
     },
-    downTemple(item) {
+    downTemple (item) {
       window.open(this.downUrl)
       // this.$http.downloadAddFileTemple({ fileType: this.fileType })
     }

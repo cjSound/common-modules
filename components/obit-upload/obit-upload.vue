@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-21 15:16:37
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-16 17:10:57
+ * @LastEditTime: 2020-12-22 15:56:29
  * @Description: file content
  -->
 <template>
@@ -46,6 +46,9 @@ export default {
     ElUpload: Upload,
   },
   props: {
+    value: {
+      type: [Object, String]
+    },
     //   是否允许拖拽上传
     drag: {
       type: Boolean,
@@ -117,9 +120,11 @@ export default {
       dialogVisible: false,
       dialogImageUrl: '',
       videosArr: JSON.parse(JSON.stringify(this.fileList)),
+
     }
   },
   methods: {
+    // 手动上传提交
     submit () {
       this.$refs.upload.submit()
     },
@@ -179,16 +184,13 @@ export default {
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)',
       })
-      this.$http
-        .upload(this.action, param)
-        .then((res) => {
-          this.endLoading()
-          this.videosArr.push({ url: res.sourceUrl })
-          this.success && this.success(res, this.params)
-        })
-        .catch(() => {
-          this.endLoading()
-        })
+      this.$http.upload(this.action, param).then((res) => {
+        this.endLoading()
+        this.videosArr.push({ url: res.sourceUrl })
+        this.success && this.success(res, this.params)
+      }).catch(() => {
+        this.endLoading()
+      })
     },
     endLoading () {
       this.loading.close()
@@ -203,6 +205,7 @@ export default {
     },
     onChange (fileobj) {
       if (!this.autoUpload) {
+        this.$emit('input', fileobj.name)
         console.log('TCL: onChange -> fileobj', fileobj)
       }
     },
