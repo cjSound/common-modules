@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-19 14:18:42
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-18 09:19:19
+ * @LastEditTime: 2020-12-21 17:10:38
  * @Description: file content
  -->
 
@@ -16,7 +16,7 @@
 -->
 <template>
   <div style="padding-top: 12px;">
-    <div :class="{paddingSpec: !needPadding}" class="fromTitle">
+    <div :class="{paddingSpec: !needPadding}" class="fromTitle ">
       <div class="title_box">
         <span>{{ fromtitle.title1 }}</span>
         <span>{{ fromtitle.title2 }}</span>
@@ -48,7 +48,7 @@ export default {
 </script>
 <style scoped lang="scss">
 //页面中的from盒子
-@import './../../styles/variables.scss';
+@import './../../../styles/variables.scss';
 .fromTitle {
   width: 100%;
   box-sizing: border-box;
@@ -56,6 +56,7 @@ export default {
   padding: 25px;
   position: relative;
   font-size: 14px;
+  transition: all 0.8s;
   &.paddingSpec {
     padding: 10px;
   }

@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-02-26 11:45:28
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-17 20:44:00
+ * @LastEditTime: 2020-12-18 16:41:00
  * @Description: file content
  */
 const path = require('path')
@@ -48,6 +48,16 @@ module.exports = {
         children: [
           'views/guide/install.md',
           'views/guide/get-started.md'
+        ]
+      },
+      {
+        title: '配置',
+        collapsable: false,
+        children: [
+          'views/config/Config.md',
+          'views/config/API.md',
+          'views/config/router.md',
+          'views/config/filter.md',
         ]
       },
       {

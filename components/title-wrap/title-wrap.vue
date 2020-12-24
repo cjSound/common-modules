@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-19 10:52:38
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-18 09:19:06
+ * @LastEditTime: 2020-12-22 20:24:52
  * @Description: file content
  -->
 <template>
@@ -11,8 +11,8 @@
     <div class="title_left">
       <div :class="{hasDetail: !isDetailPage }" class="title_left_top">
         <span />
+        <span>{{ title }}</span>
         <slot name="title">
-          <span>{{ title }}</span>
         </slot>
         <span v-if="isDetailPage && detailInfor.stadus">{{ detailInfor.stadus }}</span>
         <div class="title-child" style="display: inline-block; margin-left: 10px;">
@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './../../styles/variables.scss';
+@import './../../../styles/variables.scss';
 .title-wrap {
   width: 100%;
   min-height: 50px;
