@@ -1,24 +1,29 @@
 <!--
  * @Author: 曹捷
  * @Date: 2019-08-20 20:25:19
- * @LastEditors: 刘硕
- * @LastEditTime: 2020-06-28 10:06:07
+ * @LastEditors: 曹捷
+ * @LastEditTime: 2020-12-18 16:36:26
  * @Description: file content
  -->
 <template>
-  <div class="obit-main obit-main-fill" v-loading="loading">
-    <el-row :gutter="20">
+  <div class="obit-main " v-loading="loading">
+    <el-row :gutter="20" class="h100">
       <el-col :span="11">
         <contentForm :fromtitle="{title1:'字典类型',title2:'数据字典类型'}">
           <div class="obit-search">
-            <el-input @change="queryDataList(true)" class="input-md" placeholder="字典类型" v-model="params.codeField"></el-input>
-            <el-input @change="queryDataList(true)" class="input-md" placeholder="字典描述" v-model="params.codeDesc"></el-input>
+            <el-input @change="queryDataList(true)" class="input-md" placeholder="字典类型" v-model="params.codeField">
+            </el-input>
+            <el-input @change="queryDataList(true)" class="input-md" placeholder="字典描述" v-model="params.codeDesc">
+            </el-input>
             <span class="f-r">
-              <el-button @click="addDialog" class="btn-md" icon="el-icon-plus" type="primary" v-permiss="'addDict'">新增</el-button>
+              <el-button @click="addDialog" class="btn-md" icon="el-icon-plus" type="primary" v-permiss="'addDict'">新增
+              </el-button>
             </span>
           </div>
-          <el-table :data="dataList" @current-change="dictsChange" class="obit-table" highlight-current-row style="width: 100%">
-            <el-table-column :key="column.prop" :label="column.label" :min-width="column.minWidth" v-for="column in tableColumns">
+          <el-table :data="dataList" @current-change="dictsChange" class="obit-table" highlight-current-row
+            style="width: 100%">
+            <el-table-column :key="column.prop" :label="column.label" :min-width="column.minWidth"
+              v-for="column in tableColumns">
               <template slot-scope="scope">
                 <el-tooltip :content="scope.row[column.prop]" class="item" effect="dark" placement="top">
                   <span>{{scope.row[column.prop] || "-"}}</span>
@@ -37,19 +42,22 @@
             </el-table-column>
           </el-table>
           <div class="obit-pager m-t-15">
-            <el-pagination :current-page="searchParams.pageNum" :page-size="searchParams.pageSize" :page-sizes="[10, 20, 30, 50]" :total="total" @current-change="handleCurrentChange" @size-change="handleSizeChange" layout="total, sizes, prev, pager, next, jumper"></el-pagination>
+            <el-pagination :current-page="searchParams.pageNum" :page-size="searchParams.pageSize"
+              :page-sizes="[10, 20, 30, 50]" :total="total" @current-change="handleCurrentChange"
+              @size-change="handleSizeChange" layout="total, sizes, prev, pager, next, jumper"></el-pagination>
           </div>
         </contentForm>
       </el-col>
       <el-col :span="13">
-        <contentForm :fromtitle="{title1:'字典值',title2:'数据字典类型值'}">
+        <contentForm class="scrollBar" :fromtitle="{title1:'字典值',title2:'数据字典类型值'}">
           <div class="obit-search">
             <span class="f-r">
               <el-button @click="addDialogValue" class="btn-md" icon="el-icon-plus" type="primary">新增</el-button>
             </span>
           </div>
-          <el-table :data="dictValueList" class="obit-table" style="width: 100%">
-            <el-table-column :key="column.prop" :label="column.label" :min-width="column.minWidth" v-for="column in dictColumns">
+          <el-table :data="dictValueList" class="obit-table " style="width: 100%">
+            <el-table-column :key="column.prop" :label="column.label" :min-width="column.minWidth"
+              v-for="column in dictColumns">
               <template slot-scope="scope">
                 <el-tooltip :content="scope.row[column.prop]" class="item" effect="dark" placement="top">
                   <span>{{scope.row[column.prop] || "-"}}</span>
@@ -67,11 +75,18 @@
               </template>
             </el-table-column>
           </el-table>
+          <div class="obit-pager m-t-15">
+            <el-pagination :current-page="codeSearchParams.pageNum" :page-size="codeSearchParams.pageSize"
+              :page-sizes="[10, 20, 30, 50]" :total="codeTotal" @current-change="codeHandleCurrentChange"
+              @size-change="codeHandleSizeChange" layout="total, sizes, prev, pager, next, jumper"></el-pagination>
+          </div>
         </contentForm>
       </el-col>
     </el-row>
-    <dictAdd :addType="addType" :detailsInfo="detailsInfo" :visible.sync="addVisable" @reload="queryDataList(true)"></dictAdd>
-    <dictValueAdd :addType="addValueType" :detailsInfo="valueDetailsInfo" :selectCode="selectCode" :visible.sync="addValueVisable" @reload="getSysdictValue"></dictValueAdd>
+    <dictAdd :addType="addType" :detailsInfo="detailsInfo" :visible.sync="addVisable" @reload="queryDataList(true)">
+    </dictAdd>
+    <dictValueAdd :addType="addValueType" :detailsInfo="valueDetailsInfo" :selectCode="selectCode"
+      :visible.sync="addValueVisable" @reload="getSysdictValue"></dictValueAdd>
   </div>
 </template>
 
@@ -82,7 +97,7 @@ import dictValueAdd from './dictValueAdd'
 export default {
   components: { dictAdd, dictValueAdd },
   mixins: [pagerMix],
-  data() {
+  data () {
     return {
       tableColumns: [
         { prop: 'codeField', label: '字典名称' },
@@ -109,24 +124,28 @@ export default {
         pageSize: 10,
         orderBy: '',
       },
+      codeSearchParams: {
+        pageNum: 1,
+        pageSize: 10,
+      }, codeTotal: 0
     }
   },
-  mounted() {
+  mounted () {
     this.tableRequest = 'getSysDictList'
     this.queryDataList()
   },
   methods: {
     // 父字典新增和编辑相关  --------------start --------------------------
-    addDialog() {
+    addDialog () {
       this.addVisable = true
       this.addType = 'add'
     },
-    editDialog(item) {
+    editDialog (item) {
       this.detailsInfo = item
       this.addVisable = true
       this.addType = 'edit'
     },
-    removeInfo(item) {
+    removeInfo (item) {
       this.$confirm('是否删除', '提示')
         .then(() => {
           this.$http.removeSysDict({ codeField: item.codeField }).then((res) => {
@@ -134,25 +153,38 @@ export default {
             this.$message.success('删除成功!')
           })
         })
-        .catch(() => {})
+        .catch(() => { })
     },
     // 父字典新增和编辑相关   -------------------end-------------------
     // 选择字典
-    dictsChange(val) {
+    dictsChange (val) {
       if (val) {
         this.selectCode = val.codeField
         this.getSysdictValue()
       }
     },
-    getSysdictValue() {
+    getSysdictValue () {
       if (this.selectCode) {
-        this.$http.getCommonDictValueList({ codeField: this.selectCode }).then((res) => {
-          this.dictValueList = res
+        // this.$http.getCommonDictValueList({ codeField: this.selectCode }).then((res) => {
+        //   this.dictValueList = res
+        // })
+        this.codeSearchParams.param = { codeField: this.selectCode }
+        this.$http.getListCodeValue(this.codeSearchParams).then((res) => {
+          this.dictValueList = res.data
+          this.codeTotal = res.total
         })
       }
     },
+    codeHandleCurrentChange (value) {
+      this.codeSearchParams.pageNum = value
+      this.getSysdictValue()
+    },
+    codeHandleSizeChange (value) {
+      this.codeSearchParams.pageSize = value
+      this.getSysdictValue()
+    },
     // 子字典新增和编辑相关  --------------start --------------------------
-    addDialogValue() {
+    addDialogValue () {
       if (this.selectCode) {
         this.addValueVisable = true
         this.addValueType = 'add'
@@ -160,12 +192,12 @@ export default {
         this.$message.error('请选择字典类型')
       }
     },
-    editDialogValue(item) {
+    editDialogValue (item) {
       this.valueDetailsInfo = item
       this.addValueVisable = true
       this.addValueType = 'edit'
     },
-    removeInfoValue(item) {
+    removeInfoValue (item) {
       this.$confirm('是否删除', '提示')
         .then(() => {
           this.$http.removeSysDictValue({ id: item.id }).then((res) => {
@@ -173,7 +205,7 @@ export default {
             this.$message.success('删除成功!')
           })
         })
-        .catch(() => {})
+        .catch(() => { })
     },
     // 子字典新增和编辑相关   -------------------end-------------------
   },

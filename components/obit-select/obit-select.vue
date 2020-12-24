@@ -2,13 +2,13 @@
  * @Author: 曹捷
  * @Date: 2020-04-27 18:44:59
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-08 17:35:36
+ * @LastEditTime: 2020-12-18 15:35:08
  * @Description: 封装select组件  支持同时获取value和name
  -->
 <template>
   <el-select :clearable="clearable" :disabled="disabled" :multiple="multiple" :remote="remote"
     :remote-method="remoteMethod" :placeholder="placeholder" @change="changeValue" class="input-md" filterable
-    v-model="dictValue">
+    v-model="dictValue" @focus="focus">
     <el-option :key="item.valueName" :label="item[labelName]" :value="item[valueName]" v-for="item in selectList">
     </el-option>
   </el-select>
@@ -81,6 +81,9 @@ export default {
     },
   },
   methods: {
+    focus (value) {
+      this.$emit('focus', value)
+    },
     remoteMethod (text) {
       this.$emit('remoteMethod', text)
     },

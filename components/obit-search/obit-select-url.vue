@@ -2,13 +2,13 @@
  * @Author: 曹捷
  * @Date: 2020-06-22 20:37:04
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-08 17:23:51
+ * @LastEditTime: 2020-12-18 15:46:59
  * @Description: 自定义查询条件 接口下拉列表
 --> 
 <template>
   <obitSelect :labelName="itemInfo.labelname" :placeholder="placeholder" :remote="remote" :selectList="selectList"
     :valueName="itemInfo.valuename" :disabled="disabled" :selectName.sync="selectLableName" @change="changeValue"
-    @remoteMethod="initData" clearable v-model="cValue">
+    @remoteMethod="initData" clearable v-model="cValue" @focus="focus">
   </obitSelect>
 </template>
 
@@ -59,6 +59,10 @@ export default {
   },
   components: { obitSelect },
   methods: {
+    focus (value) {
+      console.log('🚀 ~ file: obit-select-url.vue ~ line 63 ~ focus ~ value', value)
+      this.$emit('focus')
+    },
     changeValue (value) {
       this.$emit('input', value)
       this.$emit('change', value)
@@ -88,7 +92,7 @@ export default {
           this.selectList = list
         }
       })
-    }
+    },
   },
   created () {
     if (this.itemInfo.remote === 1) {
