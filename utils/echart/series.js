@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-11-23 14:59:24
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-15 19:24:57
+ * @LastEditTime: 2020-12-24 09:02:57
  * @Description: series 相关操作
  */
 let typeInfo = {
@@ -142,7 +142,7 @@ export default class {
     } else if (Object.prototype.toString.call(this.vm[this.key].series).indexOf('Array') !== -1) {
       this.vm[this.key].series.forEach((element, index) => {
         this.vm.$set(this.vm[this.key].series[index], 'markLine', markLine)
-      });
+      })
     }
   }
 }
