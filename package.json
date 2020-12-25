@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "doc": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "build:doc": "vuepress build docs"
   },
   "dependencies": {
     "core-js": "^2.6.5",
