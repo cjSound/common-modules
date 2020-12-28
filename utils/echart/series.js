@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-11-23 14:59:24
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-24 09:02:57
+ * @LastEditTime: 2020-12-28 16:01:23
  * @Description: series 相关操作
  */
 let typeInfo = {
@@ -66,18 +66,16 @@ export default class {
    * Array
    * 每一列 细分，数组下标对应
    */
-  showLable (position) {
+  showLable (position, options = {}) {
     let list = this.vm[this.key].series
     position = position ? position : 'top'
     list.forEach((element, index) => {
       let pos = Object.prototype.toString.call(position).indexOf('Array') === -1 ? position : position[index]
-      this.vm.$set(element, 'label', {
+      this.vm.$set(element, 'label', Object.assign({
         interval: 1,
-        normal: {
-          show: true,
-          position: pos
-        }
-      })
+        show: true,
+        position: pos
+      }, options))
     });
   }
   addHover () {

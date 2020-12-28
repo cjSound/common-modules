@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-21 15:16:37
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-24 10:42:19
+ * @LastEditTime: 2020-12-28 11:20:38
  * @Description: file content
  -->
 <template>
@@ -180,8 +180,8 @@ export default {
       })
       this.$http.upload(this.action, param).then((res) => {
         this.endLoading()
-        this.videosArr.push({ url: res.sourceUrl })
         this.success && this.success(res, this.params)
+        this.videosArr.push({ url: res.sourceUrl })
       }).catch(() => {
         this.endLoading()
       })

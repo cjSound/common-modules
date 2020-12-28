@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-06-02 10:27:20
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-01 16:46:52
+ * @LastEditTime: 2020-12-28 15:52:24
  * @Description: 通用过滤器 
  */
 import numeral from 'numeral'
@@ -45,6 +45,6 @@ export function valueType (value, filterType) {
         }
         return value || ''
     } else {
-        return value
+        return value === undefined ? '' : value
     }
 }
