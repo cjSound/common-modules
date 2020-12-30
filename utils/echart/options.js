@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-11-05 10:58:20
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-15 17:57:49
+ * @LastEditTime: 2020-12-30 16:32:52
  * @Description: 基础默认的配置
  */
 /**
@@ -78,8 +78,16 @@ class options {
     this.vm = vm
     this.key = key
   }
-  title (title) {
+  title (title, options) {
     this.vm[this.key].title.text = title
+    if (options) {
+      Object.assign(this.vm[this.key].title, options)
+    }
+  }
+  legend (options) {
+    if (options) {
+      Object.assign(this.vm[this.key].legend, options)
+    }
   }
   y (name) {
     this.vm[this.key].yAxis.name = name
