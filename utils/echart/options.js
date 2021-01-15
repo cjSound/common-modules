@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-11-05 10:58:20
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-30 16:32:52
+ * @LastEditTime: 2021-01-13 15:04:28
  * @Description: 基础默认的配置
  */
 /**
@@ -88,9 +88,17 @@ class options {
     if (options) {
       Object.assign(this.vm[this.key].legend, options)
     }
+    return this
   }
   y (name) {
     this.vm[this.key].yAxis.name = name
+    return this
+  }
+  x (options) {
+    if (options) {
+      Object.assign(this.vm[this.key].xAxis, options)
+    }
+    return this
   }
   grid (top = 0, right = 0, bottom = 0, left = 0) {
     if (top) {
