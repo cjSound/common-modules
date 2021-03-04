@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2019-08-21 15:16:37
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-22 15:56:29
+ * @LastEditTime: 2020-12-28 11:20:38
  * @Description: file content
  -->
 <template>
@@ -14,22 +14,11 @@
       </li>
     </ul>
     <el-upload :accept="accept" :action="action" :auto-upload="autoUpload" :before-remove="handleRemove"
-      :before-upload="beforeUpload" :class="{'obit-video':isShowVideo}" :drag="drag" :file-list="fileList"
-      :http-request="customUpload" :limit="limit" :list-type="listType" :multiple="multiple" :on-change="onChange"
-      :on-exceed="onExceed" :on-preview="handlePictureCardPreview" :on-success="success" :show-file-list="showFileList"
-      class="avatar-uploader" ref="upload">
+      :before-upload="beforeUpload" :class="{'obit-video':isShowVideo,'file-remove':!removeFile}" :drag="drag"
+      :file-list="fileList" :http-request="customUpload" :limit="limit" :list-type="listType" :multiple="multiple"
+      :on-change="onChange" :on-exceed="onExceed" :on-preview="handlePictureCardPreview" :on-success="success"
+      :show-file-list="showFileList" class="avatar-uploader " ref="upload">
       <slot></slot>
-      <!-- <span slot="file" slot-scope="{file}" v-if="listType !==''">
-        <img :src="file.url" alt class="el-upload-list__item-thumbnail" />
-        <span class="el-upload-list__item-actions">
-          <span @click="handlePictureCardPreview(file)" class="el-upload-list__item-preview">
-            <i class="el-icon-zoom-in"></i>
-          </span>
-          <span @click="handleRemove(file)" class="el-upload-list__item-delete">
-            <i class="el-icon-delete"></i>
-          </span>
-        </span>
-      </span>-->
     </el-upload>
     <el-dialog :visible.sync="dialogVisible" append-to-body v-if="listType !==''">
       <img :src="dialogImageUrl" alt width="100%" />
@@ -106,6 +95,10 @@ export default {
         return []
       },
     },
+    removeFile: {
+      type: Boolean,
+      default: false,
+    }
   },
   computed: {
     isShowVideo () {
@@ -147,6 +140,7 @@ export default {
         }
       })
       this.$emit('remove', fileIndex, this.params)
+      this.$emit('input', '')
     },
     onExceed () {
       this.$message.error(`上传数量一次不能超过${this.limit}个`)
@@ -186,8 +180,8 @@ export default {
       })
       this.$http.upload(this.action, param).then((res) => {
         this.endLoading()
-        this.videosArr.push({ url: res.sourceUrl })
         this.success && this.success(res, this.params)
+        this.videosArr.push({ url: res.sourceUrl })
       }).catch(() => {
         this.endLoading()
       })
@@ -235,6 +229,11 @@ export default {
     }
   }
 }
+.file-remove {
+  .el-upload-list__item:hover .el-icon-close {
+    display: none;
+  }
+}
 .avatar-uploader {
   &.obit-video {
     float: left;
@@ -257,9 +256,7 @@ export default {
     line-height: 178px;
     text-align: center;
   }
-  .el-upload-list__item:hover .el-icon-close {
-    display: none;
-  }
+
   .avatar {
     width: 300px;
     height: 200px;

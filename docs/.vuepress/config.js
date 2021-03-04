@@ -2,7 +2,7 @@
  * @Author: 曹捷
  * @Date: 2020-02-26 11:45:28
  * @LastEditors: 曹捷
- * @LastEditTime: 2020-12-18 16:41:00
+ * @LastEditTime: 2020-12-24 19:29:10
  * @Description: file content
  */
 const path = require('path')
@@ -11,9 +11,10 @@ function resolve (dir) {
   return path.join(__dirname, '../../' + dir)
 }
 module.exports = {
-  base: '/obit-ui/',
+  base: '/obit-web-ui/',
+  host: '0.0.0.0',
   title: '前端基础开发平台',
-  description: '前端基础平台',
+  description: '易比特 大数据 智能物联 前端基础平台',
   port: 6000,
   head: [
     ['link', {

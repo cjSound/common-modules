@@ -14,4 +14,4 @@ features:
 footer: MIT Licensed | Copyright © 2022-present cjSound
 ---
 
-<img src="/img/home.png" />
+<img src="./static/img/home.png" />
